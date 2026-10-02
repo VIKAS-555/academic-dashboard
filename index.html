@@ -67,14 +67,59 @@
         </div>
       </div>
 
-      <!-- Calendar Milestones -->
+      <!-- Smart Calendar Milestones Card -->
       <div class="bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
         <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2 mb-4">
-            <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i> Academic Milestones
+          <h2 class="text-sm font-semibold flex items-center justify-between mb-4">
+            <span class="flex items-center gap-2">
+              <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i> Next Milestones
+            </span>
+            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Auto-Tracking</span>
           </h2>
-          <div id="calendarList" class="space-y-3 max-h-[220px] overflow-y-auto pr-1 text-xs">
-            <span class="text-slate-500">Connect Calendar CSV to view deadlines</span>
+          
+          <!-- Dynamic Highlight Badges -->
+          <div class="space-y-2.5 mb-4">
+            <!-- Next Test -->
+            <div id="nextExamCard" class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-rose-400">Next Exam / Test</div>
+                  <div id="nextExamName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextExamCountdown" class="text-xs font-bold text-rose-300 bg-rose-950/60 px-2 py-0.5 rounded border border-rose-800/60">--</div>
+            </div>
+
+            <!-- Next Holiday -->
+            <div id="nextHolidayCard" class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="sun" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-emerald-400">Next Holiday</div>
+                  <div id="nextHolidayName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextHolidayCountdown" class="text-xs font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">--</div>
+            </div>
+
+            <!-- Next Academic Event / Deadline -->
+            <div id="nextEventCard" class="p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-indigo-400">Next Event / Deadline</div>
+                  <div id="nextEventName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextEventCountdown" class="text-xs font-bold text-indigo-300 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/60">--</div>
+            </div>
+          </div>
+
+          <!-- Upcoming Timeline Details -->
+          <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Upcoming Schedule</h3>
+          <div id="calendarList" class="space-y-2 max-h-[140px] overflow-y-auto pr-1 text-xs">
+            <span class="text-slate-500">Connect Calendar CSV to view schedule</span>
           </div>
         </div>
       </div>
@@ -82,7 +127,6 @@
 
     <!-- Practice Topics & Focus Pomodoro -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
       <!-- DSA / Question Bank -->
       <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
         <div class="flex justify-between items-center mb-4">
@@ -207,6 +251,23 @@
       updateTimerDisplay();
     }
 
+    // Days difference helper
+    function getDaysRemaining(targetDateStr) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const target = new Date(targetDateStr);
+      target.setHours(0, 0, 0, 0);
+      const diffTime = target - today;
+      return Math.round(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    function formatDaysBadge(days) {
+      if (days === 0) return 'Today!';
+      if (days === 1) return 'Tomorrow';
+      if (days > 1) return `In ${days} days`;
+      return `${Math.abs(days)}d ago`;
+    }
+
     // Data Loaders
     function loadAllData() {
       const attUrl = localStorage.getItem('ATTENDANCE_CSV');
@@ -236,7 +297,6 @@
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
               }
 
-              // Build timeline
               const log = document.getElementById('attendanceLog');
               log.innerHTML = '';
               for (let i = 5; i < headers.length; i++) {
@@ -260,13 +320,85 @@
             const list = document.getElementById('calendarList');
             list.innerHTML = '';
             const rows = results.data.slice(1);
-            rows.forEach(r => {
-              if (!r[0]) return;
+
+            let nextExam = null;
+            let nextHoliday = null;
+            let nextEvent = null;
+
+            // Sort rows chronologically
+            const parsedRows = rows
+              .filter(r => r[0] && r[1])
+              .map(r => ({
+                name: r[0].trim(),
+                dateStr: r[1].trim(),
+                type: (r[2] || 'Event').trim(),
+                days: getDaysRemaining(r[1].trim())
+              }))
+              .sort((a, b) => a.days - b.days);
+
+            parsedRows.forEach(item => {
+              // Find upcoming items (days >= 0)
+              if (item.days >= 0) {
+                const lowerType = item.type.toLowerCase();
+                const lowerName = item.name.toLowerCase();
+
+                // Exam check
+                if (!nextExam && (lowerType.includes('exam') || lowerName.includes('internal assessment') || lowerName.includes('ia-') || lowerName.includes('see'))) {
+                  nextExam = item;
+                }
+
+                // Holiday check
+                if (!nextHoliday && (lowerType.includes('holiday') || lowerName.includes('jayanthi') || lowerName.includes('pooja') || lowerName.includes('deepavali') || lowerName.includes('chaturthi'))) {
+                  nextHoliday = item;
+                }
+
+                // General Event / Deadline check
+                if (!nextEvent && (lowerType.includes('academic') || lowerType.includes('deadline') || lowerName.includes('meeting') || lowerName.includes('freezing'))) {
+                  nextEvent = item;
+                }
+              }
+
+              // Append to timeline list
               const el = document.createElement('div');
               el.className = 'flex justify-between items-center p-2 rounded bg-slate-900/60 border border-slate-800';
-              el.innerHTML = `<div><div class="font-medium text-slate-200">${r[0]}</div><div class="text-[10px] text-slate-400">${r[1]}</div></div><span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">${r[2] || 'Event'}</span>`;
+              const badgeClass = item.days >= 0 ? 'text-indigo-300' : 'text-slate-500';
+              el.innerHTML = `
+                <div>
+                  <div class="font-medium text-slate-200">${item.name}</div>
+                  <div class="text-[10px] text-slate-400">${item.dateStr} &bull; <span class="${badgeClass}">${formatDaysBadge(item.days)}</span></div>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">${item.type}</span>
+              `;
               list.appendChild(el);
             });
+
+            // Update Next Exam Card
+            if (nextExam) {
+              document.getElementById('nextExamName').innerText = `${nextExam.name} (${nextExam.dateStr})`;
+              document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
+            } else {
+              document.getElementById('nextExamName').innerText = 'None scheduled';
+              document.getElementById('nextExamCountdown').innerText = '--';
+            }
+
+            // Update Next Holiday Card
+            if (nextHoliday) {
+              document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
+              document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
+            } else {
+              document.getElementById('nextHolidayName').innerText = 'No upcoming holidays';
+              document.getElementById('nextHolidayCountdown').innerText = '--';
+            }
+
+            // Update Next Event Card
+            if (nextEvent) {
+              document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
+              document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
+            } else {
+              document.getElementById('nextEventName').innerText = 'None scheduled';
+              document.getElementById('nextEventCountdown').innerText = '--';
+            }
+            lucide.createIcons();
           }
         });
       }
@@ -283,7 +415,6 @@
               const topicName = r[0];
               const sheetUrl = r[1] || '#';
               const totalQ = r[2] || '0';
-              
               const savedDone = localStorage.getItem(`topic_${idx}_done`) || 0;
 
               const card = document.createElement('div');
@@ -306,6 +437,7 @@
               `;
               container.appendChild(card);
             });
+            lucide.createIcons();
           }
         });
       }
