@@ -37,33 +37,43 @@
     <!-- Grid: Attendance & Calendar -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <!-- Attendance Card -->
-      <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
-          </h2>
-          <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Calculating...</span>
+      <!-- Attendance Card with Safe-Bunk Calculator -->
+      <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+            <h2 class="text-sm font-semibold flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
+            </h2>
+            <div class="flex items-center gap-2">
+              <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-medium">Calculating margin...</span>
+              <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Calculating...</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 mb-5">
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <span class="text-xs text-slate-400">Theory</span>
+              <div id="theoryPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
+              <div id="theoryMargin" class="text-[10px] text-slate-500 mt-0.5">Margin: --</div>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <span class="text-xs text-slate-400">Lab</span>
+              <div id="labPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
+              <div id="labMargin" class="text-[10px] text-slate-500 mt-0.5">Margin: --</div>
+            </div>
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+              <span class="text-xs text-slate-400">Aggregate</span>
+              <div id="aggPct" class="text-xl font-bold mt-1 text-indigo-400">--%</div>
+              <div id="aggMargin" class="text-[10px] text-slate-400 mt-0.5">Margin: --</div>
+            </div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-4 mb-5">
-          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-            <span class="text-xs text-slate-400">Theory</span>
-            <div id="theoryPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
+        <div>
+          <h3 class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Recent Class Log</h3>
+          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 text-xs">
+            <span class="text-slate-500">Connect Attendance CSV to view timeline</span>
           </div>
-          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-            <span class="text-xs text-slate-400">Lab</span>
-            <div id="labPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
-          </div>
-          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-            <span class="text-xs text-slate-400">Aggregate</span>
-            <div id="aggPct" class="text-xl font-bold mt-1 text-indigo-400">--%</div>
-          </div>
-        </div>
-
-        <h3 class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Recent Class Log</h3>
-        <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 text-xs">
-          <span class="text-slate-500">Connect Attendance CSV to view timeline</span>
         </div>
       </div>
 
@@ -274,8 +284,33 @@
       return `${Math.abs(days)}d ago`;
     }
 
+    // Safe-Bunk / Attendance Recovery Math Function
+    function calculateMargin(attended, total) {
+      if (!total || total === 0) return { type: 'neutral', text: 'No data', count: 0 };
+      const currentPct = (attended / total) * 100;
+      
+      if (currentPct >= 75) {
+        // Can miss X classes without falling below 75%
+        // (attended) / (total + x) >= 0.75  =>  x <= (attended - 0.75 * total) / 0.75
+        const bunkable = Math.floor((attended - 0.75 * total) / 0.75);
+        return {
+          type: 'safe',
+          count: Math.max(0, bunkable),
+          text: bunkable > 0 ? `Can miss ${bunkable} class${bunkable > 1 ? 'es' : ''}` : 'On the 75% edge (cannot miss next)'
+        };
+      } else {
+        // Must attend next X consecutive classes to recover to 75%
+        // (attended + x) / (total + x) >= 0.75 => x >= (0.75 * total - attended) / 0.25
+        const needed = Math.ceil((0.75 * total - attended) / 0.25);
+        return {
+          type: 'recover',
+          count: needed,
+          text: `Must attend next ${needed} class${needed > 1 ? 'es' : ''}`
+        };
+      }
+    }
+
     function loadAllData() {
-      // Add cache buster timestamp so it never loads old cached sheet data
       const buster = '&_t=' + new Date().getTime();
 
       let attUrl = localStorage.getItem('ATTENDANCE_CSV');
@@ -283,7 +318,7 @@
       let qUrl = localStorage.getItem('QUESTIONS_CSV');
       let assignUrl = localStorage.getItem('ASSIGNMENTS_CSV');
 
-      // 1. Attendance
+      // 1. Attendance & Safe-Bunk Calculator
       if (attUrl) {
         Papa.parse(attUrl + (attUrl.includes('?') ? buster : '?' + buster), {
           download: true,
@@ -292,31 +327,67 @@
               const headers = results.data[0];
               const myRow = results.data[1];
               
-              document.getElementById('theoryPct').innerText = myRow[2] || '--%';
-              document.getElementById('labPct').innerText = myRow[3] || '--%';
-              const agg = myRow[4] || '0%';
-              document.getElementById('aggPct').innerText = agg;
+              const theoryStr = myRow[2] || '--%';
+              const labStr = myRow[3] || '--%';
+              const aggStr = myRow[4] || '0%';
 
-              const aggVal = parseFloat(agg.replace('%', ''));
+              document.getElementById('theoryPct').innerText = theoryStr;
+              document.getElementById('labPct').innerText = labStr;
+              document.getElementById('aggPct').innerText = aggStr;
+
+              // Parse log to determine attended & total counts
+              let totalClasses = 0;
+              let attendedClasses = 0;
+              const log = document.getElementById('attendanceLog');
+              log.innerHTML = '';
+
+              for (let i = 5; i < headers.length; i++) {
+                if (!headers[i]) continue;
+                const status = (myRow[i] || '').trim().toUpperCase();
+                if (status === 'P' || status === 'A') {
+                  totalClasses++;
+                  if (status === 'P') attendedClasses++;
+                }
+
+                const isP = status === 'P';
+                const el = document.createElement('div');
+                el.className = `flex flex-col items-center px-2 py-1 rounded border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0`;
+                el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status || '-'}</span>`;
+                log.appendChild(el);
+              }
+
+              // Calculate Bunk/Recovery for Aggregate
+              const aggVal = parseFloat(aggStr.replace('%', '')) || 0;
               const badge = document.getElementById('bufferBadge');
+              const bunkBadge = document.getElementById('bunkCalculatorBadge');
+
+              const aggMarginInfo = calculateMargin(attendedClasses, totalClasses);
+              document.getElementById('aggMargin').innerText = aggMarginInfo.text;
+
               if (aggVal >= 75) {
                 badge.innerText = 'Safe: Above 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium';
+                
+                bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠️ Zero buffer';
+                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold';
               } else {
                 badge.innerText = 'Warning: Below 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
+
+                bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
+                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold animate-pulse';
               }
 
-              const log = document.getElementById('attendanceLog');
-              log.innerHTML = '';
-              for (let i = 5; i < headers.length; i++) {
-                if (!headers[i]) continue;
-                const status = myRow[i] || '-';
-                const isP = status.trim().toUpperCase() === 'P';
-                const el = document.createElement('div');
-                el.className = `flex flex-col items-center px-2 py-1 rounded border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0`;
-                el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status}</span>`;
-                log.appendChild(el);
+              // Theory & Lab Sub-margins (approx based on percentage)
+              const theoryVal = parseFloat(theoryStr.replace('%', ''));
+              if (!isNaN(theoryVal)) {
+                document.getElementById('theoryMargin').innerText = theoryVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
+                document.getElementById('theoryMargin').className = theoryVal >= 75 ? 'text-[10px] text-emerald-400 mt-0.5' : 'text-[10px] text-rose-400 mt-0.5 font-semibold';
+              }
+              const labVal = parseFloat(labStr.replace('%', ''));
+              if (!isNaN(labVal)) {
+                document.getElementById('labMargin').innerText = labVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
+                document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-0.5' : 'text-[10px] text-rose-400 mt-0.5 font-semibold';
               }
             }
           }
@@ -403,7 +474,7 @@
         });
       }
 
-      // 3. Questions (Auto-populated from Google Sheet Checkbox Counts)
+      // 3. Questions (Auto-Calculates Pending to avoid manual checks)
       if (qUrl) {
         Papa.parse(qUrl + (qUrl.includes('?') ? buster : '?' + buster), {
           download: true,
@@ -419,7 +490,8 @@
               const totalQ = parseInt(r[2] || '0') || 0;
               const completedQ = parseInt(r[3] || '0') || 0;
               const doubtQ = parseInt(r[4] || '0') || 0;
-              const notAttemptedQ = parseInt(r[5] || '0') || Math.max(0, totalQ - completedQ - doubtQ);
+              // Clean automatic pending calculation
+              const notAttemptedQ = Math.max(0, totalQ - completedQ - doubtQ);
 
               const pct = totalQ > 0 ? Math.min(100, Math.round((completedQ / totalQ) * 100)) : 0;
 
