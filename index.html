@@ -77,7 +77,6 @@
             <span class="text-[10px] text-slate-500 uppercase tracking-wider">Auto-Tracking</span>
           </h2>
           
-          <!-- Dynamic Highlight Badges -->
           <div class="space-y-2.5 mb-4">
             <!-- Next Test -->
             <div id="nextExamCard" class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-between">
@@ -116,7 +115,6 @@
             </div>
           </div>
 
-          <!-- Upcoming Timeline Details -->
           <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Upcoming Schedule</h3>
           <div id="calendarList" class="space-y-2 max-h-[140px] overflow-y-auto pr-1 text-xs">
             <span class="text-slate-500">Connect Calendar CSV to view schedule</span>
@@ -125,9 +123,9 @@
       </div>
     </div>
 
-    <!-- Practice Topics & Focus Pomodoro -->
+    <!-- Practice Topics & Focus Cockpit -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- DSA / Question Bank -->
+      <!-- Practice Topics -->
       <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-sm font-semibold flex items-center gap-2">
@@ -140,7 +138,7 @@
         </div>
       </div>
 
-      <!-- Pomodoro Widget -->
+      <!-- Focus Cockpit / Pomodoro -->
       <div class="bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col items-center justify-center text-center">
         <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Focus Cockpit</span>
         <div id="timerDisplay" class="text-4xl font-mono font-bold tracking-tight text-white my-3">25:00</div>
@@ -150,9 +148,22 @@
         </div>
       </div>
     </div>
+
+    <!-- Assignments & Lab Tracker -->
+    <div class="bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-sm font-semibold flex items-center gap-2">
+          <i data-lucide="file-check-2" class="w-4 h-4 text-amber-400"></i> Assignments & Lab Submissions
+        </h2>
+        <span id="pendingAssignmentsCount" class="text-xs px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium">Tracking</span>
+      </div>
+      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+        <span class="text-slate-500">Connect Assignments CSV to view submissions</span>
+      </div>
+    </div>
   </main>
 
-  <!-- Settings Modal for 4 CSV Links -->
+  <!-- Settings Modal -->
   <div id="settingsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#131b2e] border border-slate-800 rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
@@ -210,7 +221,6 @@
       document.getElementById('inputQuestions').value = localStorage.getItem('QUESTIONS_CSV') || '';
     }
 
-    // Pomodoro Timer
     let timerDuration = 25 * 60;
     let timerRemaining = timerDuration;
     let timerInterval = null;
@@ -251,7 +261,6 @@
       updateTimerDisplay();
     }
 
-    // Days difference helper
     function getDaysRemaining(targetDateStr) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -268,11 +277,11 @@
       return `${Math.abs(days)}d ago`;
     }
 
-    // Data Loaders
     function loadAllData() {
       const attUrl = localStorage.getItem('ATTENDANCE_CSV');
       const calUrl = localStorage.getItem('CALENDAR_CSV');
       const qUrl = localStorage.getItem('QUESTIONS_CSV');
+      const assignUrl = localStorage.getItem('ASSIGNMENTS_CSV');
 
       if (attUrl) {
         Papa.parse(attUrl, {
@@ -325,7 +334,6 @@
             let nextHoliday = null;
             let nextEvent = null;
 
-            // Sort rows chronologically
             const parsedRows = rows
               .filter(r => r[0] && r[1])
               .map(r => ({
@@ -337,28 +345,21 @@
               .sort((a, b) => a.days - b.days);
 
             parsedRows.forEach(item => {
-              // Find upcoming items (days >= 0)
               if (item.days >= 0) {
                 const lowerType = item.type.toLowerCase();
                 const lowerName = item.name.toLowerCase();
 
-                // Exam check
                 if (!nextExam && (lowerType.includes('exam') || lowerName.includes('internal assessment') || lowerName.includes('ia-') || lowerName.includes('see'))) {
                   nextExam = item;
                 }
-
-                // Holiday check
                 if (!nextHoliday && (lowerType.includes('holiday') || lowerName.includes('jayanthi') || lowerName.includes('pooja') || lowerName.includes('deepavali') || lowerName.includes('chaturthi'))) {
                   nextHoliday = item;
                 }
-
-                // General Event / Deadline check
                 if (!nextEvent && (lowerType.includes('academic') || lowerType.includes('deadline') || lowerName.includes('meeting') || lowerName.includes('freezing'))) {
                   nextEvent = item;
                 }
               }
 
-              // Append to timeline list
               const el = document.createElement('div');
               el.className = 'flex justify-between items-center p-2 rounded bg-slate-900/60 border border-slate-800';
               const badgeClass = item.days >= 0 ? 'text-indigo-300' : 'text-slate-500';
@@ -372,7 +373,6 @@
               list.appendChild(el);
             });
 
-            // Update Next Exam Card
             if (nextExam) {
               document.getElementById('nextExamName').innerText = `${nextExam.name} (${nextExam.dateStr})`;
               document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
@@ -381,7 +381,6 @@
               document.getElementById('nextExamCountdown').innerText = '--';
             }
 
-            // Update Next Holiday Card
             if (nextHoliday) {
               document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
               document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
@@ -390,7 +389,6 @@
               document.getElementById('nextHolidayCountdown').innerText = '--';
             }
 
-            // Update Next Event Card
             if (nextEvent) {
               document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
               document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
@@ -437,6 +435,50 @@
               `;
               container.appendChild(card);
             });
+            lucide.createIcons();
+          }
+        });
+      }
+
+      // Load Assignments
+      if (assignUrl) {
+        Papa.parse(assignUrl, {
+          download: true,
+          complete: function(results) {
+            const container = document.getElementById('assignmentsContainer');
+            container.innerHTML = '';
+            const rows = results.data.slice(1);
+            let pendingCount = 0;
+
+            rows.forEach((r, idx) => {
+              if (!r[0]) return;
+              const title = r[0];
+              const dueDate = r[1] || 'TBD';
+              const status = (r[2] || 'Pending').trim();
+              const score = r[3] || '-';
+
+              const isCompleted = status.toLowerCase() === 'submitted' || status.toLowerCase() === 'completed';
+              if (!isCompleted) pendingCount++;
+
+              const card = document.createElement('div');
+              card.className = 'p-3 bg-slate-900/60 border border-slate-800 rounded-lg flex flex-col justify-between';
+              card.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 class="font-semibold text-slate-200 text-xs">${title}</h4>
+                    <span class="text-[10px] text-slate-400">Due: ${dueDate}</span>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded ${isCompleted ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'} font-medium">${status}</span>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 text-[11px]">
+                  <span class="text-slate-400">Score / Grade</span>
+                  <span class="font-mono font-semibold text-slate-200">${score}</span>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+
+            document.getElementById('pendingAssignmentsCount').innerText = `${pendingCount} Pending`;
             lucide.createIcons();
           }
         });
