@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic & Focus Cockpit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-[#0b0f17] text-slate-100 min-h-screen">
+  <!-- Top Navigation -->
+  <nav class="border-b border-slate-800 bg-[#0f172a]/70 backdrop-blur sticky top-0 z-40 px-6 py-3.5 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="h-9 w-9 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">V</div>
+      <div>
+        <h1 class="text-sm font-semibold tracking-wide">Academic Dashboard</h1>
+        <p class="text-[11px] text-slate-400">USN: 2392608146 | Section B</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <button onclick="exportAIPrompt()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 transition-all">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        Export AI Prompt
+      </button>
+      <button onclick="toggleSettingsModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors">
+        <i data-lucide="settings" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+    <!-- Grid: Attendance & Calendar -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Attendance Card -->
+      <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
+          </h2>
+          <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Calculating...</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 mb-5">
+          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+            <span class="text-xs text-slate-400">Theory</span>
+            <div id="theoryPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+            <span class="text-xs text-slate-400">Lab</span>
+            <div id="labPct" class="text-xl font-bold mt-1 text-slate-100">--%</div>
+          </div>
+          <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+            <span class="text-xs text-slate-400">Aggregate</span>
+            <div id="aggPct" class="text-xl font-bold mt-1 text-indigo-400">--%</div>
+          </div>
+        </div>
+
+        <h3 class="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Recent Class Log</h3>
+        <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 text-xs">
+          <span class="text-slate-500">Connect Attendance CSV to view timeline</span>
+        </div>
+      </div>
+
+      <!-- Calendar Milestones -->
+      <div class="bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <h2 class="text-sm font-semibold flex items-center gap-2 mb-4">
+            <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i> Academic Milestones
+          </h2>
+          <div id="calendarList" class="space-y-3 max-h-[220px] overflow-y-auto pr-1 text-xs">
+            <span class="text-slate-500">Connect Calendar CSV to view deadlines</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice Topics & Focus Pomodoro -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- DSA / Question Bank -->
+      <div class="lg:col-span-2 bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="code-2" class="w-4 h-4 text-sky-400"></i> Practice Topics & Question Bank
+          </h2>
+          <span class="text-xs text-slate-400">External Practice Sheets</span>
+        </div>
+        <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <span class="text-slate-500">Connect Questions CSV to load topics</span>
+        </div>
+      </div>
+
+      <!-- Pomodoro Widget -->
+      <div class="bg-[#131b2e] border border-slate-800 rounded-xl p-5 shadow-sm flex flex-col items-center justify-center text-center">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Focus Cockpit</span>
+        <div id="timerDisplay" class="text-4xl font-mono font-bold tracking-tight text-white my-3">25:00</div>
+        <div class="flex gap-2">
+          <button id="timerToggle" onclick="toggleTimer()" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-all shadow-md shadow-indigo-600/20">Start</button>
+          <button onclick="resetTimer()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 transition-all">Reset</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Settings Modal for 4 CSV Links -->
+  <div id="settingsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#131b2e] border border-slate-800 rounded-xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="text-base font-semibold text-white">Google Sheet CSV Settings</h3>
+        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <p class="text-xs text-slate-400">Paste your 4 published CSV links below to link your live data.</p>
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Attendance CSV Link</label>
+          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-white" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Calendar CSV Link</label>
+          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-white" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Assignments CSV Link</label>
+          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-white" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Questions CSV Link</label>
+          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-white" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="saveSettings()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded text-xs font-semibold text-white">Save & Sync</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function toggleSettingsModal() {
+      const modal = document.getElementById('settingsModal');
+      modal.classList.toggle('hidden');
+    }
+
+    function saveSettings() {
+      localStorage.setItem('ATTENDANCE_CSV', document.getElementById('inputAttendance').value.trim());
+      localStorage.setItem('CALENDAR_CSV', document.getElementById('inputCalendar').value.trim());
+      localStorage.setItem('ASSIGNMENTS_CSV', document.getElementById('inputAssignments').value.trim());
+      localStorage.setItem('QUESTIONS_CSV', document.getElementById('inputQuestions').value.trim());
+      toggleSettingsModal();
+      loadAllData();
+    }
+
+    function initInputs() {
+      document.getElementById('inputAttendance').value = localStorage.getItem('ATTENDANCE_CSV') || '';
+      document.getElementById('inputCalendar').value = localStorage.getItem('CALENDAR_CSV') || '';
+      document.getElementById('inputAssignments').value = localStorage.getItem('ASSIGNMENTS_CSV') || '';
+      document.getElementById('inputQuestions').value = localStorage.getItem('QUESTIONS_CSV') || '';
+    }
+
+    // Pomodoro Timer
+    let timerDuration = 25 * 60;
+    let timerRemaining = timerDuration;
+    let timerInterval = null;
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerRemaining / 60).toString().padStart(2, '0');
+      const secs = (timerRemaining % 60).toString().padStart(2, '0');
+      document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timerToggle');
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.innerText = 'Start';
+      } else {
+        btn.innerText = 'Pause';
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            btn.innerText = 'Start';
+            alert('Focus session complete!');
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRemaining = timerDuration;
+      document.getElementById('timerToggle').innerText = 'Start';
+      updateTimerDisplay();
+    }
+
+    // Data Loaders
+    function loadAllData() {
+      const attUrl = localStorage.getItem('ATTENDANCE_CSV');
+      const calUrl = localStorage.getItem('CALENDAR_CSV');
+      const qUrl = localStorage.getItem('QUESTIONS_CSV');
+
+      if (attUrl) {
+        Papa.parse(attUrl, {
+          download: true,
+          complete: function(results) {
+            if (results.data && results.data.length >= 2) {
+              const headers = results.data[0];
+              const myRow = results.data[1];
+              
+              document.getElementById('theoryPct').innerText = myRow[2] || '--%';
+              document.getElementById('labPct').innerText = myRow[3] || '--%';
+              const agg = myRow[4] || '0%';
+              document.getElementById('aggPct').innerText = agg;
+
+              const aggVal = parseFloat(agg.replace('%', ''));
+              const badge = document.getElementById('bufferBadge');
+              if (aggVal >= 75) {
+                badge.innerText = 'Safe: Above 75%';
+                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium';
+              } else {
+                badge.innerText = 'Warning: Below 75%';
+                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
+              }
+
+              // Build timeline
+              const log = document.getElementById('attendanceLog');
+              log.innerHTML = '';
+              for (let i = 5; i < headers.length; i++) {
+                if (!headers[i]) continue;
+                const status = myRow[i] || '-';
+                const isP = status.trim().toUpperCase() === 'P';
+                const el = document.createElement('div');
+                el.className = `flex flex-col items-center px-2 py-1 rounded border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0`;
+                el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status}</span>`;
+                log.appendChild(el);
+              }
+            }
+          }
+        });
+      }
+
+      if (calUrl) {
+        Papa.parse(calUrl, {
+          download: true,
+          complete: function(results) {
+            const list = document.getElementById('calendarList');
+            list.innerHTML = '';
+            const rows = results.data.slice(1);
+            rows.forEach(r => {
+              if (!r[0]) return;
+              const el = document.createElement('div');
+              el.className = 'flex justify-between items-center p-2 rounded bg-slate-900/60 border border-slate-800';
+              el.innerHTML = `<div><div class="font-medium text-slate-200">${r[0]}</div><div class="text-[10px] text-slate-400">${r[1]}</div></div><span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">${r[2] || 'Event'}</span>`;
+              list.appendChild(el);
+            });
+          }
+        });
+      }
+
+      if (qUrl) {
+        Papa.parse(qUrl, {
+          download: true,
+          complete: function(results) {
+            const container = document.getElementById('topicsContainer');
+            container.innerHTML = '';
+            const rows = results.data.slice(1);
+            rows.forEach((r, idx) => {
+              if (!r[0]) return;
+              const topicName = r[0];
+              const sheetUrl = r[1] || '#';
+              const totalQ = r[2] || '0';
+              
+              const savedDone = localStorage.getItem(`topic_${idx}_done`) || 0;
+
+              const card = document.createElement('div');
+              card.className = 'p-3 bg-slate-900/60 border border-slate-800 rounded-lg flex flex-col justify-between';
+              card.innerHTML = `
+                <div>
+                  <div class="flex justify-between items-start mb-1">
+                    <span class="font-semibold text-slate-200">${topicName}</span>
+                    <a href="${sheetUrl}" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium">Open Sheet ↗</a>
+                  </div>
+                  <span class="text-[11px] text-slate-400">Total: ${totalQ} questions</span>
+                </div>
+                <div class="mt-3 flex items-center justify-between pt-2 border-t border-slate-800/80">
+                  <span class="text-slate-300">Solved: <b id="count_${idx}">${savedDone}</b> / ${totalQ}</span>
+                  <div class="flex gap-1">
+                    <button onclick="incTopic(${idx})" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 font-bold text-white text-[11px]">+1</button>
+                    <button onclick="decTopic(${idx})" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]">-1</button>
+                  </div>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+          }
+        });
+      }
+    }
+
+    function incTopic(idx) {
+      let cur = parseInt(localStorage.getItem(`topic_${idx}_done`) || '0');
+      cur++;
+      localStorage.setItem(`topic_${idx}_done`, cur);
+      document.getElementById(`count_${idx}`).innerText = cur;
+    }
+
+    function decTopic(idx) {
+      let cur = parseInt(localStorage.getItem(`topic_${idx}_done`) || '0');
+      if (cur > 0) cur--;
+      localStorage.setItem(`topic_${idx}_done`, cur);
+      document.getElementById(`count_${idx}`).innerText = cur;
+    }
+
+    function exportAIPrompt() {
+      const agg = document.getElementById('aggPct').innerText;
+      const prompt = `I am a B.Tech AIML student (USN 146). My current aggregate attendance is ${agg}. Please provide a 3-day study schedule balancing DSA practice and upcoming assignment submissions.`;
+      navigator.clipboard.writeText(prompt);
+      alert('AI Context prompt copied to clipboard!');
+    }
+
+    window.onload = () => {
+      initInputs();
+      loadAllData();
+      if (!localStorage.getItem('ATTENDANCE_CSV')) {
+        toggleSettingsModal();
+      }
+    };
+  </script>
+</body>
+</html>
