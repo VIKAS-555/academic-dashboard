@@ -15,13 +15,14 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@600;800&display=swap');
     
     body { 
       font-family: 'Plus Jakarta Sans', sans-serif; 
       background-color: #07090e;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .font-hud { font-family: 'Orbitron', sans-serif; }
     
     .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -91,6 +92,12 @@
 
     <!-- Center/Right Actions -->
     <div class="flex items-center gap-2.5">
+      <!-- JARVIS Voice Toggle -->
+      <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" title="Toggle J.A.R.V.I.S. Audio Synthesizer" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold">
+        <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-sky-400"></i>
+        <span class="hidden sm:inline" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
+      </button>
+
       <button onclick="toggleZenMode()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
         <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
         <span>Zen Mode</span>
@@ -495,6 +502,52 @@
       Notification.requestPermission();
     }
 
+    /* =========================================================================
+       J.A.R.V.I.S. NATIVE SPEECH SYNTHESIS ENGINE (100% Offline)
+       ========================================================================= */
+    let jarvisMuted = localStorage.getItem('JARVIS_VOICE_MUTED') === 'true';
+
+    function updateJarvisVoiceUI() {
+      const btn = document.getElementById('jarvisVoiceBtn');
+      const icon = document.getElementById('jarvisVoiceIcon');
+      const label = document.getElementById('jarvisVoiceLabel');
+      if (jarvisMuted) {
+        btn.className = 'px-2.5 py-1.5 rounded-xl bg-slate-800/80 text-slate-400 border border-slate-700 transition-all flex items-center gap-1.5 text-xs font-semibold';
+        icon.setAttribute('data-lucide', 'volume-x');
+        label.innerText = 'J.A.R.V.I.S. Muted';
+      } else {
+        btn.className = 'px-2.5 py-1.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold';
+        icon.setAttribute('data-lucide', 'volume-2');
+        label.innerText = 'J.A.R.V.I.S. Online';
+      }
+      lucide.createIcons();
+    }
+
+    function toggleJarvisVoice() {
+      jarvisMuted = !jarvisMuted;
+      localStorage.setItem('JARVIS_VOICE_MUTED', jarvisMuted);
+      updateJarvisVoiceUI();
+      if (!jarvisMuted) {
+        speakJarvis("J.A.R.V.I.S. voice telemetry online, sir.");
+      }
+    }
+
+    function speakJarvis(phrase) {
+      if (jarvisMuted) return;
+      if (!('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(phrase);
+      utterance.rate = 1.05;
+      utterance.pitch = 0.95;
+
+      const voices = window.speechSynthesis.getVoices();
+      const ukOrTechVoice = voices.find(v => v.lang.includes('en-GB') || v.name.includes('Daniel') || v.name.includes('Google UK English Male')) || voices[0];
+      if (ukOrTechVoice) utterance.voice = ukOrTechVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+
     // Global Keybinds
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
@@ -555,6 +608,7 @@
 
       if (newInfo.level > prevInfo.level) {
         triggerEpicCelebration(500, `LEVEL UP! REACHED LEVEL ${newInfo.level}: ${newInfo.title}`);
+        speakJarvis(`Exceptional performance, sir. You have advanced to Level ${newInfo.level}: ${newInfo.title}.`);
       }
     }
 
@@ -736,6 +790,7 @@
               addXP(100, 'Focus Session');
               logFocusSession(minsLogged, tag, subjectCategory);
               triggerEpicCelebration(100, `${minsLogged}m Focus Session Completed`);
+              speakJarvis(`Focus sprint concluded, sir. Excellent discipline. Recommending a 5-minute cognitive cool-down.`);
 
               if ("Notification" in window && Notification.permission === "granted") {
                 new Notification("Session Finished!", {
@@ -838,9 +893,8 @@
       btn.classList.remove('bg-slate-900/90', 'text-slate-300');
     }
 
-    // EPIC PARTICLE CANNON & HUD TOAST CELEBRATION
+    // EPIC CELEBRATION
     function triggerEpicCelebration(xpGained, taskTitle) {
-      // 1. Dual-side Cannon Fireworks
       const count = 220;
       const defaults = { origin: { y: 0.7 } };
 
@@ -856,10 +910,7 @@
       fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, colors: ['#6366f1', '#a855f7'] });
       fire(0.1, { spread: 120, startVelocity: 45 });
 
-      // 2. Play Level-Up Synth Fanfare
       playEpicVictorySound();
-
-      // 3. Floating Cyber HUD Toast
       showVictoryToast(xpGained, taskTitle);
     }
 
@@ -972,6 +1023,7 @@
       localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
       renderArchivedList();
       confetti({ particleCount: 50, spread: 45, origin: { y: 0.7 } });
+      speakJarvis(`Completed objectives swept to archives, sir. Deck cleared.`);
     }
 
     function toggleArchiveModal() {
@@ -1085,6 +1137,7 @@
 
       document.getElementById('taskTitleInput').value = '';
       saveTodos();
+      speakJarvis(`Directive queued: ${title}`);
     }
 
     function toggleTask(id) {
@@ -1095,6 +1148,7 @@
           const xpGain = task.priority === 'High' ? 75 : (task.priority === 'Medium' ? 50 : 30);
           addXP(xpGain, 'Task Completed');
           triggerEpicCelebration(xpGain, task.title);
+          speakJarvis(`Objective neutralized, sir. ${xpGain} XP added to your matrix.`);
         }
         saveTodos();
       }
@@ -1266,6 +1320,7 @@
       }
 
       navigator.clipboard.writeText(text);
+      speakJarvis("Evening debrief exported to clipboard, sir.");
       alert('📋 Daily Debrief formatted in Markdown copied to clipboard!');
     }
 
@@ -1339,6 +1394,10 @@
     }
 
     window.onload = () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
+      updateJarvisVoiceUI();
       checkWeeklyAutoReset();
       renderPlayerXP();
       renderTodos();
@@ -1348,10 +1407,6 @@
       renderHeatmapAndDistribution();
       renderDailyDebrief();
     };
-    // Register Offline Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
-}
   </script>
 </body>
 </html>
