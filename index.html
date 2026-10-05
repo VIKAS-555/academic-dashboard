@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
   <title>Academic Dashboard | Vikas N</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -18,9 +20,7 @@
       0%, 100% { border-color: rgba(244, 63, 94, 0.4); box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
       50% { border-color: rgba(244, 63, 94, 0.9); box-shadow: 0 0 25px rgba(244, 63, 94, 0.4); }
     }
-    .urgent-assignment {
-      animation: pulseGlow 2.5s infinite;
-    }
+    .urgent-assignment { animation: pulseGlow 2.5s infinite; }
   </style>
 </head>
 <body class="bg-[#0b0f17] text-slate-100 min-h-screen pb-14 selection:bg-indigo-500 selection:text-white">
@@ -69,16 +69,43 @@
     <!-- Row 1: Attendance Overview & Milestones -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       
-      <!-- Attendance Card (7 cols) -->
+      <!-- Attendance Card with What-If Simulator (7 cols) -->
       <div class="lg:col-span-7 bg-[#131b2e] border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
         <div>
-          <div class="flex flex-wrap justify-between items-center gap-2 mb-5">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
             <h2 class="text-sm font-semibold flex items-center gap-2">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
             </h2>
             <div class="flex items-center gap-2">
+              <button onclick="toggleSimulator()" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 font-semibold transition-all flex items-center gap-1">
+                <i data-lucide="sliders" class="w-3 h-3"></i> What-If Simulator
+              </button>
               <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-medium">Calculating...</span>
               <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Safe: Above 75%</span>
+            </div>
+          </div>
+
+          <!-- Attendance What-If Simulator Drawer (Expandable) -->
+          <div id="simulatorDrawer" class="hidden mb-4 p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px]">
+                <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Attendance Margin Simulator
+              </span>
+              <button onclick="resetSimulator()" class="text-[10px] text-slate-400 hover:text-white underline">Reset</button>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-slate-400 block mb-1">Simulate Next Attended Classes (+P):</label>
+                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-1">Simulate Next Missed Classes (+A):</label>
+                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
+              </div>
+            </div>
+            <div id="simResultBox" class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700 flex justify-between items-center">
+              <span class="text-slate-300">Simulated Aggregate:</span>
+              <span id="simResultPct" class="font-mono font-bold text-sm text-indigo-400">--%</span>
             </div>
           </div>
 
@@ -162,14 +189,14 @@
       </div>
     </div>
 
-    <!-- Row 2: Practice Topics & Question Bank -->
+    <!-- Row 2: Practice Topics & Question Bank with Doubt Queue Drawers -->
     <div class="bg-[#131b2e] border border-slate-800 rounded-2xl p-6 shadow-xl">
       <div class="flex justify-between items-center mb-5">
         <div>
           <h2 class="text-sm font-semibold flex items-center gap-2">
             <i data-lucide="code-2" class="w-4 h-4 text-sky-400"></i> Practice Topics & Question Bank
           </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Directly synced to your Google Sheets checkboxes</p>
+          <p class="text-xs text-slate-400 mt-0.5">Click any card's doubt counter to view your active doubt queue</p>
         </div>
         <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-medium">Live Dropdown Sync</span>
       </div>
@@ -179,17 +206,16 @@
       </div>
     </div>
 
-    <!-- Row 3: Upgraded Assignments & Submissions with Filters & Urgency Badges -->
+    <!-- Row 3: Upgraded Assignments & Submissions -->
     <div class="bg-[#131b2e] border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div>
           <h2 class="text-sm font-semibold flex items-center gap-2">
             <i data-lucide="file-check-2" class="w-4 h-4 text-amber-400"></i> Assignments & Lab Submissions
           </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Coursework deadlines with automatic urgency warnings and direct submission links</p>
+          <p class="text-xs text-slate-400 mt-0.5">Coursework deadlines with urgency warnings and submission links</p>
         </div>
 
-        <!-- Filter Buttons -->
         <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs font-semibold">
           <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all">All</button>
           <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="filterPendingBadge">0</span>)</button>
@@ -204,14 +230,28 @@
 
   </main>
 
-  <!-- Settings Modal -->
+  <!-- Settings Modal (With Backup & Restore) -->
   <div id="settingsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#131b2e] border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
-        <h3 class="text-base font-semibold text-white">Google Sheet CSV Settings</h3>
+        <h3 class="text-base font-semibold text-white">Dashboard Settings & Backup</h3>
         <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
-      <p class="text-xs text-slate-400">Paste your 4 published CSV links below to link your live data.</p>
+
+      <!-- Backup / Restore Tools -->
+      <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2">
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Cross-Device Data Backup</span>
+        <p class="text-[11px] text-slate-400">Export or restore your focus history, tasks, and XP to sync between devices.</p>
+        <div class="flex gap-2 pt-1">
+          <button onclick="exportAllDataBackup()" class="flex-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Backup (JSON)
+          </button>
+          <label class="flex-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Restore File
+            <input type="file" id="importBackupInput" accept=".json" onchange="importAllDataBackup(event)" class="hidden" />
+          </label>
+        </div>
+      </div>
       
       <div class="space-y-3 text-xs">
         <div>
@@ -249,7 +289,6 @@
       }
     });
 
-    // Sync XP Rank into Navbar
     function syncNavXP() {
       const xp = parseInt(localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150');
       const level = Math.floor(xp / 500) + 1;
@@ -266,6 +305,49 @@
       document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
+    // Backup & Restore
+    function exportAllDataBackup() {
+      const backupData = {
+        xp: localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150',
+        todos: localStorage.getItem('ACADEMIC_DASH_TODOS') || '[]',
+        sessions: localStorage.getItem('ACADEMIC_DASH_FOCUS_SESSIONS') || '[]',
+        attendanceUrl: localStorage.getItem('ATTENDANCE_CSV') || '',
+        calendarUrl: localStorage.getItem('CALENDAR_CSV') || '',
+        assignmentsUrl: localStorage.getItem('ASSIGNMENTS_CSV') || '',
+        questionsUrl: localStorage.getItem('QUESTIONS_CSV') || ''
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `academic-cockpit-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importAllDataBackup(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.xp) localStorage.setItem('ACADEMIC_DASH_PLAYER_XP', data.xp);
+          if (data.todos) localStorage.setItem('ACADEMIC_DASH_TODOS', data.todos);
+          if (data.sessions) localStorage.setItem('ACADEMIC_DASH_FOCUS_SESSIONS', data.sessions);
+          if (data.attendanceUrl) localStorage.setItem('ATTENDANCE_CSV', data.attendanceUrl);
+          if (data.calendarUrl) localStorage.setItem('CALENDAR_CSV', data.calendarUrl);
+          if (data.assignmentsUrl) localStorage.setItem('ASSIGNMENTS_CSV', data.assignmentsUrl);
+          if (data.questionsUrl) localStorage.setItem('QUESTIONS_CSV', data.questionsUrl);
+          alert('✅ Backup restored successfully! Refreshing cockpit...');
+          window.location.reload();
+        } catch (err) {
+          alert('Failed to parse backup file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
     function saveSettings() {
       localStorage.setItem('ATTENDANCE_CSV', document.getElementById('inputAttendance').value.trim());
       localStorage.setItem('CALENDAR_CSV', document.getElementById('inputCalendar').value.trim());
@@ -280,6 +362,36 @@
       document.getElementById('inputCalendar').value = localStorage.getItem('CALENDAR_CSV') || '';
       document.getElementById('inputAssignments').value = localStorage.getItem('ASSIGNMENTS_CSV') || '';
       document.getElementById('inputQuestions').value = localStorage.getItem('QUESTIONS_CSV') || '';
+    }
+
+    // What-If Simulator Engine
+    let baseAttended = 0;
+    let baseTotal = 0;
+
+    function toggleSimulator() {
+      document.getElementById('simulatorDrawer').classList.toggle('hidden');
+    }
+
+    function resetSimulator() {
+      document.getElementById('simAddPresent').value = 0;
+      document.getElementById('simAddAbsent').value = 0;
+      runSimulation();
+    }
+
+    function runSimulation() {
+      const addP = parseInt(document.getElementById('simAddPresent').value) || 0;
+      const addA = parseInt(document.getElementById('simAddAbsent').value) || 0;
+      const newAttended = baseAttended + addP;
+      const newTotal = baseTotal + addP + addA;
+      if (newTotal === 0) return;
+      const simPct = ((newAttended / newTotal) * 100).toFixed(1);
+      const res = document.getElementById('simResultPct');
+      res.innerText = `${simPct}%`;
+      if (simPct >= 75) {
+        res.className = 'font-mono font-bold text-sm text-emerald-400';
+      } else {
+        res.className = 'font-mono font-bold text-sm text-rose-400';
+      }
     }
 
     function getDaysRemaining(targetDateStr) {
@@ -320,7 +432,6 @@
       }
     }
 
-    // State cached for AI Prompt Exporter
     let cachedAttendance = {};
     let cachedMilestones = {};
     let cachedTopics = [];
@@ -393,8 +504,12 @@
         `;
         container.appendChild(card);
       });
-
       lucide.createIcons();
+    }
+
+    function toggleDoubtQueue(topicIdx) {
+      const drawer = document.getElementById(`doubtDrawer-${topicIdx}`);
+      if (drawer) drawer.classList.toggle('hidden');
     }
 
     function loadAllData() {
@@ -442,6 +557,9 @@
                 log.appendChild(el);
               }
 
+              baseAttended = attendedClasses;
+              baseTotal = totalClasses;
+
               const aggVal = parseFloat(aggStr.replace('%', '')) || 0;
               const badge = document.getElementById('bufferBadge');
               const bunkBadge = document.getElementById('bunkCalculatorBadge');
@@ -452,13 +570,15 @@
               if (aggVal >= 75) {
                 badge.innerText = 'Safe: Above 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium';
-                bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠️ Zero buffer';
+                bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠️️ Zero buffer';
                 bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold';
+                document.title = `(${aggStr}) Cockpit | Vikas N`;
               } else {
                 badge.innerText = 'Warning: Below 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
                 bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
                 bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold';
+                document.title = `⚠️️ (${aggStr}) Below 75% | Cockpit`;
               }
 
               const theoryVal = parseFloat(theoryStr.replace('%', ''));
@@ -472,7 +592,6 @@
                 document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-1' : 'text-[10px] text-rose-400 mt-1 font-semibold';
               }
 
-              // Cache for AI Exporter
               cachedAttendance = {
                 theory: theoryStr,
                 lab: labStr,
@@ -550,9 +669,6 @@
               document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
               document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
               cachedMilestones.holiday = `${nextHoliday.name} (${formatDaysBadge(nextHoliday.days)})`;
-            } else {
-              document.getElementById('nextHolidayName').innerText = 'No upcoming holidays';
-              document.getElementById('nextHolidayCountdown').innerText = '--';
             }
 
             if (nextEvent) {
@@ -564,7 +680,7 @@
         });
       }
 
-      // 3. Questions Bank
+      // 3. Question Bank with Doubt Queue Drawer
       if (qUrl) {
         Papa.parse(qUrl + (qUrl.includes('?') ? buster : '?' + buster), {
           download: true,
@@ -574,7 +690,7 @@
             const rows = results.data.slice(1);
             cachedTopics = [];
 
-            rows.forEach((r) => {
+            rows.forEach((r, idx) => {
               if (!r[0]) return;
               const topicName = r[0];
               const sheetUrl = r[1] || '#';
@@ -612,14 +728,23 @@
                       <div class="font-bold text-xs">${completedQ}</div>
                       <div class="text-[9px] text-slate-400">Done</div>
                     </div>
-                    <div class="bg-amber-950/40 border border-amber-800/60 text-amber-300 p-1.5 rounded-lg">
+                    <button onclick="toggleDoubtQueue(${idx})" class="bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800/60 text-amber-300 p-1.5 rounded-lg transition-colors cursor-pointer">
                       <div class="font-bold text-xs">${doubtQ}</div>
-                      <div class="text-[9px] text-slate-400">Doubt</div>
-                    </div>
+                      <div class="text-[9px] text-slate-400 flex items-center justify-center gap-0.5">Doubt ▾</div>
+                    </button>
                     <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1.5 rounded-lg">
                       <div class="font-bold text-xs">${notAttemptedQ}</div>
                       <div class="text-[9px] text-slate-400">Pending</div>
                     </div>
+                  </div>
+
+                  <!-- Expandable Doubt Queue Drawer -->
+                  <div id="doubtDrawer-${idx}" class="hidden mt-2.5 p-2 rounded-lg bg-amber-950/20 border border-amber-500/20 text-[10px] space-y-1">
+                    <div class="font-semibold text-amber-300 flex items-center justify-between">
+                      <span>Doubt Queue (${doubtQ})</span>
+                      <a href="${sheetUrl}" target="_blank" class="underline">View in Sheet</a>
+                    </div>
+                    <p class="text-slate-400 italic">Review flagged questions in your linked sheet to resolve edge cases.</p>
                   </div>
                 </div>
 
@@ -672,7 +797,6 @@
       }
     }
 
-    // Upgraded Context-Aware AI Study Prompt Exporter
     function exportAIPrompt() {
       const agg = cachedAttendance.aggregate || document.getElementById('aggPct').innerText;
       const theory = cachedAttendance.theory || document.getElementById('theoryPct').innerText;
