@@ -23,13 +23,11 @@
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     
-    /* Smooth Scrollbar */
     .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 6px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-    /* Glass Cards */
     .glass-panel {
       background: rgba(13, 17, 27, 0.75);
       backdrop-filter: blur(16px);
@@ -41,25 +39,18 @@
       border-color: rgba(99, 102, 241, 0.25);
     }
 
-    /* Ambient Pulsing Glow */
     @keyframes auraBreathe {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.08); }
     }
-    .ambient-glow {
-      animation: auraBreathe 8s ease-in-out infinite;
-    }
+    .ambient-glow { animation: auraBreathe 8s ease-in-out infinite; }
 
-    /* Active Timer Aura */
     @keyframes timerPulse {
       0%, 100% { filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4)); }
       50% { filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.85)); }
     }
-    .timer-active-aura {
-      animation: timerPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
+    .timer-active-aura { animation: timerPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-    /* Shimmer Effect on Badges */
     @keyframes shimmerGlow {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
@@ -69,6 +60,7 @@
       background-size: 200% 100%;
       animation: shimmerGlow 4s infinite linear;
     }
+    .timer-ring { transition: stroke-dashoffset 0.8s ease-in-out; }
   </style>
 </head>
 <body class="text-slate-100 min-h-screen pb-16 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
@@ -562,9 +554,7 @@
       renderPlayerXP();
 
       if (newInfo.level > prevInfo.level) {
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
-        playLevelUpSound();
-        alert(`🌟 LEVEL UP! You reached Level ${newInfo.level}: ${newInfo.title}!`);
+        triggerEpicCelebration(500, `LEVEL UP! REACHED LEVEL ${newInfo.level}: ${newInfo.title}`);
       }
     }
 
@@ -738,15 +728,6 @@
               clearInterval(timerInterval);
               timerInterval = null;
               resetTimerControlsUI();
-              playCelebrationSound();
-              confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-
-              if ("Notification" in window && Notification.permission === "granted") {
-                new Notification("Session Finished!", {
-                  body: "Great job! Time to take a stretch and log your wins.",
-                  icon: "https://cdn-icons-png.flaticon.com/512/906/906334.png"
-                });
-              }
               
               const minsLogged = Math.round(timerTotalSeconds / 60);
               const tag = document.getElementById('timerSubtext').innerText;
@@ -754,7 +735,14 @@
               
               addXP(100, 'Focus Session');
               logFocusSession(minsLogged, tag, subjectCategory);
-              alert(`🎉 Focus Session Completed! +100 XP gained.`);
+              triggerEpicCelebration(100, `${minsLogged}m Focus Session Completed`);
+
+              if ("Notification" in window && Notification.permission === "granted") {
+                new Notification("Session Finished!", {
+                  body: "Great job! Time to take a stretch and log your wins.",
+                  icon: "https://cdn-icons-png.flaticon.com/512/906/906334.png"
+                });
+              }
             }
           }
         }, 1000);
@@ -779,7 +767,7 @@
       resetTimerControlsUI();
     }
 
-    // Synthesizer
+    // Synthesizer Audio
     let audioCtx = null;
     let activeAmbientNodes = {};
 
@@ -850,40 +838,76 @@
       btn.classList.remove('bg-slate-900/90', 'text-slate-300');
     }
 
-    function playCelebrationSound() {
+    // EPIC PARTICLE CANNON & HUD TOAST CELEBRATION
+    function triggerEpicCelebration(xpGained, taskTitle) {
+      // 1. Dual-side Cannon Fireworks
+      const count = 220;
+      const defaults = { origin: { y: 0.7 } };
+
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55, colors: ['#6366f1', '#10b981', '#38bdf8'] });
+      fire(0.2, { spread: 60, colors: ['#f59e0b', '#ec4899', '#ffffff'] });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, colors: ['#6366f1', '#a855f7'] });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+
+      // 2. Play Level-Up Synth Fanfare
+      playEpicVictorySound();
+
+      // 3. Floating Cyber HUD Toast
+      showVictoryToast(xpGained, taskTitle);
+    }
+
+    function showVictoryToast(xp, title) {
+      const existing = document.getElementById('victoryToastHUD');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.id = 'victoryToastHUD';
+      toast.className = 'fixed bottom-8 right-8 z-50 bg-[#0e1422]/95 border border-indigo-500/40 rounded-2xl p-4 shadow-2xl backdrop-blur-xl flex items-center gap-3.5 transform translate-y-12 opacity-0 transition-all duration-300';
+      toast.innerHTML = `
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/40 flex-shrink-0 animate-bounce">
+          <i data-lucide="zap" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-emerald-400">+${xp} XP GAINED · TASK CRUSHED</div>
+          <div class="text-xs font-bold text-slate-100 truncate max-w-[220px]">${title}</div>
+        </div>
+      `;
+      document.body.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-12', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-12', 'opacity-0');
+        setTimeout(() => toast.remove(), 400);
+      }, 3400);
+    }
+
+    function playEpicVictorySound() {
       try {
         const ctx = getAudioContext();
         const now = ctx.currentTime;
-        [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
+        [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((f, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(f, now + idx * 0.08);
-          gain.gain.setValueAtTime(0.2, now + idx * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+          osc.frequency.setValueAtTime(f, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.35);
           osc.connect(gain);
           gain.connect(ctx.destination);
-          osc.start(now + idx * 0.08);
-          osc.stop(now + idx * 0.08 + 0.35);
-        });
-      } catch (e) {}
-    }
-
-    function playLevelUpSound() {
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-        [440, 554.37, 659.25, 880, 1108.73].forEach((f, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(f, now + idx * 0.1);
-          gain.gain.setValueAtTime(0.15, now + idx * 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.35);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now + idx * 0.1);
-          osc.stop(now + idx * 0.1 + 0.4);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.4);
         });
       } catch (e) {}
     }
@@ -1068,10 +1092,9 @@
       if (task) {
         task.completed = !task.completed;
         if (task.completed) {
-          playCelebrationSound();
-          confetti({ particleCount: 65, spread: 55, origin: { y: 0.7 } });
           const xpGain = task.priority === 'High' ? 75 : (task.priority === 'Medium' ? 50 : 30);
           addXP(xpGain, 'Task Completed');
+          triggerEpicCelebration(xpGain, task.title);
         }
         saveTodos();
       }
