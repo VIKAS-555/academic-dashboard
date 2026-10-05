@@ -10,12 +10,13 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@600;800&display=swap');
     body { 
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #07090e;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .font-hud { font-family: 'Orbitron', sans-serif; }
     
     .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -32,13 +33,29 @@
       border-color: rgba(99, 102, 241, 0.25);
     }
 
+    /* Ambient Pulsing Glow */
     @keyframes auraBreathe {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.08); }
     }
-    .ambient-glow {
-      animation: auraBreathe 8s ease-in-out infinite;
+    .ambient-glow { animation: auraBreathe 8s ease-in-out infinite; }
+
+    /* Arc Reactor Spin & Glow */
+    @keyframes arcSpinClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
+    @keyframes arcSpinCounter {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes reactorPulse {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6)); }
+      50% { filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.95)); }
+    }
+    .arc-spin-cw { animation: arcSpinClockwise 12s linear infinite; }
+    .arc-spin-ccw { animation: arcSpinCounter 8s linear infinite; }
+    .reactor-pulse { animation: reactorPulse 3s ease-in-out infinite; }
 
     @keyframes pulseGlow {
       0%, 100% { border-color: rgba(244, 63, 94, 0.4); box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
@@ -97,12 +114,12 @@
     <!-- Row 1: Attendance Overview & Milestones -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       
-      <!-- Attendance Card with What-If Simulator (7 cols) -->
+      <!-- Attendance Card with Marvel ARC REACTOR Tactical HUD (7 cols) -->
       <div class="lg:col-span-7 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
         <div>
           <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
             <h2 class="text-sm font-semibold flex items-center gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
             </h2>
             <div class="flex items-center gap-2">
               <button onclick="toggleSimulator()" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 font-semibold transition-all flex items-center gap-1 hover:-translate-y-0.5">
@@ -137,7 +154,8 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-3 gap-3 mb-5 text-center">
+          <!-- Top Attendance Metric Badges -->
+          <div class="grid grid-cols-3 gap-3 mb-4 text-center">
             <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
               <span class="text-xs text-slate-400">Theory</span>
               <div id="theoryPct" class="text-2xl font-bold mt-1 text-slate-100">--%</div>
@@ -154,6 +172,49 @@
               <div id="aggMargin" class="text-[10px] text-slate-400 mt-1">Margin: --</div>
             </div>
           </div>
+
+          <!-- MARVEL ARC REACTOR TACTICAL HUD (Fills the center space) -->
+          <div class="relative bg-gradient-to-r from-sky-950/20 via-slate-900/80 to-slate-900/40 border border-sky-500/20 rounded-2xl p-4 mb-4 backdrop-blur-md shadow-inner flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <!-- Holographic Animated Arc Reactor -->
+              <div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0 reactor-pulse">
+                <!-- Outer rotating gear -->
+                <svg class="w-16 h-16 absolute arc-spin-cw text-sky-400/50" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" stroke-dasharray="8 6" fill="transparent"></circle>
+                </svg>
+                <!-- Inner counter-rotating ring -->
+                <svg class="w-12 h-12 absolute arc-spin-ccw text-cyan-300/70" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="3" stroke-dasharray="14 10" fill="transparent"></circle>
+                  <polygon points="50,15 62,35 83,38 68,54 72,75 50,65 28,75 32,54 17,38 38,35" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-sky-500/30"></polygon>
+                </svg>
+                <!-- Glowing Core Center -->
+                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-400 to-cyan-200 shadow-[0_0_15px_#38bdf8] flex items-center justify-center">
+                  <div class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></div>
+                </div>
+              </div>
+
+              <!-- J.A.R.V.I.S. Tactical Readout -->
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-hud font-bold tracking-widest text-sky-400 flex items-center gap-1.5 uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> Stark Defense Protocol
+                  </span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-300 border border-sky-500/30 font-mono">MARK-85</span>
+                </div>
+                <h4 id="jarvisStatusHeadline" class="text-xs font-bold text-slate-100 mt-0.5 tracking-wide">ARC REACTOR: ONLINE</h4>
+                <p id="jarvisStatusDetail" class="text-[11px] text-slate-400 font-mono mt-0.5 leading-tight">
+                  J.A.R.V.I.S.: Shields operating at 73%. +11 lectures required to reach optimum 75% defense threshold.
+                </p>
+              </div>
+            </div>
+
+            <!-- Protocol Badge -->
+            <div class="hidden sm:flex flex-col items-end flex-shrink-0 text-right">
+              <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold font-mono">Core Power</span>
+              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-sky-300">98.4%</span>
+            </div>
+          </div>
+
         </div>
 
         <div>
@@ -590,18 +651,29 @@
               const aggMarginInfo = calculateMargin(attendedClasses, totalClasses);
               document.getElementById('aggMargin').innerText = aggMarginInfo.text;
 
+              const headline = document.getElementById('jarvisStatusHeadline');
+              const detail = document.getElementById('jarvisStatusDetail');
+
               if (aggVal >= 75) {
                 badge.innerText = 'Safe: Above 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium';
                 bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠ Zero buffer';
                 bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold';
                 document.title = `(${aggStr}) Cockpit | Vikas N`;
+
+                headline.innerText = 'J.A.R.V.I.S.: DEFENSE SHIELDS OPTIMAL';
+                headline.className = 'text-xs font-bold text-emerald-300 mt-0.5 tracking-wide';
+                detail.innerText = `All academic protocols nominal at ${aggStr}. Arc reactor buffer: ${aggMarginInfo.text}.`;
               } else {
                 badge.innerText = 'Warning: Below 75%';
                 badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
                 bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
                 bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold';
                 document.title = `⚠ (${aggStr}) Below 75% | Cockpit`;
+
+                headline.innerText = `J.A.R.V.I.S.: DEFICIT DETECTED (${aggStr})`;
+                headline.className = 'text-xs font-bold text-rose-300 mt-0.5 tracking-wide';
+                detail.innerText = `Warning sir: Shields depleted below 75%. You must attend the next ${aggMarginInfo.count} classes to restore equilibrium.`;
               }
 
               const theoryVal = parseFloat(theoryStr.replace('%', ''));
