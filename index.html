@@ -5,31 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#07090e" />
-  <title>Ultimate Productivity Cockpit | Vikas N</title>
-  <!-- Tailwind CSS -->
+  <title>Academic Dashboard | Vikas N</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap');
-    
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
     body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #07090e;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
     
-    /* Smooth Scrollbar */
     .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-    /* Glass Cards */
     .glass-panel {
       background: rgba(13, 17, 27, 0.75);
       backdrop-filter: blur(16px);
@@ -41,7 +32,6 @@
       border-color: rgba(99, 102, 241, 0.25);
     }
 
-    /* Ambient Pulsing Glow */
     @keyframes auraBreathe {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.08); }
@@ -50,1280 +40,835 @@
       animation: auraBreathe 8s ease-in-out infinite;
     }
 
-    /* Active Timer Aura */
-    @keyframes timerPulse {
-      0%, 100% { filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4)); }
-      50% { filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.85)); }
+    @keyframes pulseGlow {
+      0%, 100% { border-color: rgba(244, 63, 94, 0.4); box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
+      50% { border-color: rgba(244, 63, 94, 0.9); box-shadow: 0 0 25px rgba(244, 63, 94, 0.4); }
     }
-    .timer-active-aura {
-      animation: timerPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    /* Shimmer Effect on Badges */
-    @keyframes shimmerGlow {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    .badge-shimmer {
-      background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.25) 50%, rgba(99, 102, 241, 0.1) 100%);
-      background-size: 200% 100%;
-      animation: shimmerGlow 4s infinite linear;
-    }
+    .urgent-assignment { animation: pulseGlow 2.5s infinite; }
   </style>
 </head>
-<body class="text-slate-100 min-h-screen pb-16 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+<body class="text-slate-100 min-h-screen pb-14 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
   <!-- Background Ambient Glow Orbs -->
-  <div class="fixed top-[-10%] left-[20%] w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none ambient-glow -z-10"></div>
-  <div class="fixed bottom-[-10%] right-[10%] w-[550px] h-[550px] rounded-full bg-emerald-600/10 blur-[140px] pointer-events-none ambient-glow -z-10" style="animation-delay: 4s;"></div>
+  <div class="fixed top-[-10%] left-[15%] w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none ambient-glow -z-10"></div>
+  <div class="fixed bottom-[-10%] right-[15%] w-[550px] h-[550px] rounded-full bg-violet-600/10 blur-[140px] pointer-events-none ambient-glow -z-10" style="animation-delay: 4s;"></div>
 
-  <!-- Top Navigation Bar & RPG XP Tracker -->
+  <!-- Top Navigation -->
   <nav class="border-b border-white/[0.06] bg-[#07090e]/80 backdrop-blur-xl sticky top-0 z-40 px-4 md:px-8 py-3.5 flex flex-wrap justify-between items-center gap-3">
     <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30 transform hover:scale-105 transition-transform duration-200">
-        <i data-lucide="zap" class="w-5 h-5"></i>
-      </div>
+      <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">V</div>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-sm font-bold tracking-wide">Focus Cockpit</h1>
-          <span id="playerRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full badge-shimmer text-indigo-300 border border-indigo-500/30">Lvl 1 · Code Novice</span>
+          <h1 class="text-sm font-bold tracking-wide">Academic Dashboard</h1>
+          <span id="navRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Lvl 1 · Code Novice</span>
         </div>
-        <div class="flex items-center gap-2 mt-0.5">
-          <div class="w-28 bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-            <div id="playerXpBar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-700 ease-out" style="width: 20%"></div>
-          </div>
-          <span id="playerXpText" class="text-[10px] text-slate-400 font-mono">100 / 500 XP</span>
-        </div>
+        <p class="text-[11px] text-slate-400">USN: 2392608146 | Section B &bull; AIML</p>
       </div>
     </div>
 
-    <!-- Center/Right Actions -->
+    <!-- Navigation Switcher & Tools -->
     <div class="flex items-center gap-2.5">
-      <button onclick="toggleZenMode()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
-        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-        <span>Zen Mode</span>
-        <span class="text-[9px] bg-indigo-900/60 text-indigo-300 px-1 py-0.2 rounded border border-indigo-700/50">F</span>
-      </button>
-
       <div class="flex items-center bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/25 flex items-center gap-1.5">
           <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
           <span>Dashboard</span>
-          <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400">1</span>
+          <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200">1</span>
         </a>
-        <a href="productivity.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/25 flex items-center gap-1.5">
-          <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-300"></i>
+        <a href="productivity.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
+          <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400"></i>
           <span>Productivity</span>
-          <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200">2</span>
+          <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400">2</span>
         </a>
       </div>
+
+      <button onclick="exportAIPrompt()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <span>Export AI Prompt</span>
+      </button>
+
+      <button onclick="toggleSettingsModal()" class="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/[0.06] transition-colors border border-transparent hover:border-white/[0.08]">
+        <i data-lucide="settings" class="w-4 h-4"></i>
+      </button>
     </div>
   </nav>
 
   <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
-    <!-- Mindset & Daily Spark Banner -->
-    <div class="relative bg-gradient-to-r from-indigo-950/30 via-slate-900/60 to-slate-900/40 border border-indigo-500/20 rounded-2xl px-5 py-3.5 backdrop-blur-md shadow-lg flex items-center justify-between gap-4 transition-all duration-300 hover:border-indigo-500/40">
-      <div class="flex items-center gap-3">
-        <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex-shrink-0">
-          <i data-lucide="quote" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <p id="mindsetQuoteText" class="text-xs md:text-sm text-slate-200 font-medium italic">"We are what we repeatedly do. Excellence, then, is not an act, but a habit."</p>
-          <span id="mindsetQuoteAuthor" class="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">— Aristotle</span>
-        </div>
-      </div>
-      <button onclick="cycleQuote()" title="Next spark" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/80 transition-colors flex-shrink-0">
-        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-      </button>
-    </div>
-
-    <!-- Top Grid: Focus Timers & Spotify Command Center -->
+    <!-- Row 1: Attendance Overview & Milestones -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-
-      <!-- Focus Timer Suite (7 cols) -->
+      
+      <!-- Attendance Card with What-If Simulator (7 cols) -->
       <div class="lg:col-span-7 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
         <div>
           <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-            <div class="flex items-center gap-2">
-              <span class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                <i data-lucide="timer" class="w-4 h-4"></i>
-              </span>
-              <h2 class="text-sm font-semibold tracking-wide" id="timerModeTitle">Pomodoro Focus Timer</h2>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <select id="sessionSubjectCategory" class="bg-slate-900/90 border border-white/[0.08] text-indigo-300 rounded-lg px-2.5 py-1 text-xs font-semibold outline-none focus:border-indigo-500">
-                <option value="DSA">💻 DSA Practice</option>
-                <option value="Theory">📚 College Theory</option>
-                <option value="Lab">🧪 Lab Coding</option>
-                <option value="Personal">⚡ Core Review</option>
-              </select>
-
-              <div class="flex bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-                <button onclick="setTimerTab('pomo')" id="tabBtnPomo" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm transition-all">Pomodoro</button>
-                <button onclick="setTimerTab('custom')" id="tabBtnCustom" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Custom</button>
-                <button onclick="setTimerTab('stopwatch')" id="tabBtnStopwatch" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Stopwatch</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Timer Clock Display with Floating Ring -->
-          <div class="flex flex-col items-center justify-center my-3 relative">
-            <div id="timerContainerRing" class="relative w-56 h-56 flex items-center justify-center transition-all duration-500">
-              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" class="text-slate-800/60 fill-transparent"></circle>
-                <circle id="timerProgressCircle" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round" class="text-indigo-500 fill-transparent timer-ring transition-all duration-700 ease-out"></circle>
-              </svg>
-              <div class="absolute flex flex-col items-center justify-center text-center">
-                <span id="timerDisplay" class="text-5xl font-mono font-extrabold tracking-tight text-white drop-shadow-md">25:00</span>
-                <span id="timerSubtext" class="text-[11px] text-indigo-400 uppercase tracking-widest font-semibold mt-1">Deep Work</span>
-              </div>
-            </div>
-
-            <!-- Custom Duration Settings -->
-            <div id="customInputsBar" class="hidden flex items-center gap-2 mt-4 bg-slate-900/80 border border-white/[0.08] p-2 rounded-xl text-xs">
-              <span class="text-slate-400 pl-1 font-medium">Duration:</span>
-              <input type="number" id="customMinutesInput" value="45" min="1" max="180" class="w-14 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white font-mono text-center outline-none focus:border-indigo-500" />
-              <span class="text-slate-400">mins</span>
-              <input type="text" id="customSessionTag" placeholder="Tag (e.g. Java Loops)" class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-white text-xs outline-none focus:border-indigo-500 placeholder-slate-500" />
-              <button onclick="applyCustomDuration()" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded font-medium transition-all">Set</button>
-            </div>
-
-            <!-- Pomodoro Presets -->
-            <div id="pomoPresetsBar" class="flex flex-wrap justify-center gap-2 mt-4 text-xs font-medium">
-              <button onclick="setPomodoroPreset(25, 'Deep Work')" class="px-3 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-indigo-300 border border-indigo-500/20 hover:border-indigo-500/40 transition-all hover:-translate-y-0.5">25m Work</button>
-              <button onclick="setPomodoroPreset(50, 'Extended Sprint')" class="px-3 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-indigo-300 border border-indigo-500/20 hover:border-indigo-500/40 transition-all hover:-translate-y-0.5">50m Sprint</button>
-              <button onclick="setPomodoroPreset(5, 'Short Rest')" class="px-3 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/40 transition-all hover:-translate-y-0.5">5m Rest</button>
-              <button onclick="setPomodoroPreset(15, 'Long Rest')" class="px-3 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] text-emerald-400 border border-emerald-500/20 hover:border-emerald-500/40 transition-all hover:-translate-y-0.5">15m Rest</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="flex items-center justify-center gap-3 pt-4 border-t border-white/[0.06]">
-          <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="px-7 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 flex items-center gap-2 active:scale-95">
-            <i data-lucide="play" id="mainTimerIcon" class="w-4 h-4 fill-white"></i>
-            <span id="mainTimerBtnText">Start Session</span>
-          </button>
-          <button onclick="resetMainTimer()" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold transition-all border border-white/[0.06] hover:border-white/[0.1] flex items-center gap-1.5">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            Reset
-          </button>
-        </div>
-      </div>
-
-      <!-- Spotify & Audio Lounge (5 cols) -->
-      <div class="lg:col-span-5 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
-        <div>
-          <div class="flex justify-between items-center mb-3">
             <h2 class="text-sm font-semibold flex items-center gap-2">
-              <i data-lucide="music-2" class="w-4 h-4 text-emerald-400"></i> Study Beats & Audio Lounge
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
             </h2>
-            <span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Desktop App Ready
-            </span>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleSimulator()" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 font-semibold transition-all flex items-center gap-1 hover:-translate-y-0.5">
+                <i data-lucide="sliders" class="w-3 h-3"></i> What-If Simulator
+              </button>
+              <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-white/[0.08] text-slate-300 font-medium">Calculating...</span>
+              <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Safe: Above 75%</span>
+            </div>
           </div>
 
-          <!-- Native Spotify Launcher Card -->
-          <div class="rounded-xl border border-emerald-500/25 bg-emerald-950/20 backdrop-blur p-4 space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <div class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <i data-lucide="headphones" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-slate-100">Native Spotify Streamer</h4>
-                  <p class="text-[10px] text-slate-400">Full Premium tracks &bull; Zero browser strain</p>
-                </div>
+          <!-- Attendance What-If Simulator Drawer -->
+          <div id="simulatorDrawer" class="hidden mb-4 p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px]">
+                <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Attendance Margin Simulator
+              </span>
+              <button onclick="resetSimulator()" class="text-[10px] text-slate-400 hover:text-white underline">Reset</button>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-slate-400 block mb-1">Simulate Attended Classes (+P):</label>
+                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
               </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/40">Full Audio</span>
+              <div>
+                <label class="text-slate-400 block mb-1">Simulate Missed Classes (+A):</label>
+                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
+              </div>
             </div>
-
-            <!-- 1-Click Launchers -->
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <a href="spotify:playlist:37i9dQZF1DX8Uebhn9wzrS" class="px-3 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-white/[0.06] hover:border-emerald-500/40 flex items-center justify-between transition-all group hover:-translate-y-0.5">
-                <span class="font-medium truncate">🎧 Lofi Beats</span>
-                <i data-lucide="external-link" class="w-3 h-3 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
-              </a>
-              <a href="spotify:playlist:37i9dQZF1DX3qCx52SuA8Q" class="px-3 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-white/[0.06] hover:border-emerald-500/40 flex items-center justify-between transition-all group hover:-translate-y-0.5">
-                <span class="font-medium truncate">🧠 Deep Focus</span>
-                <i data-lucide="external-link" class="w-3 h-3 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
-              </a>
-              <a href="spotify:playlist:37i9dQZF1DXdLEN7aqioXM" class="px-3 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-white/[0.06] hover:border-emerald-500/40 flex items-center justify-between transition-all group hover:-translate-y-0.5">
-                <span class="font-medium truncate">💻 Synthwave Code</span>
-                <i data-lucide="external-link" class="w-3 h-3 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
-              </a>
-              <a href="spotify:playlist:37i9dQZF1DX4sWSpwq3LiO" class="px-3 py-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-white/[0.06] hover:border-emerald-500/40 flex items-center justify-between transition-all group hover:-translate-y-0.5">
-                <span class="font-medium truncate">🌧 Peaceful Piano</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
-              </a>
+            <div id="simResultBox" class="p-2.5 rounded-lg bg-slate-800/80 border border-white/[0.06] flex justify-between items-center">
+              <span class="text-slate-300">Simulated Aggregate:</span>
+              <span id="simResultPct" class="font-mono font-bold text-sm text-indigo-400">--%</span>
             </div>
           </div>
-        </div>
 
-        <!-- Synthesized Ambient Audio -->
-        <div class="mt-4 pt-3 border-t border-white/[0.06]">
-          <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-2">Synthesized Ambient Audio (Zero Battery Drain)</span>
-          <div class="grid grid-cols-3 gap-2 text-xs">
-            <button id="ambientRainBtn" onclick="toggleAmbient('rain')" class="p-2 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-white/[0.06] text-slate-300 flex items-center justify-center gap-1.5 transition-all hover:-translate-y-0.5">
-              <i data-lucide="cloud-rain" class="w-3.5 h-3.5 text-sky-400"></i>
-              <span>Rain</span>
-            </button>
-            <button id="ambientNoiseBtn" onclick="toggleAmbient('noise')" class="p-2 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-white/[0.06] text-slate-300 flex items-center justify-center gap-1.5 transition-all hover:-translate-y-0.5">
-              <i data-lucide="wind" class="w-3.5 h-3.5 text-amber-400"></i>
-              <span>White Noise</span>
-            </button>
-            <button id="ambientHumBtn" onclick="toggleAmbient('hum')" class="p-2 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-white/[0.06] text-slate-300 flex items-center justify-center gap-1.5 transition-all hover:-translate-y-0.5">
-              <i data-lucide="waves" class="w-3.5 h-3.5 text-indigo-400"></i>
-              <span>Focus Hum</span>
-            </button>
+          <div class="grid grid-cols-3 gap-3 mb-5 text-center">
+            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
+              <span class="text-xs text-slate-400">Theory</span>
+              <div id="theoryPct" class="text-2xl font-bold mt-1 text-slate-100">--%</div>
+              <div id="theoryMargin" class="text-[10px] text-slate-500 mt-1">Margin: --</div>
+            </div>
+            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
+              <span class="text-xs text-slate-400">Lab</span>
+              <div id="labPct" class="text-2xl font-bold mt-1 text-slate-100">--%</div>
+              <div id="labMargin" class="text-[10px] text-slate-500 mt-1">Margin: --</div>
+            </div>
+            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
+              <span class="text-xs text-slate-400">Aggregate</span>
+              <div id="aggPct" class="text-2xl font-bold mt-1 text-indigo-400">--%</div>
+              <div id="aggMargin" class="text-[10px] text-slate-400 mt-1">Margin: --</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- SUBJECT ALLOCATION & HEATMAP -->
-    <div class="glass-panel rounded-2xl p-6 space-y-5 transition-all duration-300">
-      <div class="flex flex-wrap justify-between items-center gap-3">
         <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="layout-grid" class="w-4 h-4 text-emerald-400"></i> Study Consistency Heatmap & Subject Allocation
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Tracking daily focus density and exact time invested across subjects this week</p>
-        </div>
-        <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-semibold" id="heatmapTotalHoursText">0.0 Focus Hours</span>
-      </div>
-
-      <!-- Consistency Heatmap Grid (Mon - Sun) -->
-      <div class="bg-slate-900/70 border border-white/[0.06] rounded-xl p-4">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-3">Daily Consistency Matrix</span>
-        <div id="heatmapGrid" class="grid grid-cols-7 gap-2.5 text-center"></div>
-      </div>
-
-      <!-- Subject Time Distribution Bar -->
-      <div class="space-y-2">
-        <div class="flex justify-between items-center text-xs">
-          <span class="text-slate-300 font-semibold">Subject Split:</span>
-          <div class="flex items-center gap-4 text-[11px]" id="subjectLegendContainer">
-            <span class="flex items-center gap-1.5 text-indigo-300"><span class="w-2.5 h-2.5 rounded-sm bg-indigo-500"></span>DSA: <b id="barDsaHours">0h</b></span>
-            <span class="flex items-center gap-1.5 text-sky-300"><span class="w-2.5 h-2.5 rounded-sm bg-sky-400"></span>Theory: <b id="barTheoryHours">0h</b></span>
-            <span class="flex items-center gap-1.5 text-emerald-300"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span>Lab: <b id="barLabHours">0h</b></span>
-            <span class="flex items-center gap-1.5 text-amber-300"><span class="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>Review: <b id="barReviewHours">0h</b></span>
-          </div>
-        </div>
-
-        <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden flex border border-white/[0.06]" id="allocationDistributionBar">
-          <div id="barDsaSegment" class="bg-indigo-500 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barTheorySegment" class="bg-sky-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barLabSegment" class="bg-emerald-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barReviewSegment" class="bg-amber-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Daily Task Engine with Weekly Reset & Archive Controls -->
-    <div class="glass-panel rounded-2xl p-6 space-y-4 transition-all duration-300">
-      <div class="flex flex-wrap justify-between items-center gap-3">
-        <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="check-square" class="w-4 h-4 text-indigo-400"></i> Daily Task Engine
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Auto-archives completed tasks every Sunday night to keep your cockpit pristine.</p>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button onclick="toggleArchiveModal()" class="px-2.5 py-1 text-xs rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-white/[0.08] flex items-center gap-1.5 transition-all hover:-translate-y-0.5">
-            <i data-lucide="archive" class="w-3.5 h-3.5 text-slate-400"></i>
-            <span>Archived Logs (<span id="archiveCountBadge">0</span>)</span>
-          </button>
-
-          <button onclick="manualArchiveCompleted()" title="Archive finished tasks now" class="px-2.5 py-1 text-xs rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 flex items-center gap-1.5 transition-all hover:-translate-y-0.5">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
-            <span>Sweep Completed</span>
-          </button>
-
-          <div class="flex items-center gap-1 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-            <button onclick="setTodoFilter('all')" id="filterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium">All</button>
-            <button onclick="setTodoFilter('dsa')" id="filterDSA" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">DSA</button>
-            <button onclick="setTodoFilter('theory')" id="filterTheory" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Theory</button>
-            <button onclick="setTodoFilter('pending')" id="filterPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Pending</button>
+          <h3 class="text-xs font-semibold text-slate-400 mb-2.5 uppercase tracking-wider">Recent Class Log</h3>
+          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs">
+            <span class="text-slate-500">Connect Attendance CSV to view timeline</span>
           </div>
         </div>
       </div>
 
-      <form onsubmit="handleAddTask(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2 text-xs bg-slate-900/60 p-3 rounded-xl border border-white/[0.06]">
-        <input type="text" id="taskTitleInput" placeholder="What are you tackling right now? (e.g. Solve 5 Loop problems, Review Lab 2...)" required class="md:col-span-6 bg-slate-800/80 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-        
-        <select id="taskCategorySelect" class="md:col-span-2 bg-slate-800/80 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-          <option value="DSA">💻 DSA Practice</option>
-          <option value="Theory">📚 Theory / College</option>
-          <option value="Lab">🧪 Lab Program</option>
-          <option value="Personal">⚡ Core Review</option>
-        </select>
-
-        <select id="taskPrioritySelect" class="md:col-span-2 bg-slate-800/80 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-          <option value="High">🔴 High (+75 XP)</option>
-          <option value="Medium" selected>🟡 Medium (+50 XP)</option>
-          <option value="Low">🟢 Low (+30 XP)</option>
-        </select>
-
-        <button type="submit" class="md:col-span-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/20 active:scale-95">
-          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-          Add Task
-        </button>
-      </form>
-
-      <div id="todoListContainer" class="space-y-2.5 min-h-[140px] max-h-[360px] overflow-y-auto pr-1 custom-scrollbar"></div>
-    </div>
-
-    <!-- Analytics & Consistency Reports -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div class="lg:col-span-7 glass-panel rounded-2xl p-6 transition-all duration-300">
-        <div class="flex justify-between items-center mb-4">
-          <div>
-            <h3 class="text-sm font-semibold flex items-center gap-2">
-              <i data-lucide="bar-chart-2" class="w-4 h-4 text-sky-400"></i> Weekly Focus Hours
-            </h3>
-            <p class="text-xs text-slate-400">Hours invested across study sessions this week</p>
-          </div>
-          <span class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono font-bold" id="weeklyTotalHoursBadge">0.0 hrs total</span>
-        </div>
-        <div class="h-60">
-          <canvas id="weeklyReportChart"></canvas>
-        </div>
-      </div>
-
+      <!-- Smart Milestones Card (5 cols) -->
       <div class="lg:col-span-5 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
         <div>
-          <div class="flex justify-between items-center mb-3">
-            <h3 class="text-sm font-semibold flex items-center gap-2">
-              <i data-lucide="pie-chart" class="w-4 h-4 text-violet-400"></i> Monthly Focus Breakdown
-            </h3>
-            <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">October 2026</span>
-          </div>
-          <div class="h-44 flex items-center justify-center">
-            <canvas id="monthlyReportChart"></canvas>
-          </div>
-        </div>
+          <h2 class="text-sm font-semibold flex items-center justify-between mb-4">
+            <span class="flex items-center gap-2">
+              <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i> Next Milestones
+            </span>
+            <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Auto-Tracking</span>
+          </h2>
+          
+          <div class="space-y-2.5 mb-4">
+            <div id="nextExamCard" class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-rose-400">Next Exam / Test</div>
+                  <div id="nextExamName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextExamCountdown" class="text-xs font-bold text-rose-300 bg-rose-950/60 px-2.5 py-0.5 rounded border border-rose-800/60">--</div>
+            </div>
 
-        <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-white/[0.06] text-center text-xs">
-          <div class="bg-slate-900/60 p-2.5 rounded-xl border border-white/[0.06]">
-            <span class="text-[10px] text-slate-400 uppercase font-semibold">Tasks Completed</span>
-            <div id="metricCompletedTasks" class="text-xl font-bold text-white mt-0.5">0</div>
+            <div id="nextHolidayCard" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="sun" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-emerald-400">Next Holiday</div>
+                  <div id="nextHolidayName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextHolidayCountdown" class="text-xs font-bold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded border border-emerald-800/60">--</div>
+            </div>
+
+            <div id="nextEventCard" class="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <i data-lucide="clock" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+                <div>
+                  <div class="text-[10px] uppercase font-bold text-indigo-400">Next Event / Deadline</div>
+                  <div id="nextEventName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                </div>
+              </div>
+              <div id="nextEventCountdown" class="text-xs font-bold text-indigo-300 bg-indigo-950/60 px-2.5 py-0.5 rounded border border-indigo-800/60">--</div>
+            </div>
           </div>
-          <div class="bg-slate-900/60 p-2.5 rounded-xl border border-white/[0.06]">
-            <span class="text-[10px] text-slate-400 uppercase font-semibold">Total Level XP</span>
-            <div id="metricTotalXp" class="text-xl font-bold text-emerald-400 mt-0.5">0</div>
+
+          <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Upcoming Schedule</h3>
+          <div id="calendarList" class="space-y-2 max-h-[145px] overflow-y-auto pr-1 custom-scrollbar text-xs">
+            <span class="text-slate-500">Connect Calendar CSV to view schedule</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Daily Victory & Evening Reflection Debrief -->
-    <div class="glass-panel rounded-2xl p-6 space-y-4 transition-all duration-300">
-      <div class="flex flex-wrap justify-between items-center gap-2">
+    <!-- Row 2: Practice Topics & Question Bank -->
+    <div class="glass-panel rounded-2xl p-6 transition-all duration-300">
+      <div class="flex justify-between items-center mb-5">
         <div>
-          <h3 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="trophy" class="w-4 h-4 text-amber-400"></i> Today's Victory & Evening Debrief
-          </h3>
-          <p class="text-xs text-slate-400 mt-0.5">Automatic log of everything you accomplished today.</p>
+          <h2 class="text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="code-2" class="w-4 h-4 text-sky-400"></i> Practice Topics & Question Bank
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Click any card's doubt counter to view your active doubt queue</p>
         </div>
-        <button onclick="copyDailyDebrief()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 transition-all hover:-translate-y-0.5 active:scale-95">
-          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-          <span>Copy Daily Debrief (Markdown)</span>
-        </button>
+        <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-medium">Live Dropdown Sync</span>
       </div>
 
-      <div id="dailyDebriefContainer" class="bg-slate-900/70 border border-white/[0.06] rounded-xl p-4 text-xs font-mono space-y-1.5 text-slate-300 max-h-48 overflow-y-auto custom-scrollbar"></div>
+      <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <span class="text-slate-500">Connect Questions CSV to load topics</span>
+      </div>
+    </div>
+
+    <!-- Row 3: Upgraded Assignments & Submissions -->
+    <div class="glass-panel rounded-2xl p-6 space-y-4 transition-all duration-300">
+      <div class="flex flex-wrap justify-between items-center gap-3">
+        <div>
+          <h2 class="text-sm font-semibold flex items-center gap-2">
+            <i data-lucide="file-check-2" class="w-4 h-4 text-amber-400"></i> Assignments & Lab Submissions
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Coursework deadlines with urgency warnings and submission links</p>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all">All</button>
+          <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="filterPendingBadge">0</span>)</button>
+          <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Submitted</button>
+        </div>
+      </div>
+
+      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+        <span class="text-slate-500">Connect Assignments CSV to view submissions</span>
+      </div>
     </div>
 
   </main>
 
-  <!-- Archived Tasks Modal Drawer -->
-  <div id="archiveModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0e1422] border border-white/[0.08] rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+  <!-- Settings Modal (With Backup & Restore) -->
+  <div id="settingsModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0e1422] border border-white/[0.08] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
-        <div>
-          <h3 class="text-base font-semibold text-white flex items-center gap-2">
-            <i data-lucide="archive" class="w-4 h-4 text-indigo-400"></i> Archived Tasks History
-          </h3>
-          <p class="text-xs text-slate-400">Completed tasks rolled over from past weeks</p>
+        <h3 class="text-base font-semibold text-white">Dashboard Settings & Backup</h3>
+        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+
+      <div class="p-3 bg-slate-900/80 border border-white/[0.06] rounded-xl space-y-2">
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Cross-Device Data Backup</span>
+        <p class="text-[11px] text-slate-400">Export or restore your focus history, tasks, and XP to sync between devices.</p>
+        <div class="flex gap-2 pt-1">
+          <button onclick="exportAllDataBackup()" class="flex-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Backup (JSON)
+          </button>
+          <label class="flex-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i> Restore File
+            <input type="file" id="importBackupInput" accept=".json" onchange="importAllDataBackup(event)" class="hidden" />
+          </label>
         </div>
-        <button onclick="toggleArchiveModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
       </div>
-
-      <div id="archivedListContainer" class="space-y-2 max-h-80 overflow-y-auto pr-1 custom-scrollbar text-xs"></div>
-
-      <div class="flex justify-between items-center pt-2 border-t border-white/[0.06] text-xs">
-        <button onclick="clearAllArchived()" class="text-rose-400 hover:text-rose-300 underline text-[11px]">Clear Archive History</button>
-        <button onclick="toggleArchiveModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Fullscreen Zen Mode Overlay -->
-  <div id="zenOverlay" class="fixed inset-0 bg-[#05070a]/95 backdrop-blur-2xl z-50 hidden flex flex-col justify-between items-center p-6 md:p-12 transition-opacity duration-300">
-    <div class="w-full max-w-4xl flex justify-between items-center text-xs">
-      <div class="flex items-center gap-2 text-indigo-400 font-semibold tracking-wider uppercase text-[11px]">
-        <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
-        Zen Focus Mode Active
-      </div>
-      <button onclick="toggleZenMode()" class="px-3 py-1.5 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-white/[0.08] text-slate-300 text-xs font-medium flex items-center gap-1.5">
-        <i data-lucide="minimize-2" class="w-3.5 h-3.5"></i> Exit Zen (Esc)
-      </button>
-    </div>
-
-    <div class="flex flex-col items-center justify-center text-center">
-      <div id="zenTimerDisplay" class="text-8xl md:text-9xl font-mono font-extrabold tracking-tighter text-white drop-shadow-[0_0_35px_rgba(99,102,241,0.5)]">25:00</div>
-      <div id="zenCurrentTarget" class="mt-5 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs md:text-sm font-medium">Target: Deep Focus Session</div>
       
-      <div class="flex items-center gap-3 mt-8">
-        <button id="zenTimerBtn" onclick="toggleMainTimer()" class="px-8 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-xl shadow-indigo-600/40 transition-all flex items-center gap-2 active:scale-95">
-          <i data-lucide="play" id="zenPlayIcon" class="w-4 h-4 fill-white"></i>
-          <span id="zenBtnText">Start</span>
-        </button>
-        <button onclick="resetMainTimer()" class="p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-white/[0.08] text-slate-400 hover:text-white transition-all">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-        </button>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Attendance CSV Link</label>
+          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Calendar CSV Link</label>
+          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Assignments CSV Link</label>
+          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-medium mb-1">Questions CSV Link</label>
+          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+        </div>
       </div>
-    </div>
 
-    <div class="text-[11px] text-slate-500">
-      Press <kbd class="px-1.5 py-0.5 rounded bg-slate-900 border border-white/[0.08] font-mono text-slate-400">Space</kbd> to Play/Pause &bull; <kbd class="px-1.5 py-0.5 rounded bg-slate-900 border border-white/[0.08] font-mono text-slate-400">Esc</kbd> to Exit
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="saveSettings()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-semibold text-white shadow-lg shadow-indigo-600/25 transition-all">Save & Sync</button>
+      </div>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    if ("Notification" in window && Notification.permission === "default") {
-      Notification.requestPermission();
-    }
-
-    // Global Keybinds
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.key === '1') {
-        window.location.href = 'index.html';
-      }
-      if (e.key === 'f' || e.key === 'F') {
-        e.preventDefault();
-        toggleZenMode();
-      }
-      if (e.key === 'Escape' && isZenActive) {
-        toggleZenMode();
-      }
-      if (e.code === 'Space') {
-        e.preventDefault();
-        toggleMainTimer();
+      if (e.key === '2') {
+        window.location.href = 'productivity.html';
       }
     });
 
-    const quotes = [
-      { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Aristotle" },
-      { text: "It is not that we have a short time to live, but that we waste a lot of it.", author: "Seneca" },
-      { text: "Focus is a muscle. The more you eliminate distractions, the stronger it becomes.", author: "Naval Ravikant" },
-      { text: "Sometimes it is the people no one imagines anything of who do the things that no one can imagine.", author: "Alan Turing" },
-      { text: "Simplicity is prerequisite for reliability.", author: "Edsger W. Dijkstra" }
-    ];
-    let quoteIndex = 0;
-
-    function cycleQuote() {
-      quoteIndex = (quoteIndex + 1) % quotes.length;
-      document.getElementById('mindsetQuoteText').innerText = `"${quotes[quoteIndex].text}"`;
-      document.getElementById('mindsetQuoteAuthor').innerText = `— ${quotes[quoteIndex].author}`;
-    }
-
-    // RPG Dev XP
-    const STORAGE_KEY_XP = 'ACADEMIC_DASH_PLAYER_XP';
-    let playerXP = parseInt(localStorage.getItem(STORAGE_KEY_XP) || '150');
-
-    function getPlayerLevelInfo(xp) {
+    function syncNavXP() {
+      const xp = parseInt(localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150');
       const level = Math.floor(xp / 500) + 1;
-      const currentLevelXP = xp % 500;
       let title = "Code Novice";
       if (level >= 3) title = "Algorithm Apprentice";
       if (level >= 6) title = "Logic Craftsman";
       if (level >= 10) title = "Core Architect";
       if (level >= 15) title = "Code Alchemist";
       if (level >= 20) title = "10x Grandmaster";
-      return { level, currentLevelXP, title };
+      document.getElementById('navRankBadge').innerText = `Lvl ${level} · ${title}`;
     }
 
-    function addXP(amount, reason) {
-      const prevInfo = getPlayerLevelInfo(playerXP);
-      playerXP += amount;
-      localStorage.setItem(STORAGE_KEY_XP, playerXP);
-      const newInfo = getPlayerLevelInfo(playerXP);
-
-      renderPlayerXP();
-
-      if (newInfo.level > prevInfo.level) {
-        confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
-        playLevelUpSound();
-        alert(`🌟 LEVEL UP! You reached Level ${newInfo.level}: ${newInfo.title}!`);
-      }
+    function toggleSettingsModal() {
+      document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
-    function renderPlayerXP() {
-      const info = getPlayerLevelInfo(playerXP);
-      document.getElementById('playerRankBadge').innerText = `Lvl ${info.level} · ${info.title}`;
-      document.getElementById('playerXpText').innerText = `${info.currentLevelXP} / 500 XP`;
-      document.getElementById('playerXpBar').style.width = `${(info.currentLevelXP / 500) * 100}%`;
-      document.getElementById('metricTotalXp').innerText = playerXP;
+    function exportAllDataBackup() {
+      const backupData = {
+        xp: localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150',
+        todos: localStorage.getItem('ACADEMIC_DASH_TODOS') || '[]',
+        sessions: localStorage.getItem('ACADEMIC_DASH_FOCUS_SESSIONS') || '[]',
+        attendanceUrl: localStorage.getItem('ATTENDANCE_CSV') || '',
+        calendarUrl: localStorage.getItem('CALENDAR_CSV') || '',
+        assignmentsUrl: localStorage.getItem('ASSIGNMENTS_CSV') || '',
+        questionsUrl: localStorage.getItem('QUESTIONS_CSV') || ''
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `academic-cockpit-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
-    // Zen Mode
-    let isZenActive = false;
-    function toggleZenMode() {
-      isZenActive = !isZenActive;
-      const overlay = document.getElementById('zenOverlay');
-      if (isZenActive) {
-        overlay.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+    function importAllDataBackup(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.xp) localStorage.setItem('ACADEMIC_DASH_PLAYER_XP', data.xp);
+          if (data.todos) localStorage.setItem('ACADEMIC_DASH_TODOS', data.todos);
+          if (data.sessions) localStorage.setItem('ACADEMIC_DASH_FOCUS_SESSIONS', data.sessions);
+          if (data.attendanceUrl) localStorage.setItem('ATTENDANCE_CSV', data.attendanceUrl);
+          if (data.calendarUrl) localStorage.setItem('CALENDAR_CSV', data.calendarUrl);
+          if (data.assignmentsUrl) localStorage.setItem('ASSIGNMENTS_CSV', data.assignmentsUrl);
+          if (data.questionsUrl) localStorage.setItem('QUESTIONS_CSV', data.questionsUrl);
+          alert('✅ Backup restored successfully! Refreshing cockpit...');
+          window.location.reload();
+        } catch (err) {
+          alert('Failed to parse backup file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function saveSettings() {
+      localStorage.setItem('ATTENDANCE_CSV', document.getElementById('inputAttendance').value.trim());
+      localStorage.setItem('CALENDAR_CSV', document.getElementById('inputCalendar').value.trim());
+      localStorage.setItem('ASSIGNMENTS_CSV', document.getElementById('inputAssignments').value.trim());
+      localStorage.setItem('QUESTIONS_CSV', document.getElementById('inputQuestions').value.trim());
+      toggleSettingsModal();
+      loadAllData();
+    }
+
+    function initInputs() {
+      document.getElementById('inputAttendance').value = localStorage.getItem('ATTENDANCE_CSV') || '';
+      document.getElementById('inputCalendar').value = localStorage.getItem('CALENDAR_CSV') || '';
+      document.getElementById('inputAssignments').value = localStorage.getItem('ASSIGNMENTS_CSV') || '';
+      document.getElementById('inputQuestions').value = localStorage.getItem('QUESTIONS_CSV') || '';
+    }
+
+    let baseAttended = 0;
+    let baseTotal = 0;
+
+    function toggleSimulator() {
+      document.getElementById('simulatorDrawer').classList.toggle('hidden');
+    }
+
+    function resetSimulator() {
+      document.getElementById('simAddPresent').value = 0;
+      document.getElementById('simAddAbsent').value = 0;
+      runSimulation();
+    }
+
+    function runSimulation() {
+      const addP = parseInt(document.getElementById('simAddPresent').value) || 0;
+      const addA = parseInt(document.getElementById('simAddAbsent').value) || 0;
+      const newAttended = baseAttended + addP;
+      const newTotal = baseTotal + addP + addA;
+      if (newTotal === 0) return;
+      const simPct = ((newAttended / newTotal) * 100).toFixed(1);
+      const res = document.getElementById('simResultPct');
+      res.innerText = `${simPct}%`;
+      if (simPct >= 75) {
+        res.className = 'font-mono font-bold text-sm text-emerald-400';
       } else {
-        overlay.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+        res.className = 'font-mono font-bold text-sm text-rose-400';
       }
     }
 
-    // Timer Suite
-    let timerMode = 'pomo';
-    let timerTotalSeconds = 25 * 60;
-    let timerSecondsRemaining = 25 * 60;
-    let timerInterval = null;
-    let stopwatchSeconds = 0;
-
-    function setTimerTab(mode) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerMode = mode;
-
-      const btnPomo = document.getElementById('tabBtnPomo');
-      const btnCustom = document.getElementById('tabBtnCustom');
-      const btnStopwatch = document.getElementById('tabBtnStopwatch');
-      const pomoPresets = document.getElementById('pomoPresetsBar');
-      const customInputs = document.getElementById('customInputsBar');
-      const title = document.getElementById('timerModeTitle');
-
-      [btnPomo, btnCustom, btnStopwatch].forEach(b => {
-        b.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
-      });
-
-      if (mode === 'pomo') {
-        btnPomo.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
-        pomoPresets.classList.remove('hidden');
-        customInputs.classList.add('hidden');
-        title.innerText = 'Pomodoro Focus Timer';
-        setPomodoroPreset(25, 'Deep Work');
-      } else if (mode === 'custom') {
-        btnCustom.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
-        pomoPresets.classList.add('hidden');
-        customInputs.classList.remove('hidden');
-        title.innerText = 'Custom Study Timer';
-        applyCustomDuration();
-      } else if (mode === 'stopwatch') {
-        btnStopwatch.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
-        pomoPresets.classList.add('hidden');
-        customInputs.classList.add('hidden');
-        title.innerText = 'Continuous Activity Stopwatch';
-        stopwatchSeconds = 0;
-        updateTimerDisplay(0, 0);
-      }
-      resetTimerControlsUI();
+    function getDaysRemaining(targetDateStr) {
+      if (!targetDateStr) return 999;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const target = new Date(targetDateStr);
+      if (isNaN(target.getTime())) return 999;
+      target.setHours(0, 0, 0, 0);
+      return Math.round((target - today) / (1000 * 60 * 60 * 24));
     }
 
-    function setPomodoroPreset(minutes, subtext) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerTotalSeconds = minutes * 60;
-      timerSecondsRemaining = timerTotalSeconds;
-      document.getElementById('timerSubtext').innerText = subtext;
-      document.getElementById('zenCurrentTarget').innerText = `Target: ${subtext}`;
-      updateTimerDisplay(minutes, 0);
-      updateRingProgress(1);
-      resetTimerControlsUI();
+    function formatDaysBadge(days) {
+      if (days === 0) return 'Today!';
+      if (days === 1) return 'Tomorrow';
+      if (days > 1) return `In ${days} days`;
+      return `${Math.abs(days)}d ago`;
     }
 
-    function applyCustomDuration() {
-      const mins = parseInt(document.getElementById('customMinutesInput').value) || 30;
-      const tag = document.getElementById('customSessionTag').value.trim() || 'Custom Session';
-      timerTotalSeconds = mins * 60;
-      timerSecondsRemaining = timerTotalSeconds;
-      document.getElementById('timerSubtext').innerText = tag;
-      document.getElementById('zenCurrentTarget').innerText = `Target: ${tag}`;
-      updateTimerDisplay(mins, 0);
-      updateRingProgress(1);
-      resetTimerControlsUI();
-    }
-
-    function updateTimerDisplay(mins, secs) {
-      const mStr = Math.floor(mins).toString().padStart(2, '0');
-      const sStr = Math.floor(secs).toString().padStart(2, '0');
-      const timeStr = `${mStr}:${sStr}`;
-      document.getElementById('timerDisplay').innerText = timeStr;
-      document.getElementById('zenTimerDisplay').innerText = timeStr;
+    function calculateMargin(attended, total) {
+      if (!total || total === 0) return { type: 'neutral', text: 'No data', count: 0 };
+      const currentPct = (attended / total) * 100;
       
-      if (timerInterval) {
-        document.title = `(${timeStr}) ${document.getElementById('timerSubtext').innerText} | Cockpit`;
-      }
-    }
-
-    function updateRingProgress(fraction) {
-      const circle = document.getElementById('timerProgressCircle');
-      const circumference = 2 * Math.PI * 44;
-      const offset = circumference * (1 - fraction);
-      circle.style.strokeDashoffset = offset;
-    }
-
-    function resetTimerControlsUI() {
-      const btn = document.getElementById('mainTimerToggleBtn');
-      const icon = document.getElementById('mainTimerIcon');
-      const txt = document.getElementById('mainTimerBtnText');
-      const zenBtn = document.getElementById('zenBtnText');
-      const zenIcon = document.getElementById('zenPlayIcon');
-      const ringContainer = document.getElementById('timerContainerRing');
-
-      btn.className = 'px-7 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-600/30 flex items-center gap-2 active:scale-95';
-      icon.setAttribute('data-lucide', 'play');
-      zenIcon.setAttribute('data-lucide', 'play');
-      const label = timerMode === 'stopwatch' ? 'Start Stopwatch' : 'Start Session';
-      txt.innerText = label;
-      zenBtn.innerText = label;
-      ringContainer.classList.remove('timer-active-aura');
-      document.title = 'Ultimate Productivity Cockpit | Vikas N';
-      lucide.createIcons();
-    }
-
-    function toggleMainTimer() {
-      const txt = document.getElementById('mainTimerBtnText');
-      const icon = document.getElementById('mainTimerIcon');
-      const zenTxt = document.getElementById('zenBtnText');
-      const zenIcon = document.getElementById('zenPlayIcon');
-      const ringContainer = document.getElementById('timerContainerRing');
-
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        txt.innerText = 'Resume';
-        zenTxt.innerText = 'Resume';
-        icon.setAttribute('data-lucide', 'play');
-        zenIcon.setAttribute('data-lucide', 'play');
-        ringContainer.classList.remove('timer-active-aura');
+      if (currentPct >= 75) {
+        const bunkable = Math.floor((attended - 0.75 * total) / 0.75);
+        return {
+          type: 'safe',
+          count: Math.max(0, bunkable),
+          text: bunkable > 0 ? `Can miss ${bunkable} class${bunkable > 1 ? 'es' : ''}` : 'On the 75% edge'
+        };
       } else {
-        txt.innerText = 'Pause';
-        zenTxt.innerText = 'Pause';
-        icon.setAttribute('data-lucide', 'pause');
-        zenIcon.setAttribute('data-lucide', 'pause');
-        ringContainer.classList.add('timer-active-aura');
-
-        timerInterval = setInterval(() => {
-          if (timerMode === 'stopwatch') {
-            stopwatchSeconds++;
-            const m = Math.floor(stopwatchSeconds / 60);
-            const s = stopwatchSeconds % 60;
-            updateTimerDisplay(m, s);
-            updateRingProgress((stopwatchSeconds % 60) / 60);
-          } else {
-            if (timerSecondsRemaining > 0) {
-              timerSecondsRemaining--;
-              const m = Math.floor(timerSecondsRemaining / 60);
-              const s = timerSecondsRemaining % 60;
-              updateTimerDisplay(m, s);
-              updateRingProgress(timerSecondsRemaining / timerTotalSeconds);
-            } else {
-              clearInterval(timerInterval);
-              timerInterval = null;
-              resetTimerControlsUI();
-              playCelebrationSound();
-              confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-
-              if ("Notification" in window && Notification.permission === "granted") {
-                new Notification("Session Finished!", {
-                  body: "Great job! Time to take a stretch and log your wins.",
-                  icon: "https://cdn-icons-png.flaticon.com/512/906/906334.png"
-                });
-              }
-              
-              const minsLogged = Math.round(timerTotalSeconds / 60);
-              const tag = document.getElementById('timerSubtext').innerText;
-              const subjectCategory = document.getElementById('sessionSubjectCategory').value;
-              
-              addXP(100, 'Focus Session');
-              logFocusSession(minsLogged, tag, subjectCategory);
-              alert(`🎉 Focus Session Completed! +100 XP gained.`);
-            }
-          }
-        }, 1000);
+        const needed = Math.ceil((0.75 * total - attended) / 0.25);
+        return {
+          type: 'recover',
+          count: needed,
+          text: `Must attend next ${needed} class${needed > 1 ? 'es' : ''}`
+        };
       }
-      lucide.createIcons();
     }
 
-    function resetMainTimer() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      if (timerMode === 'stopwatch') {
-        stopwatchSeconds = 0;
-        updateTimerDisplay(0, 0);
-        updateRingProgress(0);
-      } else {
-        timerSecondsRemaining = timerTotalSeconds;
-        const m = Math.floor(timerTotalSeconds / 60);
-        const s = timerTotalSeconds % 60;
-        updateTimerDisplay(m, s);
-        updateRingProgress(1);
-      }
-      resetTimerControlsUI();
-    }
+    let cachedAttendance = {};
+    let cachedMilestones = {};
+    let cachedTopics = [];
+    let cachedAssignments = [];
+    let currentAssignmentFilter = 'all';
 
-    // Synthesizer
-    let audioCtx = null;
-    let activeAmbientNodes = {};
-
-    function getAudioContext() {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      return audioCtx;
-    }
-
-    function toggleAmbient(type) {
-      const ctx = getAudioContext();
-      if (ctx.state === 'suspended') ctx.resume();
-
-      const btn = document.getElementById(`ambient${type.charAt(0).toUpperCase() + type.slice(1)}Btn`);
-
-      if (activeAmbientNodes[type]) {
-        activeAmbientNodes[type].gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-        setTimeout(() => {
-          activeAmbientNodes[type].source.stop();
-          delete activeAmbientNodes[type];
-        }, 400);
-        btn.classList.remove('bg-indigo-600', 'text-white');
-        btn.classList.add('bg-slate-900/90', 'text-slate-300');
-        return;
-      }
-
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-
-      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      noise.loop = true;
-
-      const filter = ctx.createBiquadFilter();
-      const gain = ctx.createGain();
-
-      if (type === 'rain') {
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, ctx.currentTime);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-      } else if (type === 'noise') {
-        filter.type = 'bandpass';
-        filter.frequency.setValueAtTime(1000, ctx.currentTime);
-        gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      } else if (type === 'hum') {
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(108, ctx.currentTime);
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        activeAmbientNodes[type] = { source: osc, gain };
-        btn.classList.add('bg-indigo-600', 'text-white');
-        btn.classList.remove('bg-slate-900/90', 'text-slate-300');
-        return;
-      }
-
-      noise.connect(filter);
-      filter.connect(gain);
-      gain.connect(ctx.destination);
-      noise.start();
-
-      activeAmbientNodes[type] = { source: noise, gain };
-      btn.classList.add('bg-indigo-600', 'text-white');
-      btn.classList.remove('bg-slate-900/90', 'text-slate-300');
-    }
-
-    function playCelebrationSound() {
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-        [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(f, now + idx * 0.08);
-          gain.gain.setValueAtTime(0.2, now + idx * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now + idx * 0.08);
-          osc.stop(now + idx * 0.08 + 0.35);
-        });
-      } catch (e) {}
-    }
-
-    function playLevelUpSound() {
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-        [440, 554.37, 659.25, 880, 1108.73].forEach((f, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(f, now + idx * 0.1);
-          gain.gain.setValueAtTime(0.15, now + idx * 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.35);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now + idx * 0.1);
-          osc.stop(now + idx * 0.1 + 0.4);
-        });
-      } catch (e) {}
-    }
-
-    /* Tasks, Sessions & Heatmap System */
-    const STORAGE_KEY_TODOS = 'ACADEMIC_DASH_TODOS';
-    const STORAGE_KEY_ARCHIVE = 'ACADEMIC_DASH_ARCHIVED_TODOS';
-    const STORAGE_KEY_SESSIONS = 'ACADEMIC_DASH_FOCUS_SESSIONS';
-    const STORAGE_KEY_LAST_WEEK = 'ACADEMIC_DASH_LAST_ACTIVE_WEEK';
-
-    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY_TODOS) || '[]');
-    let archivedTodos = JSON.parse(localStorage.getItem(STORAGE_KEY_ARCHIVE) || '[]');
-    let focusSessions = JSON.parse(localStorage.getItem(STORAGE_KEY_SESSIONS) || '[]');
-    let currentFilter = 'all';
-
-    function getWeekIdentifier(date) {
-      const d = new Date(date);
-      d.setHours(0, 0, 0, 0);
-      d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-      const yearStart = new Date(d.getFullYear(), 0, 1);
-      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-      return `${d.getFullYear()}-W${weekNo}`;
-    }
-
-    function checkWeeklyAutoReset() {
-      const currentWeek = getWeekIdentifier(new Date());
-      const lastWeek = localStorage.getItem(STORAGE_KEY_LAST_WEEK);
-
-      if (!lastWeek) {
-        localStorage.setItem(STORAGE_KEY_LAST_WEEK, currentWeek);
-        return;
-      }
-
-      if (lastWeek !== currentWeek) {
-        const completedToArchive = todos.filter(t => t.completed);
-        if (completedToArchive.length > 0) {
-          completedToArchive.forEach(t => {
-            t.archivedWeek = lastWeek;
-            archivedTodos.unshift(t);
-          });
-          todos = todos.filter(t => !t.completed);
-          localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
-          localStorage.setItem(STORAGE_KEY_TODOS, JSON.stringify(todos));
+    function setAssignmentFilter(filter) {
+      currentAssignmentFilter = filter;
+      ['all', 'pending', 'submitted'].forEach(f => {
+        const btn = document.getElementById(`btnAssign${f.charAt(0).toUpperCase() + f.slice(1)}`);
+        if (f === filter) {
+          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
         }
-        localStorage.setItem(STORAGE_KEY_LAST_WEEK, currentWeek);
-      }
-    }
-
-    function manualArchiveCompleted() {
-      const completed = todos.filter(t => t.completed);
-      if (completed.length === 0) {
-        alert('No completed tasks to archive right now.');
-        return;
-      }
-      const currentWeek = getWeekIdentifier(new Date());
-      completed.forEach(t => {
-        t.archivedWeek = currentWeek;
-        archivedTodos.unshift(t);
       });
-      todos = todos.filter(t => !t.completed);
-      saveTodos();
-      localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
-      renderArchivedList();
-      confetti({ particleCount: 50, spread: 45, origin: { y: 0.7 } });
+      renderAssignmentsList();
     }
 
-    function toggleArchiveModal() {
-      document.getElementById('archiveModal').classList.toggle('hidden');
-      renderArchivedList();
-    }
-
-    function renderArchivedList() {
-      const container = document.getElementById('archivedListContainer');
-      const badge = document.getElementById('archiveCountBadge');
-      badge.innerText = archivedTodos.length;
+    function renderAssignmentsList() {
+      const container = document.getElementById('assignmentsContainer');
       container.innerHTML = '';
 
-      if (archivedTodos.length === 0) {
-        container.innerHTML = '<div class="p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-xl">No archived tasks found.</div>';
-        return;
+      let filtered = cachedAssignments;
+      if (currentAssignmentFilter === 'pending') {
+        filtered = cachedAssignments.filter(a => !a.isCompleted);
+      } else if (currentAssignmentFilter === 'submitted') {
+        filtered = cachedAssignments.filter(a => a.isCompleted);
       }
-
-      archivedTodos.forEach((task, idx) => {
-        const el = document.createElement('div');
-        el.className = 'p-3 bg-slate-900/80 border border-white/[0.06] rounded-xl flex items-center justify-between gap-3';
-        el.innerHTML = `
-          <div>
-            <div class="font-medium text-slate-200 line-through">${task.title}</div>
-            <div class="text-[10px] text-slate-500 mt-0.5">${task.category} &bull; ${task.archivedWeek || 'Past Session'}</div>
-          </div>
-          <button onclick="restoreArchivedTask(${idx})" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold px-2 py-1 rounded bg-indigo-500/10 border border-indigo-500/20">
-            Restore
-          </button>
-        `;
-        container.appendChild(el);
-      });
-    }
-
-    function restoreArchivedTask(idx) {
-      const restored = archivedTodos.splice(idx, 1)[0];
-      restored.completed = false;
-      todos.unshift(restored);
-      saveTodos();
-      localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
-      renderArchivedList();
-    }
-
-    function clearAllArchived() {
-      if (confirm('Permanently clear all archived task logs?')) {
-        archivedTodos = [];
-        localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
-        renderArchivedList();
-      }
-    }
-
-    if (todos.length === 0 && archivedTodos.length === 0) {
-      todos = [
-        { id: 1, title: 'Solve 5 Conditional Statement Questions', category: 'DSA', priority: 'High', completed: false, time: '10:15 AM' },
-        { id: 2, title: 'Check Aggregate buffer in Simulator', category: 'Theory', priority: 'Medium', completed: true, time: '11:30 AM' },
-        { id: 3, title: 'Set up Scanner practice in VS Code', category: 'Lab', priority: 'Low', completed: false, time: '02:00 PM' }
-      ];
-      saveTodos();
-    }
-
-    function saveTodos() {
-      localStorage.setItem(STORAGE_KEY_TODOS, JSON.stringify(todos));
-      renderTodos();
-      updateMetrics();
-      updateCharts();
-      renderHeatmapAndDistribution();
-      renderDailyDebrief();
-    }
-
-    function logFocusSession(minutes, tag, subjectCategory) {
-      const now = new Date();
-      focusSessions.push({
-        minutes,
-        tag: tag || 'Study',
-        category: subjectCategory || 'DSA',
-        time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        date: now.toISOString().split('T')[0],
-        dayOfWeek: now.getDay()
-      });
-      localStorage.setItem(STORAGE_KEY_SESSIONS, JSON.stringify(focusSessions));
-      updateCharts();
-      renderHeatmapAndDistribution();
-      renderDailyDebrief();
-    }
-
-    function setTodoFilter(filter) {
-      currentFilter = filter;
-      ['all', 'dsa', 'theory', 'pending'].forEach(f => {
-        const el = document.getElementById(`filter${f.charAt(0).toUpperCase() + f.slice(1)}`);
-        el.className = f === filter ? 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium' : 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white';
-      });
-      renderTodos();
-    }
-
-    function handleAddTask(e) {
-      e.preventDefault();
-      const title = document.getElementById('taskTitleInput').value.trim();
-      const category = document.getElementById('taskCategorySelect').value;
-      const priority = document.getElementById('taskPrioritySelect').value;
-
-      if (!title) return;
-
-      todos.unshift({
-        id: Date.now(),
-        title,
-        category,
-        priority,
-        completed: false,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      });
-
-      document.getElementById('taskTitleInput').value = '';
-      saveTodos();
-    }
-
-    function toggleTask(id) {
-      const task = todos.find(t => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        if (task.completed) {
-          playCelebrationSound();
-          confetti({ particleCount: 65, spread: 55, origin: { y: 0.7 } });
-          const xpGain = task.priority === 'High' ? 75 : (task.priority === 'Medium' ? 50 : 30);
-          addXP(xpGain, 'Task Completed');
-        }
-        saveTodos();
-      }
-    }
-
-    function deleteTask(id) {
-      todos = todos.filter(t => t.id !== id);
-      saveTodos();
-    }
-
-    function renderTodos() {
-      const container = document.getElementById('todoListContainer');
-      container.innerHTML = '';
-
-      let filtered = todos;
-      if (currentFilter === 'dsa') filtered = todos.filter(t => t.category === 'DSA');
-      if (currentFilter === 'theory') filtered = todos.filter(t => t.category === 'Theory');
-      if (currentFilter === 'pending') filtered = todos.filter(t => !t.completed);
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-xl">No active tasks in this view. Ready for a new sprint!</div>`;
+        container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-xl">No assignments matching this filter.</div>`;
         return;
       }
 
-      filtered.forEach(task => {
-        const el = document.createElement('div');
-        el.className = `p-3 rounded-xl border flex items-center justify-between gap-3 transition-all duration-200 ${
-          task.completed ? 'bg-slate-900/30 border-white/[0.04] opacity-50' : 'bg-slate-900/70 border-white/[0.06] hover:border-white/[0.12] hover:-translate-y-0.5'
+      filtered.forEach(a => {
+        const daysLeft = getDaysRemaining(a.dueDate);
+        const isUrgent = !a.isCompleted && daysLeft <= 3;
+
+        const card = document.createElement('div');
+        card.className = `p-4 bg-slate-900/60 border rounded-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 ${
+          isUrgent ? 'border-rose-500/80 bg-rose-950/20 urgent-assignment' : 'border-white/[0.06] hover:border-white/[0.12]'
         }`;
 
-        const priorityColor = task.priority === 'High' ? 'text-rose-400 bg-rose-500/10 border-rose-500/20' : (task.priority === 'Medium' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20');
+        let urgencyTag = '';
+        if (!a.isCompleted) {
+          if (daysLeft < 0) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">Overdue</span>`;
+          else if (daysLeft <= 1) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40 animate-pulse">Due soon!</span>`;
+          else if (daysLeft <= 3) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/40">In ${daysLeft} days</span>`;
+        }
 
-        el.innerHTML = `
-          <div class="flex items-center gap-3 min-w-0">
-            <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})" class="h-4 w-4 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-0 cursor-pointer" />
-            <div class="min-w-0">
-              <div class="text-xs font-medium text-slate-200 truncate ${task.completed ? 'line-through text-slate-500' : ''}">${task.title}</div>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="text-[9px] px-1.5 py-0.5 rounded border ${priorityColor} font-semibold">${task.priority}</span>
-                <span class="text-[10px] text-slate-400">${task.category}</span>
-                <span class="text-[10px] text-slate-500">&bull; ${task.time}</span>
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2 gap-2">
+              <div>
+                <h4 class="font-semibold text-slate-200 text-xs">${a.title}</h4>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <span class="text-[10px] text-slate-400">Due: <b>${a.dueDate}</b></span>
+                  ${urgencyTag}
+                </div>
               </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-lg ${a.isCompleted ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium'} whitespace-nowrap">${a.status}</span>
             </div>
           </div>
-          <button onclick="deleteTask(${task.id})" class="text-slate-500 hover:text-rose-400 p-1.5 transition-colors">
-            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          </button>
+          
+          <div class="flex justify-between items-center pt-2.5 border-t border-white/[0.06] text-[11px] mt-2">
+            <span class="text-slate-400">Grade: <span class="font-mono font-semibold text-slate-200">${a.score}</span></span>
+            ${a.portalUrl ? `<a href="${a.portalUrl}" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 text-[10px]">Submit ↗</a>` : `<span class="text-slate-600 text-[10px]">No Link</span>`}
+          </div>
         `;
-        container.appendChild(el);
+        container.appendChild(card);
       });
       lucide.createIcons();
     }
 
-    function renderHeatmapAndDistribution() {
-      const grid = document.getElementById('heatmapGrid');
-      grid.innerHTML = '';
-
-      const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      const dayTotals = [0, 0, 0, 0, 0, 0, 0];
-
-      let totalHeatmapMins = 0;
-      focusSessions.forEach(s => {
-        totalHeatmapMins += (s.minutes || 0);
-        const dayIdx = s.dayOfWeek === 0 ? 6 : s.dayOfWeek - 1;
-        if (dayIdx >= 0 && dayIdx < 7) {
-          dayTotals[dayIdx] += (s.minutes || 0);
-        }
-      });
-
-      todos.filter(t => t.completed).forEach(() => { totalHeatmapMins += 20; });
-      archivedTodos.forEach(() => { totalHeatmapMins += 20; });
-
-      document.getElementById('heatmapTotalHoursText').innerText = `${(totalHeatmapMins / 60).toFixed(1)} Focus Hours`;
-
-      dayLabels.forEach((label, idx) => {
-        const mins = dayTotals[idx];
-        let colorClass = 'bg-slate-800/40 text-slate-500 border-white/[0.04]';
-        if (mins > 0 && mins < 45) {
-          colorClass = 'bg-emerald-950/60 text-emerald-300 border-emerald-800/50';
-        } else if (mins >= 45 && mins < 90) {
-          colorClass = 'bg-emerald-700/60 text-emerald-200 border-emerald-600/60';
-        } else if (mins >= 90) {
-          colorClass = 'bg-emerald-500 text-black font-bold border-emerald-400 shadow-lg shadow-emerald-500/25';
-        }
-
-        const cell = document.createElement('div');
-        cell.className = `p-3 rounded-xl border flex flex-col items-center justify-between gap-1 transition-all hover:scale-105 duration-200 ${colorClass}`;
-        cell.innerHTML = `
-          <span class="text-[10px] uppercase font-bold tracking-wider">${label}</span>
-          <span class="font-mono text-xs">${mins > 0 ? (mins / 60).toFixed(1) + 'h' : '0h'}</span>
-        `;
-        grid.appendChild(cell);
-      });
-
-      let dsaMins = 0;
-      let theoryMins = 0;
-      let labMins = 0;
-      let reviewMins = 0;
-
-      focusSessions.forEach(s => {
-        const cat = s.category || 'DSA';
-        if (cat === 'DSA') dsaMins += s.minutes;
-        else if (cat === 'Theory') theoryMins += s.minutes;
-        else if (cat === 'Lab') labMins += s.minutes;
-        else reviewMins += s.minutes;
-      });
-
-      [...todos.filter(t => t.completed), ...archivedTodos].forEach(t => {
-        if (t.category === 'DSA') dsaMins += 25;
-        else if (t.category === 'Theory') theoryMins += 25;
-        else if (t.category === 'Lab') labMins += 25;
-        else reviewMins += 25;
-      });
-
-      const totalAllocated = (dsaMins + theoryMins + labMins + reviewMins) || 1;
-
-      const dsaPct = Math.round((dsaMins / totalAllocated) * 100);
-      const theoryPct = Math.round((theoryMins / totalAllocated) * 100);
-      const labPct = Math.round((labMins / totalAllocated) * 100);
-      const reviewPct = Math.max(0, 100 - dsaPct - theoryPct - labPct);
-
-      document.getElementById('barDsaSegment').style.width = `${dsaPct}%`;
-      document.getElementById('barTheorySegment').style.width = `${theoryPct}%`;
-      document.getElementById('barLabSegment').style.width = `${labPct}%`;
-      document.getElementById('barReviewSegment').style.width = `${reviewPct}%`;
-
-      document.getElementById('barDsaHours').innerText = `${(dsaMins / 60).toFixed(1)}h (${dsaPct}%)`;
-      document.getElementById('barTheoryHours').innerText = `${(theoryMins / 60).toFixed(1)}h (${theoryPct}%)`;
-      document.getElementById('barLabHours').innerText = `${(labMins / 60).toFixed(1)}h (${labPct}%)`;
-      document.getElementById('barReviewHours').innerText = `${(reviewMins / 60).toFixed(1)}h (${reviewPct}%)`;
+    function toggleDoubtQueue(topicIdx) {
+      const drawer = document.getElementById(`doubtDrawer-${topicIdx}`);
+      if (drawer) drawer.classList.toggle('hidden');
     }
 
-    function renderDailyDebrief() {
-      const container = document.getElementById('dailyDebriefContainer');
-      const completed = todos.filter(t => t.completed);
-      
-      let html = '';
-      if (completed.length === 0 && focusSessions.length === 0) {
-        html = '<div class="text-slate-500">No completed sessions or tasks yet today. Start your first focus block above!</div>';
-      } else {
-        html += '<div class="text-emerald-400 font-bold mb-1">// TODAY\'S ACHIEVEMENTS & WINS:</div>';
-        focusSessions.forEach(s => {
-          html += `<div>⚡ [FOCUS] ${s.minutes}m Session (${s.category || 'Study'} &bull; ${s.tag}) at ${s.time}</div>`;
-        });
-        completed.forEach(t => {
-          html += `<div>✅ [TASK] ${t.title} (${t.category}) finished at ${t.time}</div>`;
-        });
-      }
-      container.innerHTML = html;
-    }
+    function loadAllData() {
+      const buster = '&_t=' + new Date().getTime();
 
-    function copyDailyDebrief() {
-      const completed = todos.filter(t => t.completed);
-      const totalMins = focusSessions.reduce((acc, s) => acc + s.minutes, 0);
-      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      let attUrl = localStorage.getItem('ATTENDANCE_CSV');
+      let calUrl = localStorage.getItem('CALENDAR_CSV');
+      let qUrl = localStorage.getItem('QUESTIONS_CSV');
+      let assignUrl = localStorage.getItem('ASSIGNMENTS_CSV');
 
-      let text = `### 🏆 Daily Focus & Victory Debrief (${today})\n`;
-      text += `- **Focus Time Logged**: ${totalMins} minutes (${(totalMins / 60).toFixed(1)} hrs)\n`;
-      text += `- **Tasks Completed**: ${completed.length}\n`;
-      text += `- **XP Level**: ${document.getElementById('playerRankBadge').innerText}\n\n`;
+      if (attUrl) {
+        Papa.parse(attUrl + (attUrl.includes('?') ? buster : '?' + buster), {
+          download: true,
+          complete: function(results) {
+            if (results.data && results.data.length >= 2) {
+              const headers = results.data[0];
+              const myRow = results.data[1];
+              
+              const theoryStr = myRow[2] || '--%';
+              const labStr = myRow[3] || '--%';
+              const aggStr = myRow[4] || '0%';
 
-      text += `#### Completed Tasks:\n`;
-      if (completed.length === 0) {
-        text += `- None logged yet.\n`;
-      } else {
-        completed.forEach(t => {
-          text += `- [x] ${t.title} (${t.category})\n`;
-        });
-      }
+              document.getElementById('theoryPct').innerText = theoryStr;
+              document.getElementById('labPct').innerText = labStr;
+              document.getElementById('aggPct').innerText = aggStr;
 
-      navigator.clipboard.writeText(text);
-      alert('📋 Daily Debrief formatted in Markdown copied to clipboard!');
-    }
+              let totalClasses = 0;
+              let attendedClasses = 0;
+              const log = document.getElementById('attendanceLog');
+              log.innerHTML = '';
 
-    function updateMetrics() {
-      const totalCompleted = todos.filter(t => t.completed).length + archivedTodos.length;
-      document.getElementById('metricCompletedTasks').innerText = totalCompleted;
-      document.getElementById('archiveCountBadge').innerText = archivedTodos.length;
-    }
+              for (let i = 5; i < headers.length; i++) {
+                if (!headers[i]) continue;
+                const status = (myRow[i] || '').trim().toUpperCase();
+                if (status === 'P' || status === 'A') {
+                  totalClasses++;
+                  if (status === 'P') attendedClasses++;
+                }
 
-    let weeklyChart = null;
-    let monthlyChart = null;
+                const isP = status === 'P';
+                const el = document.createElement('div');
+                el.className = `flex flex-col items-center px-2 py-1 rounded-lg border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0`;
+                el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status || '-'}</span>`;
+                log.appendChild(el);
+              }
 
-    function initCharts() {
-      const ctxWeek = document.getElementById('weeklyReportChart').getContext('2d');
-      weeklyChart = new Chart(ctxWeek, {
-        type: 'bar',
-        data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          datasets: [{
-            label: 'Hours',
-            data: [2.5, 3.0, 1.8, 4.0, 2.0, 3.5, 1.5],
-            backgroundColor: 'rgba(99, 102, 241, 0.85)',
-            borderColor: '#6366f1',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
-            y: { grid: { color: 'rgba(255, 255, 255, 0.04)' }, ticks: { color: '#94a3b8' } }
+              baseAttended = attendedClasses;
+              baseTotal = totalClasses;
+
+              const aggVal = parseFloat(aggStr.replace('%', '')) || 0;
+              const badge = document.getElementById('bufferBadge');
+              const bunkBadge = document.getElementById('bunkCalculatorBadge');
+
+              const aggMarginInfo = calculateMargin(attendedClasses, totalClasses);
+              document.getElementById('aggMargin').innerText = aggMarginInfo.text;
+
+              if (aggVal >= 75) {
+                badge.innerText = 'Safe: Above 75%';
+                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium';
+                bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠ Zero buffer';
+                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold';
+                document.title = `(${aggStr}) Cockpit | Vikas N`;
+              } else {
+                badge.innerText = 'Warning: Below 75%';
+                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium';
+                bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
+                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold';
+                document.title = `⚠ (${aggStr}) Below 75% | Cockpit`;
+              }
+
+              const theoryVal = parseFloat(theoryStr.replace('%', ''));
+              if (!isNaN(theoryVal)) {
+                document.getElementById('theoryMargin').innerText = theoryVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
+                document.getElementById('theoryMargin').className = theoryVal >= 75 ? 'text-[10px] text-emerald-400 mt-1' : 'text-[10px] text-rose-400 mt-1 font-semibold';
+              }
+              const labVal = parseFloat(labStr.replace('%', ''));
+              if (!isNaN(labVal)) {
+                document.getElementById('labMargin').innerText = labVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
+                document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-1' : 'text-[10px] text-rose-400 mt-1 font-semibold';
+              }
+
+              cachedAttendance = {
+                theory: theoryStr,
+                lab: labStr,
+                aggregate: aggStr,
+                status: aggVal >= 75 ? 'Safe' : 'Warning/Deficit',
+                marginDetail: aggMarginInfo.text
+              };
+            }
           }
-        }
-      });
+        });
+      }
 
-      const ctxMonth = document.getElementById('monthlyReportChart').getContext('2d');
-      monthlyChart = new Chart(ctxMonth, {
-        type: 'doughnut',
-        data: {
-          labels: ['DSA', 'Theory', 'Lab', 'Personal'],
-          datasets: [{
-            data: [45, 25, 20, 10],
-            backgroundColor: ['#6366f1', '#38bdf8', '#10b981', '#f59e0b'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { size: 10 } } } },
-          cutout: '72%'
-        }
-      });
+      if (calUrl) {
+        Papa.parse(calUrl + (calUrl.includes('?') ? buster : '?' + buster), {
+          download: true,
+          complete: function(results) {
+            const list = document.getElementById('calendarList');
+            list.innerHTML = '';
+            const rows = results.data.slice(1);
+
+            let nextExam = null;
+            let nextHoliday = null;
+            let nextEvent = null;
+
+            const parsedRows = rows
+              .filter(r => r[0] && r[1])
+              .map(r => ({
+                name: r[0].trim(),
+                dateStr: r[1].trim(),
+                type: (r[2] || 'Event').trim(),
+                days: getDaysRemaining(r[1].trim())
+              }))
+              .sort((a, b) => a.days - b.days);
+
+            parsedRows.forEach(item => {
+              if (item.days >= 0) {
+                const lowerType = item.type.toLowerCase();
+                const lowerName = item.name.toLowerCase();
+
+                if (!nextExam && (lowerType.includes('exam') || lowerName.includes('internal assessment') || lowerName.includes('ia-') || lowerName.includes('see'))) {
+                  nextExam = item;
+                }
+                if (!nextHoliday && (lowerType.includes('holiday') || lowerName.includes('jayanthi') || lowerName.includes('pooja') || lowerName.includes('deepavali') || lowerName.includes('chaturthi'))) {
+                  nextHoliday = item;
+                }
+                if (!nextEvent && (lowerType.includes('academic') || lowerType.includes('deadline') || lowerName.includes('meeting') || lowerName.includes('freezing'))) {
+                  nextEvent = item;
+                }
+              }
+
+              const el = document.createElement('div');
+              el.className = 'flex justify-between items-center p-2.5 rounded-xl bg-slate-900/60 border border-white/[0.06] hover:border-white/[0.1] transition-all';
+              const badgeClass = item.days >= 0 ? 'text-indigo-300' : 'text-slate-500';
+              el.innerHTML = `
+                <div>
+                  <div class="font-medium text-slate-200">${item.name}</div>
+                  <div class="text-[10px] text-slate-400">${item.dateStr} &bull; <span class="${badgeClass}">${formatDaysBadge(item.days)}</span></div>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300">${item.type}</span>
+              `;
+              list.appendChild(el);
+            });
+
+            if (nextExam) {
+              document.getElementById('nextExamName').innerText = `${nextExam.name} (${nextExam.dateStr})`;
+              document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
+              cachedMilestones.exam = `${nextExam.name} on ${nextExam.dateStr} (${formatDaysBadge(nextExam.days)})`;
+            } else {
+              document.getElementById('nextExamName').innerText = 'None scheduled';
+              document.getElementById('nextExamCountdown').innerText = '--';
+            }
+
+            if (nextHoliday) {
+              document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
+              document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
+              cachedMilestones.holiday = `${nextHoliday.name} (${formatDaysBadge(nextHoliday.days)})`;
+            }
+
+            if (nextEvent) {
+              document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
+              document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
+            }
+            lucide.createIcons();
+          }
+        });
+      }
+
+      if (qUrl) {
+        Papa.parse(qUrl + (qUrl.includes('?') ? buster : '?' + buster), {
+          download: true,
+          complete: function(results) {
+            const container = document.getElementById('topicsContainer');
+            container.innerHTML = '';
+            const rows = results.data.slice(1);
+            cachedTopics = [];
+
+            rows.forEach((r, idx) => {
+              if (!r[0]) return;
+              const topicName = r[0];
+              const sheetUrl = r[1] || '#';
+              const totalQ = parseInt(r[2] || '0') || 0;
+              const completedQ = parseInt(r[3] || '0') || 0;
+              const doubtQ = parseInt(r[4] || '0') || 0;
+              const notAttemptedQ = Math.max(0, totalQ - completedQ - doubtQ);
+
+              const pct = totalQ > 0 ? Math.min(100, Math.round((completedQ / totalQ) * 100)) : 0;
+
+              cachedTopics.push({
+                name: topicName,
+                total: totalQ,
+                done: completedQ,
+                doubt: doubtQ,
+                pending: notAttemptedQ,
+                percentage: pct
+              });
+
+              const card = document.createElement('div');
+              card.className = 'p-4 bg-slate-900/60 border border-white/[0.06] hover:border-white/[0.12] rounded-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5';
+              card.innerHTML = `
+                <div>
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="font-semibold text-slate-200 capitalize truncate pr-1">${topicName}</span>
+                    <a href="${sheetUrl}" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium whitespace-nowrap">Open ↗</a>
+                  </div>
+
+                  <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-3">
+                    <div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
+                    <div class="bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 p-1.5 rounded-lg">
+                      <div class="font-bold text-xs">${completedQ}</div>
+                      <div class="text-[9px] text-slate-400">Done</div>
+                    </div>
+                    <button onclick="toggleDoubtQueue(${idx})" class="bg-amber-950/40 hover:bg-amber-900/50 border border-amber-800/60 text-amber-300 p-1.5 rounded-lg transition-colors cursor-pointer">
+                      <div class="font-bold text-xs">${doubtQ}</div>
+                      <div class="text-[9px] text-slate-400 flex items-center justify-center gap-0.5">Doubt ▾</div>
+                    </button>
+                    <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1.5 rounded-lg">
+                      <div class="font-bold text-xs">${notAttemptedQ}</div>
+                      <div class="text-[9px] text-slate-400">Pending</div>
+                    </div>
+                  </div>
+
+                  <div id="doubtDrawer-${idx}" class="hidden mt-2.5 p-2 rounded-lg bg-amber-950/20 border border-amber-500/20 text-[10px] space-y-1">
+                    <div class="font-semibold text-amber-300 flex items-center justify-between">
+                      <span>Doubt Queue (${doubtQ})</span>
+                      <a href="${sheetUrl}" target="_blank" class="underline">View in Sheet</a>
+                    </div>
+                    <p class="text-slate-400 italic">Review flagged questions in your linked sheet.</p>
+                  </div>
+                </div>
+
+                <div class="mt-3.5 flex items-center justify-between pt-2.5 border-t border-white/[0.06] text-[11px]">
+                  <span class="text-slate-400">Total: <b>${totalQ}</b></span>
+                  <span class="font-semibold ${pct === 100 ? 'text-emerald-400' : 'text-indigo-400'}">${pct}% Completed</span>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+            lucide.createIcons();
+          }
+        });
+      }
+
+      if (assignUrl) {
+        Papa.parse(assignUrl + (assignUrl.includes('?') ? buster : '?' + buster), {
+          download: true,
+          complete: function(results) {
+            const rows = results.data.slice(1);
+            cachedAssignments = [];
+            let pendingCount = 0;
+
+            rows.forEach((r) => {
+              if (!r[0]) return;
+              const title = r[0];
+              const dueDate = r[1] || 'TBD';
+              const status = (r[2] || 'Pending').trim();
+              const score = r[3] || '-';
+              const portalUrl = r[4] || '';
+
+              const isCompleted = status.toLowerCase() === 'submitted' || status.toLowerCase() === 'completed';
+              if (!isCompleted) pendingCount++;
+
+              cachedAssignments.push({
+                title,
+                dueDate,
+                status,
+                score,
+                portalUrl,
+                isCompleted
+              });
+            });
+
+            document.getElementById('filterPendingBadge').innerText = pendingCount;
+            renderAssignmentsList();
+          }
+        });
+      }
     }
 
-    function updateCharts() {
-      if (!weeklyChart || !monthlyChart) return;
-      const totalMins = focusSessions.reduce((acc, s) => acc + s.minutes, 0) + ((todos.filter(t => t.completed).length + archivedTodos.length) * 25);
-      document.getElementById('weeklyTotalHoursBadge').innerText = `${(totalMins / 60).toFixed(1)} hrs total`;
+    function exportAIPrompt() {
+      const agg = cachedAttendance.aggregate || document.getElementById('aggPct').innerText;
+      const theory = cachedAttendance.theory || document.getElementById('theoryPct').innerText;
+      const lab = cachedAttendance.lab || document.getElementById('labPct').innerText;
+      const margin = cachedAttendance.marginDetail || 'Monitoring 75% threshold';
+      const exam = cachedMilestones.exam || 'Internal Assessment 1';
+      
+      let topicSummary = '';
+      if (cachedTopics.length > 0) {
+        topicSummary = cachedTopics.map(t => `  - ${t.name}: ${t.done}/${t.total} solved (${t.percentage}%), ${t.doubt} doubts, ${t.pending} pending`).join('\n');
+      } else {
+        topicSummary = '  - DSA practice in progress';
+      }
 
-      const allTasks = [...todos, ...archivedTodos];
-      monthlyChart.data.datasets[0].data = [
-        allTasks.filter(t => t.category === 'DSA').length || 1,
-        allTasks.filter(t => t.category === 'Theory').length || 1,
-        allTasks.filter(t => t.category === 'Lab').length || 1,
-        allTasks.filter(t => t.category === 'Personal').length || 1
-      ];
-      monthlyChart.update();
+      const pendingAssign = cachedAssignments.filter(a => !a.isCompleted);
+      let assignSummary = pendingAssign.length > 0 
+        ? pendingAssign.map(a => `  - ${a.title} (Due: ${a.dueDate})`).join('\n')
+        : '  - No urgent submissions pending';
+
+      const prompt = `I am Vikas N, a 1st-year B.Tech AIML engineering student (USN: 2392608146, Section B).
+
+Here is my real-time academic cockpit status:
+1. ATTENDANCE STATUS:
+   - Aggregate: ${agg}
+   - Theory: ${theory} | Lab: ${lab}
+   - Safe-Bunk / Recovery Margin: ${margin}
+
+2. UPCOMING MILESTONES:
+   - Target Exam: ${exam}
+
+3. DSA PRACTICE GAPS:
+${topicSummary}
+
+4. PENDING ASSIGNMENTS:
+${assignSummary}
+
+TASK:
+Acting as an expert academic and software engineering mentor, generate an optimized 7-day study & problem-solving roadmap that:
+1. Allocates specific daily focus blocks to clear my open DSA doubts first.
+2. Balances upcoming coursework deadlines without falling behind in theory classes.
+3. Provides 3 high-yield conceptual tips for my pending topics.`;
+
+      navigator.clipboard.writeText(prompt);
+      alert('📋 Rich Context AI Study Prompt copied to clipboard!\nPaste it directly into Gemini or ChatGPT for your tailored study plan.');
     }
 
     window.onload = () => {
-      checkWeeklyAutoReset();
-      renderPlayerXP();
-      renderTodos();
-      updateMetrics();
-      initCharts();
-      updateCharts();
-      renderHeatmapAndDistribution();
-      renderDailyDebrief();
+      syncNavXP();
+      initInputs();
+      loadAllData();
+      if (!localStorage.getItem('ATTENDANCE_CSV')) {
+        toggleSettingsModal();
+      }
     };
   </script>
 </body>
