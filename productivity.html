@@ -773,6 +773,24 @@
       initCharts();
       updateCharts();
     };
+    // Global Keybinds
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === '1') {
+        window.location.href = 'index.html';
+      }
+      if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleZenMode();
+      }
+      if (e.key === 'Escape' && typeof isZenActive !== 'undefined' && isZenActive) {
+        toggleZenMode();
+      }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        toggleMainTimer();
+      }
+    });
   </script>
 </body>
 </html>
