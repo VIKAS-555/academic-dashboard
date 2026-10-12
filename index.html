@@ -1566,16 +1566,16 @@ TASK:
       document.getElementById('filterPendingBadge').innerText = pendingCount;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<span class="text-slate-500 col-span-full py-6 text-center text-xs">No assignments found for this filter.</span>`;
+        container.innerHTML = `<span class="text-slate-500 col-span-full py-6 text-center text-xs">No coursework submissions under this filter.</span>`;
         return;
       }
 
       filtered.forEach((a, idx) => {
-        const days = getDaysRemaining(a.deadline);
-        const isUrgent = days >= 0 && days <= 2 && !a.isCompleted;
+        const days = getDaysRemaining(a.dueDate);
+        const isUrgent = days >= 0 && days <= 3 && !a.isCompleted;
 
         const card = document.createElement('div');
-        card.className = `p-3.5 rounded-2xl border transition-all ${
+        card.className = `p-4 rounded-2xl border transition-all ${
           a.isCompleted 
             ? 'bg-[#080d19] border-white/[0.06] opacity-75' 
             : isUrgent 
@@ -1586,28 +1586,28 @@ TASK:
         card.innerHTML = `
           <div class="flex justify-between items-start gap-2 mb-2">
             <div>
-              <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">${a.subject}</span>
-              <h4 class="font-bold text-slate-100 text-xs mt-1.5 ${a.isCompleted ? 'line-through text-slate-400' : ''}">${a.title}</h4>
+              <h4 class="font-bold text-slate-100 text-xs ${a.isCompleted ? 'line-through text-slate-400' : ''}">${a.title}</h4>
+              <div class="flex items-center gap-1.5 mt-1 text-[10px] text-slate-400 font-mono">
+                <span>Due: ${a.dueDate}</span>
+                <span>&bull;</span>
+                <span class="${a.isCompleted ? 'text-emerald-400' : isUrgent ? 'text-rose-400 font-bold' : 'text-slate-300'}">${a.isCompleted ? 'Submitted' : formatDaysBadge(days)}</span>
+              </div>
             </div>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${
+            <span class="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
               a.isCompleted 
                 ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
-                : isUrgent 
-                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse' 
-                  : 'bg-slate-800 text-slate-300 border border-slate-700'
+                : 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
             }">
-              ${a.isCompleted ? 'Submitted' : formatDaysBadge(days)}
+              ${a.status}
             </span>
           </div>
 
-          <p class="text-[11px] text-slate-400 mb-3">${a.description || 'No detailed instructions provided.'}</p>
-
-          <div class="flex items-center justify-between pt-2 border-t border-white/[0.05] text-[11px]">
-            <span class="text-slate-500 font-mono text-[10px]">Due: ${a.deadline || 'TBA'}</span>
-            <div class="flex items-center gap-1.5">
-              ${a.submissionLink ? `
-                <a href="${a.submissionLink}" target="_blank" class="btn-opal-secondary px-2 py-1 text-[10px] text-cyan-300">
-                  <i data-lucide="external-link" class="w-3 h-3"></i> Portal
+          <div class="flex items-center justify-between pt-2.5 border-t border-white/[0.05] text-[11px] mt-2">
+            <span class="text-slate-400 font-mono text-[10px]">Score / Grade: <b class="text-slate-200">${a.score || '-'}</b></span>
+            <div class="flex items-center gap-2">
+              ${a.portalUrl ? `
+                <a href="${a.portalUrl}" target="_blank" class="btn-opal-secondary px-2.5 py-1 text-[10px] text-cyan-300">
+                  <i data-lucide="external-link" class="w-3 h-3"></i> Portal ↗
                 </a>
               ` : ''}
               <button onclick="toggleAssignmentSubmission(${idx})" class="btn-opal-secondary px-2.5 py-1 text-[10px] ${a.isCompleted ? 'text-amber-300' : 'text-emerald-400 font-semibold'}">
@@ -1624,304 +1624,387 @@ TASK:
     function toggleAssignmentSubmission(index) {
       if (cachedAssignments[index]) {
         cachedAssignments[index].isCompleted = !cachedAssignments[index].isCompleted;
+        cachedAssignments[index].status = cachedAssignments[index].isCompleted ? 'Submitted' : 'Pending';
         renderAssignmentsList();
         if (cachedAssignments[index].isCompleted) {
           const currentXp = parseInt(localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150');
           localStorage.setItem('ACADEMIC_DASH_PLAYER_XP', currentXp + 40);
           syncNavXP();
-          speakJarvis("Assignment submission verified, sir. Academic defense elevated.");
+          speakJarvis("Assignment submission recorded, sir. Academic defense elevated.");
         }
       }
     }
 
     /* =========================================================================
-       DATA STREAMING: PAPAPARSE CSV FETCHER
+       DATA STREAMING: EXACT PAPAPARSE GOOGLE SHEETS FETCHER (CACHE-BUSTER)
        ========================================================================= */
+    function cleanGoogleSheetUrl(url) {
+      if (!url) return '';
+      url = url.trim();
+      if (url.includes('docs.google.com/spreadsheets/d/') && !url.includes('output=csv') && !url.includes('export?format=csv')) {
+        url = url.replace(/\/edit(#gid=\d+)?(\S*)?$/, '/export?format=csv$1');
+        if (!url.includes('/export?format=csv')) {
+          url += (url.includes('?') ? '&' : '?') + 'export=download&format=csv';
+        }
+      }
+      return url;
+    }
+
     function loadAllData() {
-      const attUrl = localStorage.getItem('ATTENDANCE_CSV');
-      const calUrl = localStorage.getItem('CALENDAR_CSV');
-      const assUrl = localStorage.getItem('ASSIGNMENTS_CSV');
-      const queUrl = localStorage.getItem('QUESTIONS_CSV');
+      const buster = '&_t=' + new Date().getTime();
 
-      if (attUrl) loadAttendance(attUrl);
-      if (calUrl) loadCalendar(calUrl);
-      if (assUrl) loadAssignments(assUrl);
-      if (queUrl) loadQuestions(queUrl);
-    }
+      let attUrl = localStorage.getItem('ATTENDANCE_CSV');
+      let calUrl = localStorage.getItem('CALENDAR_CSV');
+      let qUrl = localStorage.getItem('QUESTIONS_CSV');
+      let assignUrl = localStorage.getItem('ASSIGNMENTS_CSV');
 
-    function loadAttendance(url) {
-      Papa.parse(url, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          processAttendance(results.data);
-        },
-        error: function() {
-          document.getElementById('attendanceLog').innerHTML = '<span class="text-rose-400 text-xs">Failed to load attendance CSV</span>';
-        }
-      });
-    }
+      // 1. ATTENDANCE STREAMING
+      if (attUrl) {
+        const cleanUrl = cleanGoogleSheetUrl(attUrl);
+        const fetchUrl = cleanUrl + (cleanUrl.includes('?') ? buster : '?' + buster);
 
-    function processAttendance(rows) {
-      let theoryAttended = 0, theoryTotal = 0;
-      let labAttended = 0, labTotal = 0;
-      let totalAttended = 0, totalClasses = 0;
+        Papa.parse(fetchUrl, {
+          download: true,
+          complete: function(results) {
+            if (results.data && results.data.length >= 2) {
+              const headers = results.data[0];
+              // Match student row by USN or Vikas, or default to row 1
+              const myRow = results.data.find(r => r && (
+                (r[1] && r[1].toString().trim().includes('2392608146')) ||
+                (r[0] && r[0].toString().toLowerCase().includes('vikas'))
+              )) || results.data[1];
+              
+              if (!myRow) return;
 
-      const logContainer = document.getElementById('attendanceLog');
-      logContainer.innerHTML = '';
+              const theoryStr = myRow[2] || '--%';
+              const labStr = myRow[3] || '--%';
+              const aggStr = myRow[4] || '0%';
 
-      rows.forEach(r => {
-        const type = (r['Type'] || r['type'] || 'Theory').toLowerCase();
-        const status = (r['Status'] || r['status'] || '').toLowerCase();
-        const subject = r['Subject'] || r['subject'] || 'Subject';
-        const date = r['Date'] || r['date'] || '';
+              document.getElementById('theoryPct').innerText = theoryStr;
+              document.getElementById('labPct').innerText = labStr;
+              document.getElementById('aggPct').innerText = aggStr;
 
-        const isPresent = status === 'present' || status === 'p' || status === '1';
-        const isAbsent = status === 'absent' || status === 'a' || status === '0';
+              let totalClasses = 0;
+              let attendedClasses = 0;
+              const log = document.getElementById('attendanceLog');
+              log.innerHTML = '';
 
-        if (isPresent || isAbsent) {
-          totalClasses++;
-          if (isPresent) totalAttended++;
+              for (let i = 5; i < headers.length; i++) {
+                if (!headers[i]) continue;
+                const status = (myRow[i] || '').toString().trim().toUpperCase();
+                if (status === 'P' || status === 'A') {
+                  totalClasses++;
+                  if (status === 'P') attendedClasses++;
+                }
 
-          if (type.includes('lab') || type.includes('practical')) {
-            labTotal++;
-            if (isPresent) labAttended++;
-          } else {
-            theoryTotal++;
-            if (isPresent) theoryAttended++;
+                const isP = status === 'P';
+                const el = document.createElement('div');
+                el.className = `flex flex-col items-center px-2.5 py-1.5 rounded-xl border flex-shrink-0 ${
+                  isP 
+                    ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' 
+                    : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+                }`;
+                el.innerHTML = `
+                  <span class="text-[9px] text-slate-400 font-mono truncate max-w-[85px]">${headers[i]}</span>
+                  <span class="font-bold font-mono text-xs mt-0.5">${status || '-'}</span>
+                `;
+                log.appendChild(el);
+              }
+
+              baseAttended = attendedClasses;
+              baseTotal = totalClasses;
+
+              const aggVal = parseFloat(aggStr.toString().replace('%', '')) || 0;
+              updateOpalGauge(aggVal);
+
+              const badge = document.getElementById('bufferBadge');
+              const bunkBadge = document.getElementById('bunkCalculatorBadge');
+              const aggMarginInfo = calculateMargin(attendedClasses, totalClasses);
+              
+              const aggMarginEl = document.getElementById('aggMargin');
+              if (aggMarginEl) {
+                aggMarginEl.innerText = aggMarginInfo.count > 0 ? `+${aggMarginInfo.count} Safe` : `-${aggMarginInfo.count} Deficit`;
+              }
+
+              if (aggVal >= 75) {
+                if (badge) {
+                  badge.innerText = `Safe: Above 75%`;
+                  badge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                }
+                if (bunkBadge) {
+                  bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠ On the 75% edge';
+                  bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-mono font-medium';
+                }
+              } else {
+                if (badge) {
+                  badge.innerText = `Warning: Below 75%`;
+                  badge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30";
+                }
+                if (bunkBadge) {
+                  bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
+                  bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 font-mono font-medium';
+                }
+              }
+
+              const marginSliderPill = document.getElementById('marginSliderPill');
+              if (marginSliderPill) {
+                marginSliderPill.innerText = aggMarginInfo.type === 'safe' ? `+${aggMarginInfo.count} Safe` : `Attend ${aggMarginInfo.count}`;
+                marginSliderPill.className = aggMarginInfo.type === 'safe' 
+                  ? 'text-xs font-mono font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full'
+                  : 'text-xs font-mono font-bold text-rose-300 bg-rose-950/60 border border-rose-500/30 px-3 py-1 rounded-full';
+              }
+
+              cachedAttendance = {
+                theory: theoryStr,
+                lab: labStr,
+                aggregate: aggStr,
+                attended: attendedClasses,
+                total: totalClasses,
+                status: aggVal >= 75 ? 'Safe' : 'Warning/Deficit',
+                marginDetail: aggMarginInfo.text
+              };
+            }
+          },
+          error: function(err) {
+            console.error('Attendance parse error:', err);
+            document.getElementById('attendanceLog').innerHTML = '<span class="text-rose-400 text-xs">Failed to load attendance CSV. Check CSV URL in Settings.</span>';
           }
-
-          const chip = document.createElement('div');
-          chip.className = `flex-shrink-0 px-2.5 py-1 rounded-full text-[10px] font-mono font-medium flex items-center gap-1.5 border ${
-            isPresent 
-              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' 
-              : 'bg-rose-500/10 text-rose-400 border-rose-500/25'
-          }`;
-          chip.innerHTML = `
-            <span class="w-1.5 h-1.5 rounded-full ${isPresent ? 'bg-emerald-400' : 'bg-rose-400'}"></span>
-            <span>${subject}</span>
-            <span class="text-slate-500">${date ? `(${date.slice(0,5)})` : ''}</span>
-          `;
-          logContainer.appendChild(chip);
-        }
-      });
-
-      baseAttended = totalAttended;
-      baseTotal = totalClasses;
-
-      const aggPct = totalClasses ? ((totalAttended / totalClasses) * 100).toFixed(1) : 0;
-      const thPct = theoryTotal ? ((theoryAttended / theoryTotal) * 100).toFixed(1) : 0;
-      const lbPct = labTotal ? ((labAttended / labTotal) * 100).toFixed(1) : 0;
-
-      document.getElementById('aggPct').innerText = `${aggPct}%`;
-      document.getElementById('theoryPct').innerText = `${thPct}%`;
-      document.getElementById('labPct').innerText = `${lbPct}%`;
-
-      // Update the smooth SVG Opal Arc Gauge
-      updateOpalGauge(parseFloat(aggPct));
-
-      const margin = calculateMargin(totalAttended, totalClasses);
-      const marginSliderPill = document.getElementById('marginSliderPill');
-      if (marginSliderPill) {
-        marginSliderPill.innerText = margin.type === 'safe' ? `+${margin.count} Safe` : `Attend ${margin.count}`;
-        marginSliderPill.className = margin.type === 'safe' 
-          ? 'text-xs font-mono font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full'
-          : 'text-xs font-mono font-bold text-rose-300 bg-rose-950/60 border border-rose-500/30 px-3 py-1 rounded-full';
+        });
       }
 
-      const bunkBadge = document.getElementById('bunkCalculatorBadge');
-      if (bunkBadge) {
-        bunkBadge.innerText = margin.text;
-        bunkBadge.className = margin.type === 'safe' 
-          ? 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-mono font-medium'
-          : 'text-xs px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 font-mono font-medium';
-      }
+      // 2. CALENDAR STREAMING
+      if (calUrl) {
+        const cleanUrl = cleanGoogleSheetUrl(calUrl);
+        const fetchUrl = cleanUrl + (cleanUrl.includes('?') ? buster : '?' + buster);
 
-      const bufferBadge = document.getElementById('bufferBadge');
-      if (bufferBadge) {
-        if (aggPct >= 75) {
-          bufferBadge.innerText = `Safe: ${(aggPct - 75).toFixed(1)}% Buffer`;
-          bufferBadge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
-        } else {
-          bufferBadge.innerText = `Alert: ${(75 - aggPct).toFixed(1)}% Deficit`;
-          bufferBadge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30";
-        }
-      }
+        Papa.parse(fetchUrl, {
+          download: true,
+          complete: function(results) {
+            const list = document.getElementById('calendarList');
+            list.innerHTML = '';
+            const rows = results.data.slice(1);
 
-      const aggMarginEl = document.getElementById('aggMargin');
-      if (aggMarginEl) {
-        aggMarginEl.innerText = margin.type === 'safe' ? `+${margin.count} Safe` : `-${margin.count} Needed`;
-      }
+            let nextExam = null;
+            let nextHoliday = null;
+            let nextEvent = null;
 
-      cachedAttendance = {
-        aggPct,
-        theoryPct: thPct,
-        labPct: lbPct,
-        attended: totalAttended,
-        total: totalClasses,
-        margin
-      };
-    }
+            const parsedRows = rows
+              .filter(r => r && r[0] && r[1])
+              .map(r => ({
+                name: (r[0] || '').toString().trim(),
+                dateStr: (r[1] || '').toString().trim(),
+                type: (r[2] || 'Event').toString().trim(),
+                days: getDaysRemaining((r[1] || '').toString().trim())
+              }))
+              .sort((a, b) => a.days - b.days);
 
-    function loadCalendar(url) {
-      Papa.parse(url, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          processCalendar(results.data);
-        }
-      });
-    }
+            parsedRows.forEach(item => {
+              if (item.days >= 0) {
+                const lowerType = item.type.toLowerCase();
+                const lowerName = item.name.toLowerCase();
 
-    function processCalendar(rows) {
-      const listEl = document.getElementById('calendarList');
-      listEl.innerHTML = '';
+                if (!nextExam && (lowerType.includes('exam') || lowerName.includes('internal assessment') || lowerName.includes('ia-') || lowerName.includes('see') || lowerType.includes('test'))) {
+                  nextExam = item;
+                }
+                if (!nextHoliday && (lowerType.includes('holiday') || lowerName.includes('jayanthi') || lowerName.includes('pooja') || lowerName.includes('deepavali') || lowerName.includes('chaturthi') || lowerType.includes('vacation'))) {
+                  nextHoliday = item;
+                }
+                if (!nextEvent && (lowerType.includes('academic') || lowerType.includes('deadline') || lowerName.includes('meeting') || lowerName.includes('freezing'))) {
+                  nextEvent = item;
+                }
+              }
 
-      let nextExam = null;
-      let nextHoliday = null;
-      let nextEvent = null;
+              const el = document.createElement('div');
+              el.className = 'opal-subcard p-2.5 flex items-center justify-between text-xs';
+              el.innerHTML = `
+                <div>
+                  <span class="font-medium text-slate-200 block">${item.name}</span>
+                  <span class="text-[10px] text-slate-400 font-mono">${item.dateStr} &bull; <span class="${item.days >= 0 ? 'text-emerald-300' : 'text-slate-500'}">${formatDaysBadge(item.days)}</span></span>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">${item.type}</span>
+              `;
+              list.appendChild(el);
+            });
 
-      rows.forEach(r => {
-        const title = r['Event'] || r['Title'] || r['event'] || r['name'] || 'Event';
-        const type = (r['Type'] || r['type'] || 'Event').toLowerCase();
-        const date = r['Date'] || r['date'] || '';
-        const days = getDaysRemaining(date);
+            if (nextExam) {
+              document.getElementById('nextExamName').innerText = `${nextExam.name} (${nextExam.dateStr})`;
+              document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
+              cachedMilestones.exam = `${nextExam.name} on ${nextExam.dateStr} (${formatDaysBadge(nextExam.days)})`;
+            } else {
+              document.getElementById('nextExamName').innerText = 'None scheduled';
+              document.getElementById('nextExamCountdown').innerText = '--';
+            }
 
-        if (days >= 0) {
-          if (type.includes('exam') || type.includes('test') || type.includes('cia') || type.includes('quiz')) {
-            if (!nextExam || days < nextExam.days) nextExam = { title, date, days };
-          } else if (type.includes('holiday') || type.includes('vacation')) {
-            if (!nextHoliday || days < nextHoliday.days) nextHoliday = { title, date, days };
-          } else {
-            if (!nextEvent || days < nextEvent.days) nextEvent = { title, date, days };
+            if (nextHoliday) {
+              document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
+              document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
+              cachedMilestones.holiday = `${nextHoliday.name} (${formatDaysBadge(nextHoliday.days)})`;
+            } else {
+              document.getElementById('nextHolidayName').innerText = 'None scheduled';
+              document.getElementById('nextHolidayCountdown').innerText = '--';
+            }
+
+            if (nextEvent) {
+              document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
+              document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
+            } else {
+              document.getElementById('nextEventName').innerText = 'None scheduled';
+              document.getElementById('nextEventCountdown').innerText = '--';
+            }
           }
-        }
-
-        const item = document.createElement('div');
-        item.className = "opal-subcard p-2.5 flex items-center justify-between text-xs";
-        item.innerHTML = `
-          <div>
-            <span class="font-medium text-slate-200 block">${title}</span>
-            <span class="text-[10px] text-slate-400 font-mono">${date}</span>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full ${
-            days >= 0 && days <= 3 
-              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' 
-              : 'bg-slate-800 text-slate-400 border border-slate-700'
-          }">
-            ${formatDaysBadge(days)}
-          </span>
-        `;
-        listEl.appendChild(item);
-      });
-
-      if (nextExam) {
-        document.getElementById('nextExamName').innerText = nextExam.title;
-        document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
-      }
-      if (nextHoliday) {
-        document.getElementById('nextHolidayName').innerText = nextHoliday.title;
-        document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
-      }
-      if (nextEvent) {
-        document.getElementById('nextEventName').innerText = nextEvent.title;
-        document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
+        });
       }
 
-      cachedMilestones = { nextExam, nextHoliday, nextEvent };
-    }
+      // 3. QUESTIONS & PRACTICE TOPICS
+      if (qUrl) {
+        const cleanUrl = cleanGoogleSheetUrl(qUrl);
+        const fetchUrl = cleanUrl + (cleanUrl.includes('?') ? buster : '?' + buster);
 
-    function loadAssignments(url) {
-      Papa.parse(url, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          cachedAssignments = results.data.map(r => ({
-            title: r['Title'] || r['title'] || r['Assignment'] || 'Assignment',
-            subject: r['Subject'] || r['subject'] || 'Core',
-            deadline: r['Deadline'] || r['Due Date'] || r['date'] || '',
-            description: r['Description'] || r['description'] || '',
-            submissionLink: r['Link'] || r['Submission Link'] || '',
-            isCompleted: false
-          }));
-          renderAssignmentsList();
-        }
-      });
-    }
+        Papa.parse(fetchUrl, {
+          download: true,
+          complete: function(results) {
+            const container = document.getElementById('topicsContainer');
+            container.innerHTML = '';
+            const rows = results.data.slice(1);
+            cachedTopics = [];
 
-    function loadQuestions(url) {
-      Papa.parse(url, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          processQuestions(results.data);
-        }
-      });
-    }
+            rows.forEach((r) => {
+              if (!r || !r[0]) return;
+              const topicName = r[0];
+              const sheetUrl = r[1] || '#';
+              const totalQ = parseInt(r[2] || '0') || 0;
+              const completedQ = parseInt(r[3] || '0') || 0;
+              const doubtQ = parseInt(r[4] || '0') || 0;
+              const notAttemptedQ = Math.max(0, totalQ - completedQ - doubtQ);
+              const pct = totalQ > 0 ? Math.min(100, Math.round((completedQ / totalQ) * 100)) : 0;
 
-    function processQuestions(rows) {
-      const topicMap = {};
-      rows.forEach(r => {
-        const topic = r['Topic'] || r['topic'] || 'General Practice';
-        const qTitle = r['Question'] || r['question'] || r['Title'] || 'Problem';
-        const difficulty = r['Difficulty'] || r['difficulty'] || 'Medium';
+              cachedTopics.push({
+                name: topicName,
+                total: totalQ,
+                done: completedQ,
+                doubt: doubtQ,
+                pending: notAttemptedQ,
+                percentage: pct
+              });
 
-        if (!topicMap[topic]) topicMap[topic] = [];
-        topicMap[topic].push({ title: qTitle, difficulty });
-      });
+              const card = document.createElement('div');
+              card.className = 'opal-subcard p-4 flex flex-col justify-between hover:border-emerald-500/30 transition-all';
+              card.innerHTML = `
+                <div>
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="font-bold text-slate-100 text-xs capitalize truncate pr-1">${topicName}</span>
+                    <a href="${sheetUrl}" target="_blank" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-mono font-semibold whitespace-nowrap">Open ↗</a>
+                  </div>
 
-      cachedTopics = topicMap;
-      const container = document.getElementById('topicsContainer');
-      container.innerHTML = '';
+                  <div class="w-full bg-[#050811] rounded-full h-1.5 overflow-hidden mb-3 border border-white/[0.06]">
+                    <div class="bg-emerald-400 h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                  </div>
 
-      Object.keys(topicMap).forEach(topic => {
-        const count = topicMap[topic].length;
-        const card = document.createElement('div');
-        card.className = "opal-subcard p-3.5 space-y-2 hover:border-emerald-500/30 transition-all";
-        card.innerHTML = `
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-100 text-xs">${topic}</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${count} Problems</span>
-          </div>
-          <div class="space-y-1 pt-1 max-h-36 overflow-y-auto custom-scrollbar">
-            ${topicMap[topic].slice(0, 4).map(q => `
-              <div class="text-[11px] text-slate-300 flex items-center justify-between py-0.5 hover:text-emerald-300">
-                <span class="truncate pr-1">• ${q.title}</span>
-                <span class="text-[9px] font-mono text-slate-500 flex-shrink-0">${q.difficulty}</span>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        container.appendChild(card);
-      });
+                  <div class="grid grid-cols-3 gap-1.5 text-center text-[10px] font-mono">
+                    <div class="bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 p-1.5 rounded-xl">
+                      <div class="font-bold text-xs">${completedQ}</div>
+                      <div class="text-[9px] text-slate-400">Done</div>
+                    </div>
+                    <div class="bg-amber-950/40 border border-amber-500/30 text-amber-300 p-1.5 rounded-xl">
+                      <div class="font-bold text-xs">${doubtQ}</div>
+                      <div class="text-[9px] text-slate-400">Doubts</div>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1.5 rounded-xl">
+                      <div class="font-bold text-xs">${notAttemptedQ}</div>
+                      <div class="text-[9px] text-slate-400">Pending</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3.5 flex items-center justify-between pt-2.5 border-t border-white/[0.06] text-[11px] font-mono">
+                  <span class="text-slate-400 text-[10px]">Total: <b>${totalQ}</b></span>
+                  <span class="font-semibold text-[10px] ${pct === 100 ? 'text-emerald-400' : 'text-emerald-300'}">${pct}% Done</span>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+          }
+        });
+      }
+
+      // 4. ASSIGNMENTS STREAMING
+      if (assignUrl) {
+        const cleanUrl = cleanGoogleSheetUrl(assignUrl);
+        const fetchUrl = cleanUrl + (cleanUrl.includes('?') ? buster : '?' + buster);
+
+        Papa.parse(fetchUrl, {
+          download: true,
+          complete: function(results) {
+            const rows = results.data.slice(1);
+            cachedAssignments = [];
+            let pendingCount = 0;
+
+            rows.forEach((r) => {
+              if (!r || !r[0]) return;
+              const title = r[0];
+              const dueDate = r[1] || 'TBD';
+              const status = (r[2] || 'Pending').toString().trim();
+              const score = r[3] || '-';
+              const portalUrl = r[4] || '';
+
+              const isCompleted = status.toLowerCase() === 'submitted' || status.toLowerCase() === 'completed';
+              if (!isCompleted) pendingCount++;
+
+              cachedAssignments.push({
+                title,
+                dueDate,
+                status,
+                score,
+                portalUrl,
+                isCompleted
+              });
+            });
+
+            document.getElementById('filterPendingBadge').innerText = pendingCount;
+            renderAssignmentsList();
+          }
+        });
+      }
     }
 
     /* =========================================================================
        AI MENTOR EXPORT PROMPT
        ========================================================================= */
     function exportAIPrompt() {
-      const totalDoubts = doubts.length;
-      const pendingDoubts = doubts.filter(d => !d.isResolved).length;
+      const agg = cachedAttendance.aggregate || document.getElementById('aggPct').innerText;
+      const theory = cachedAttendance.theory || document.getElementById('theoryPct').innerText;
+      const lab = cachedAttendance.lab || document.getElementById('labPct').innerText;
+      const margin = cachedAttendance.marginDetail || 'Monitoring 75% threshold';
+      const exam = cachedMilestones.exam || 'Internal Assessment 1';
+      
+      let topicSummary = '';
+      if (cachedTopics.length > 0) {
+        topicSummary = cachedTopics.map(t => `  - ${t.name}: ${t.done}/${t.total} solved (${t.percentage}%), ${t.doubt} doubts, ${t.pending} pending`).join('\n');
+      } else {
+        topicSummary = '  - DSA practice in progress';
+      }
 
-      let prompt = `I am Vikas N, a 1st-year B.Tech AIML student (USN: 2392608146) at CMR University.
+      const pendingAssign = cachedAssignments.filter(a => !a.isCompleted);
+      let assignSummary = pendingAssign.length > 0 
+        ? pendingAssign.map(a => `  - ${a.title} (Due: ${a.dueDate})`).join('\n')
+        : '  - No urgent submissions pending';
+
+      const prompt = `I am Vikas N, a 1st-year B.Tech AIML student (USN: 2392608146, Sec B).
 Here is my current live academic cockpit status:
 
 [ATTENDANCE & DEFENSE]
-- Aggregate Attendance: ${cachedAttendance.aggPct || '--'}%
-- Theory: ${cachedAttendance.theoryPct || '--'}%
-- Lab: ${cachedAttendance.labPct || '--'}%
-- Safe Bunk Buffer: ${cachedAttendance.margin ? cachedAttendance.margin.text : 'Pending data'}
+- Aggregate Attendance: ${agg}
+- Theory: ${theory} | Lab: ${lab}
+- Safe Bunk Buffer: ${margin}
 
-[MILESTONES]
-- Next Exam: ${cachedMilestones.nextExam ? `${cachedMilestones.nextExam.title} (in ${cachedMilestones.nextExam.days} days)` : 'None pending'}
-- Next Holiday: ${cachedMilestones.nextHoliday ? `${cachedMilestones.nextHoliday.title} (in ${cachedMilestones.nextHoliday.days} days)` : 'None pending'}
+[UPCOMING MILESTONES]
+- Target Exam: ${exam}
 
-[ACTIVE COURSEWORK & DOUBTS]
-- Unresolved Doubts in Vault: ${pendingDoubts} out of ${totalDoubts} total doubts.
+[DSA PRACTICE GAPS]
+${topicSummary}
+
+[PENDING ASSIGNMENTS]
+${assignSummary}
 
 TASK:
 Based on my schedule and current attendance buffer, provide a prioritized study strategy for this week to maintain my 75% attendance equilibrium and master pending DSA/AIML topics.`;
@@ -1938,7 +2021,10 @@ Based on my schedule and current attendance buffer, provide a prioritized study 
       updateJarvisVoiceUI();
       renderDoubtsLedger();
       loadAllData();
-      updateOpalGauge(85); // Initial pleasant arc state until CSV syncs
+      
+      if (!localStorage.getItem('ATTENDANCE_CSV')) {
+        toggleSettingsModal();
+      }
     });
   </script>
 
