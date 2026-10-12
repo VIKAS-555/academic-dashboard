@@ -1,44 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#07090e" />
-  <title>Academic Dashboard | Vikas N</title>
+  <meta name="theme-color" content="#080b11" />
+  <title>Academic Cockpit | Vikas N</title>
+  
+  <!-- Modern CDN Fonts & Frameworks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cockpit: {
+              base: '#080b11',
+              card: 'rgba(13, 18, 30, 0.72)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              accent: '#6366f1',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            hud: ['Orbitron', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@600;800&display=swap');
-    body { 
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #07090e;
-    }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    .font-hud { font-family: 'Orbitron', sans-serif; }
-    
-    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 6px; }
 
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.18); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.35); }
+
+    /* Base Aesthetic */
+    body {
+      background-color: #080b11;
+      background-image: 
+        radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.07) 0px, transparent 50%),
+        radial-gradient(at 85% 20%, rgba(6, 182, 212, 0.06) 0px, transparent 50%),
+        radial-gradient(at 50% 80%, rgba(139, 92, 246, 0.05) 0px, transparent 55%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      color: #f1f5f9;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    /* Elite Glassmorphism */
     .glass-panel {
-      background: rgba(13, 17, 27, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      background: rgba(13, 18, 30, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+        0 12px 36px -8px rgba(0, 0, 0, 0.6),
+        0 4px 12px -2px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     }
     .glass-panel:hover {
-      border-color: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.32);
+      box-shadow: 
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+        0 16px 40px -8px rgba(0, 0, 0, 0.7),
+        0 0 25px -5px rgba(99, 102, 241, 0.12);
     }
 
+    /* Sub-card styling */
+    .glass-card-sub {
+      background: rgba(18, 24, 38, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card-sub:hover {
+      background: rgba(22, 30, 48, 0.75);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Ambient Breathing Orbs */
     @keyframes auraBreathe {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.08); }
+      0%, 100% { opacity: 0.35; transform: scale(1) translate(0, 0); }
+      50% { opacity: 0.65; transform: scale(1.1) translate(15px, -10px); }
     }
-    .ambient-glow { animation: auraBreathe 8s ease-in-out infinite; }
+    .ambient-glow { animation: auraBreathe 10s ease-in-out infinite; }
 
+    /* Marvel Arc Reactor Animations */
     @keyframes arcSpinClockwise {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -48,85 +112,143 @@
       to { transform: rotate(0deg); }
     }
     @keyframes reactorPulse {
-      0%, 100% { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6)); }
-      50% { filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.95)); }
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.65)); }
+      50% { filter: drop-shadow(0 0 26px rgba(6, 182, 212, 0.95)); }
     }
     .arc-spin-cw { animation: arcSpinClockwise 12s linear infinite; }
     .arc-spin-ccw { animation: arcSpinCounter 8s linear infinite; }
     .reactor-pulse { animation: reactorPulse 3s ease-in-out infinite; }
 
+    /* Urgent Assignment Pulsing Glow */
     @keyframes pulseGlow {
-      0%, 100% { border-color: rgba(244, 63, 94, 0.4); box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
-      50% { border-color: rgba(244, 63, 94, 0.9); box-shadow: 0 0 25px rgba(244, 63, 94, 0.4); }
+      0%, 100% { border-color: rgba(244, 63, 94, 0.4); box-shadow: 0 0 16px rgba(244, 63, 94, 0.2); }
+      50% { border-color: rgba(244, 63, 94, 0.85); box-shadow: 0 0 28px rgba(244, 63, 94, 0.45); }
     }
-    .urgent-assignment { animation: pulseGlow 2.5s infinite; }
+    .urgent-assignment { animation: pulseGlow 2.2s infinite; }
+
+    /* Shimmer Badge */
+    @keyframes badgeShine {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .badge-shimmer {
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.3) 50%, rgba(99, 102, 241, 0.1) 100%);
+      background-size: 200% 100%;
+      animation: badgeShine 4s infinite linear;
+    }
+
+    /* Keycaps */
+    .kbd-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #cbd5e1;
+    }
   </style>
 </head>
-<body class="text-slate-100 min-h-screen pb-14 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
 
-  <!-- Ambient Glow Orbs -->
-  <div class="fixed top-[-10%] left-[15%] w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none ambient-glow -z-10"></div>
-  <div class="fixed bottom-[-10%] right-[15%] w-[550px] h-[550px] rounded-full bg-violet-600/10 blur-[140px] pointer-events-none ambient-glow -z-10" style="animation-delay: 4s;"></div>
+<body class="text-slate-100 min-h-screen pb-16 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden font-sans">
 
-  <!-- Top Navigation -->
-  <nav class="border-b border-white/[0.06] bg-[#07090e]/80 backdrop-blur-xl sticky top-0 z-40 px-4 md:px-8 py-3.5 flex flex-wrap justify-between items-center gap-3">
+  <!-- Ambient Glow Background Orbs -->
+  <div class="fixed top-[-12%] left-[10%] w-[600px] h-[600px] rounded-full bg-indigo-600/15 blur-[140px] pointer-events-none ambient-glow -z-10"></div>
+  <div class="fixed top-[40%] right-[-10%] w-[650px] h-[650px] rounded-full bg-cyan-600/12 blur-[150px] pointer-events-none ambient-glow -z-10" style="animation-delay: 3.5s;"></div>
+  <div class="fixed bottom-[-10%] left-[20%] w-[550px] h-[550px] rounded-full bg-violet-600/12 blur-[140px] pointer-events-none ambient-glow -z-10" style="animation-delay: 6s;"></div>
+
+  <!-- Top Navigation Bar -->
+  <nav class="border-b border-white/[0.07] bg-[#080b11]/85 backdrop-blur-2xl sticky top-0 z-40 px-4 md:px-8 py-3 flex flex-wrap justify-between items-center gap-3">
     <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">V</div>
+      <div class="relative group cursor-pointer" onclick="openCommandPalette()">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center font-extrabold text-white shadow-lg shadow-indigo-500/25 ring-1 ring-white/20 group-hover:scale-105 transition-transform duration-200">
+          <span class="font-hud tracking-wider text-sm">V</span>
+        </div>
+        <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[#080b11] animate-pulse" title="System Live"></div>
+      </div>
+
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-sm font-bold tracking-wide">Academic Dashboard</h1>
-          <span id="navRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Lvl 1 · Code Novice</span>
+          <h1 class="text-sm font-bold tracking-wide text-white flex items-center gap-1.5">
+            Academic Cockpit
+            <span class="text-[10px] text-cyan-400/90 font-mono font-normal">v3.0</span>
+          </h1>
+          <span id="navRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full badge-shimmer text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
         </div>
-        <p class="text-[11px] text-slate-400">USN: 2392608146 | Section B &bull; AIML</p>
+        <div class="flex items-center gap-2 text-[11px] text-slate-400">
+          <span>USN: <strong class="text-slate-300 font-mono">2392608146</strong></span>
+          <span class="text-slate-600">&bull;</span>
+          <span>Sec B &bull; AIML</span>
+          <span class="text-slate-600">&bull;</span>
+          <span id="tacticalClock" class="font-mono text-cyan-300 text-[10px] hidden sm:inline">--:--:--</span>
+        </div>
       </div>
     </div>
 
-    <!-- Switcher, JARVIS Mute Button & Tools -->
-    <div class="flex items-center gap-2.5">
-      <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" title="Toggle J.A.R.V.I.S. Audio Synthesizer" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/20 transition-all flex items-center gap-1.5 text-xs font-semibold">
-        <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-sky-400"></i>
+    <!-- Right Controls: Command Palette, JARVIS, Navigation Tabs, Tools -->
+    <div class="flex items-center gap-2 md:gap-2.5">
+      <!-- Quick Command Palette Button -->
+      <button onclick="openCommandPalette()" title="Command Palette (Cmd+K)" class="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] text-xs transition-all hover:border-indigo-500/40">
+        <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+        <span class="text-slate-400 text-[11px]">Command Palette</span>
+        <span class="kbd-chip">⌘K</span>
+      </button>
+
+      <!-- JARVIS Audio Toggle Button -->
+      <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" title="Toggle J.A.R.V.I.S. Audio Synthesizer" class="px-2.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold shadow-sm">
+        <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-cyan-400"></i>
         <span class="hidden sm:inline" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
       </button>
 
-      <div class="flex items-center bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/25 flex items-center gap-1.5">
+      <!-- View Switcher Tabs -->
+      <div class="flex items-center bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold shadow-inner">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all">
           <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
           <span>Dashboard</span>
-          <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200">1</span>
+          <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200 font-mono">1</span>
         </a>
         <a href="productivity.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
           <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400"></i>
           <span>Productivity</span>
-          <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400">2</span>
+          <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400 font-mono">2</span>
         </a>
       </div>
 
-      <button onclick="exportAIPrompt()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
+      <!-- Export AI Prompt -->
+      <button onclick="exportAIPrompt()" title="Compile full academic snapshot into AI roadmap prompt" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-gradient-to-r from-indigo-500/15 to-violet-500/15 hover:from-indigo-500/25 hover:to-violet-500/25 text-indigo-300 border border-indigo-500/30 transition-all hover:scale-[1.02] active:scale-95 shadow-sm">
         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
-        <span>Export AI Prompt</span>
+        <span class="hidden md:inline">Export AI Prompt</span>
+        <span class="md:hidden">AI</span>
       </button>
 
-      <button onclick="toggleSettingsModal()" class="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/[0.06] transition-colors border border-transparent hover:border-white/[0.08]">
+      <!-- Settings Button -->
+      <button onclick="toggleSettingsModal()" title="Dashboard Settings & Sheet URLs" class="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/[0.06] transition-colors border border-transparent hover:border-white/[0.08]">
         <i data-lucide="settings" class="w-4 h-4"></i>
       </button>
     </div>
   </nav>
 
+  <!-- Main Content Layout -->
   <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
     <!-- Row 1: Attendance Overview & Milestones -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       
       <!-- Attendance Card with Marvel ARC REACTOR Tactical HUD (7 cols) -->
-      <div class="lg:col-span-7 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
+      <div class="lg:col-span-7 glass-panel rounded-2xl p-5 md:p-6 flex flex-col justify-between">
         <div>
+          <!-- Header Bar -->
           <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-            <h2 class="text-sm font-semibold flex items-center gap-2">
-              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Attendance Overview
+            <h2 class="text-sm font-semibold flex items-center gap-2 text-slate-100">
+              <span class="p-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+              </span>
+              <span>Attendance Defense Shield</span>
             </h2>
-            <div class="flex items-center gap-2">
-              <button onclick="toggleSimulator()" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 font-semibold transition-all flex items-center gap-1 hover:-translate-y-0.5">
-                <i data-lucide="sliders" class="w-3.5 h-3.5"></i> What-If Simulator
+            <div class="flex items-center gap-2 flex-wrap">
+              <button onclick="toggleSimulator()" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold transition-all flex items-center gap-1.5 hover:-translate-y-0.5 shadow-sm">
+                <i data-lucide="sliders" class="w-3.5 h-3.5 text-indigo-400"></i> What-If Simulator
               </button>
               <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-white/[0.08] text-slate-300 font-medium">Calculating...</span>
               <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Safe: Above 75%</span>
@@ -134,72 +256,74 @@
           </div>
 
           <!-- Attendance What-If Simulator Drawer -->
-          <div id="simulatorDrawer" class="hidden mb-4 p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs space-y-3">
+          <div id="simulatorDrawer" class="hidden mb-5 p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 text-xs space-y-3 shadow-xl">
             <div class="flex justify-between items-center">
-              <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px]">
-                <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Attendance Margin Simulator
+              <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px] font-mono">
+                <i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-400"></i> Attendance Margin Simulator
               </span>
               <button onclick="resetSimulator()" class="text-[10px] text-slate-400 hover:text-white underline">Reset</button>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="text-slate-400 block mb-1">Simulate Attended Classes (+P):</label>
-                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
+                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-indigo-500" />
               </div>
               <div>
                 <label class="text-slate-400 block mb-1">Simulate Missed Classes (+A):</label>
-                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-mono outline-none" />
+                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-rose-500" />
               </div>
             </div>
             <div id="simResultBox" class="p-2.5 rounded-lg bg-slate-800/80 border border-white/[0.06] flex justify-between items-center">
-              <span class="text-slate-300">Simulated Aggregate:</span>
+              <span class="text-slate-300 font-medium">Simulated Aggregate:</span>
               <span id="simResultPct" class="font-mono font-bold text-sm text-indigo-400">--%</span>
             </div>
           </div>
 
           <!-- Top Attendance Metric Badges -->
           <div class="grid grid-cols-3 gap-3 mb-4 text-center">
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
-              <span class="text-xs text-slate-400">Theory</span>
-              <div id="theoryPct" class="text-2xl font-bold mt-1 text-slate-100">--%</div>
-              <div id="theoryMargin" class="text-[10px] text-slate-500 mt-1">Margin: --</div>
+            <div class="glass-card-sub p-3.5 rounded-xl">
+              <span class="text-[11px] text-slate-400 font-medium uppercase tracking-wider block">Theory</span>
+              <div id="theoryPct" class="text-2xl font-bold font-mono mt-1 text-slate-100">--%</div>
+              <div id="theoryMargin" class="text-[10px] text-slate-500 mt-1 font-mono">Margin: --</div>
             </div>
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
-              <span class="text-xs text-slate-400">Lab</span>
-              <div id="labPct" class="text-2xl font-bold mt-1 text-slate-100">--%</div>
-              <div id="labMargin" class="text-[10px] text-slate-500 mt-1">Margin: --</div>
+            <div class="glass-card-sub p-3.5 rounded-xl">
+              <span class="text-[11px] text-slate-400 font-medium uppercase tracking-wider block">Lab</span>
+              <div id="labPct" class="text-2xl font-bold font-mono mt-1 text-slate-100">--%</div>
+              <div id="labMargin" class="text-[10px] text-slate-500 mt-1 font-mono">Margin: --</div>
             </div>
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-white/[0.06]">
-              <span class="text-xs text-slate-400">Aggregate</span>
-              <div id="aggPct" class="text-2xl font-bold mt-1 text-indigo-400">--%</div>
-              <div id="aggMargin" class="text-[10px] text-slate-400 mt-1">Margin: --</div>
+            <div class="glass-card-sub p-3.5 rounded-xl border-indigo-500/25 bg-indigo-950/20">
+              <span class="text-[11px] text-indigo-300 font-medium uppercase tracking-wider block">Aggregate</span>
+              <div id="aggPct" class="text-2xl font-bold font-mono mt-1 text-indigo-300 drop-shadow-sm">--%</div>
+              <div id="aggMargin" class="text-[10px] text-indigo-400 mt-1 font-mono font-semibold">Margin: --</div>
             </div>
           </div>
 
-          <!-- MARVEL ARC REACTOR TACTICAL HUD -->
-          <div class="relative bg-gradient-to-r from-sky-950/20 via-slate-900/80 to-slate-900/40 border border-sky-500/20 rounded-2xl p-4 mb-4 backdrop-blur-md shadow-inner flex items-center justify-between gap-4">
+          <!-- MARVEL ARC REACTOR TACTICAL HUD (INTERACTIVE) -->
+          <div class="relative bg-gradient-to-r from-cyan-950/30 via-slate-900/90 to-slate-900/60 border border-cyan-500/30 rounded-2xl p-4 mb-5 backdrop-blur-md shadow-inner flex items-center justify-between gap-4 group cursor-pointer hover:border-cyan-400/50 transition-all" onclick="triggerReactorOvercharge()" title="Click to pulse Arc Reactor telemetry">
             <div class="flex items-center gap-4">
+              <!-- Holographic Arc Reactor SVG Core -->
               <div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0 reactor-pulse">
-                <svg class="w-16 h-16 absolute arc-spin-cw text-sky-400/50" viewBox="0 0 100 100">
+                <svg class="w-16 h-16 absolute arc-spin-cw text-cyan-400/60" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" stroke-dasharray="8 6" fill="transparent"></circle>
+                  <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 8" fill="transparent" class="text-indigo-400/40"></circle>
                 </svg>
-                <svg class="w-12 h-12 absolute arc-spin-ccw text-cyan-300/70" viewBox="0 0 100 100">
+                <svg class="w-12 h-12 absolute arc-spin-ccw text-sky-300/80" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="3" stroke-dasharray="14 10" fill="transparent"></circle>
-                  <polygon points="50,15 62,35 83,38 68,54 72,75 50,65 28,75 32,54 17,38 38,35" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-sky-500/30"></polygon>
+                  <polygon points="50,15 62,35 83,38 68,54 72,75 50,65 28,75 32,54 17,38 38,35" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-cyan-400/40"></polygon>
                 </svg>
-                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-400 to-cyan-200 shadow-[0_0_15px_#38bdf8] flex items-center justify-center">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-sky-200 shadow-[0_0_20px_#22d3ee] flex items-center justify-center">
                   <div class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></div>
                 </div>
               </div>
 
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-hud font-bold tracking-widest text-sky-400 flex items-center gap-1.5 uppercase">
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span> Stark Defense Protocol
+                  <span class="text-[10px] font-hud font-bold tracking-widest text-cyan-400 flex items-center gap-1.5 uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Stark Defense Protocol
                   </span>
-                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-300 border border-sky-500/30 font-mono">MARK-85</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">MARK-85</span>
                 </div>
-                <h4 id="jarvisStatusHeadline" class="text-xs font-bold text-slate-100 mt-0.5 tracking-wide">ARC REACTOR: ONLINE</h4>
+                <h4 id="jarvisStatusHeadline" class="text-xs font-bold text-slate-100 mt-0.5 tracking-wide font-hud">ARC REACTOR: ONLINE</h4>
                 <p id="jarvisStatusDetail" class="text-[11px] text-slate-400 font-mono mt-0.5 leading-tight">
                   J.A.R.V.I.S.: Shields operating. Initializing telemetry scan...
                 </p>
@@ -208,67 +332,82 @@
 
             <div class="hidden sm:flex flex-col items-end flex-shrink-0 text-right">
               <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold font-mono">Core Power</span>
-              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-sky-300">98.4%</span>
+              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-cyan-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">98.4%</span>
             </div>
           </div>
-
         </div>
 
+        <!-- Recent Class Log Timeline -->
         <div>
-          <h3 class="text-xs font-semibold text-slate-400 mb-2.5 uppercase tracking-wider">Recent Class Log</h3>
-          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs">
-            <span class="text-slate-500">Connect Attendance CSV to view timeline</span>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Recent Class Log Timeline</h3>
+            <span class="text-[10px] text-slate-500 font-mono">Chronological Feed</span>
+          </div>
+          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs min-h-[48px] items-center">
+            <span class="text-slate-500 text-xs">Connect Attendance CSV in settings to view live session timeline</span>
           </div>
         </div>
       </div>
 
       <!-- Smart Milestones Card (5 cols) -->
-      <div class="lg:col-span-5 glass-panel rounded-2xl p-6 flex flex-col justify-between transition-all duration-300">
+      <div class="lg:col-span-5 glass-panel rounded-2xl p-5 md:p-6 flex flex-col justify-between">
         <div>
           <h2 class="text-sm font-semibold flex items-center justify-between mb-4">
-            <span class="flex items-center gap-2">
-              <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i> Next Milestones
+            <span class="flex items-center gap-2 text-slate-100">
+              <span class="p-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+              </span>
+              <span>Next Milestones</span>
             </span>
-            <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Auto-Tracking</span>
+            <span class="text-[10px] text-indigo-400/90 font-mono font-semibold bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Auto-Tracking</span>
           </h2>
           
-          <div class="space-y-2.5 mb-4">
-            <div id="nextExamCard" class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <i data-lucide="alert-circle" class="w-4 h-4 text-rose-400 flex-shrink-0"></i>
+          <div class="space-y-3 mb-4">
+            <!-- Next Exam Card -->
+            <div id="nextExamCard" class="p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-center justify-between transition-all hover:border-rose-500/40">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-rose-500/15 text-rose-400 border border-rose-500/30 flex-shrink-0">
+                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                </div>
                 <div>
-                  <div class="text-[10px] uppercase font-bold text-rose-400">Next Exam / Test</div>
-                  <div id="nextExamName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                  <div class="text-[10px] uppercase font-bold text-rose-400 font-mono">Next Exam / Test</div>
+                  <div id="nextExamName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextExamCountdown" class="text-xs font-bold text-rose-300 bg-rose-950/60 px-2.5 py-0.5 rounded border border-rose-800/60">--</div>
+              <div id="nextExamCountdown" class="text-xs font-mono font-bold text-rose-300 bg-rose-950/80 px-2.5 py-1 rounded-lg border border-rose-800/80">--</div>
             </div>
 
-            <div id="nextHolidayCard" class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <i data-lucide="sun" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+            <!-- Next Holiday Card -->
+            <div id="nextHolidayCard" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-between transition-all hover:border-emerald-500/40">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex-shrink-0">
+                  <i data-lucide="sun" class="w-4 h-4"></i>
+                </div>
                 <div>
-                  <div class="text-[10px] uppercase font-bold text-emerald-400">Next Holiday</div>
-                  <div id="nextHolidayName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                  <div class="text-[10px] uppercase font-bold text-emerald-400 font-mono">Next Holiday</div>
+                  <div id="nextHolidayName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextHolidayCountdown" class="text-xs font-bold text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded border border-emerald-800/60">--</div>
+              <div id="nextHolidayCountdown" class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-800/80">--</div>
             </div>
 
-            <div id="nextEventCard" class="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <i data-lucide="clock" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+            <!-- Next Event / Deadline Card -->
+            <div id="nextEventCard" class="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/25 flex items-center justify-between transition-all hover:border-indigo-500/40">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex-shrink-0">
+                  <i data-lucide="clock" class="w-4 h-4"></i>
+                </div>
                 <div>
-                  <div class="text-[10px] uppercase font-bold text-indigo-400">Next Event / Deadline</div>
-                  <div id="nextEventName" class="text-xs font-semibold text-slate-200">Finding...</div>
+                  <div class="text-[10px] uppercase font-bold text-indigo-400 font-mono">Next Event / Deadline</div>
+                  <div id="nextEventName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextEventCountdown" class="text-xs font-bold text-indigo-300 bg-indigo-950/60 px-2.5 py-0.5 rounded border border-indigo-800/60">--</div>
+              <div id="nextEventCountdown" class="text-xs font-mono font-bold text-indigo-300 bg-indigo-950/80 px-2.5 py-1 rounded-lg border border-indigo-800/80">--</div>
             </div>
           </div>
 
-          <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Upcoming Schedule</h3>
-          <div id="calendarList" class="space-y-2 max-h-[145px] overflow-y-auto pr-1 custom-scrollbar text-xs">
+          <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Upcoming Schedule Calendar</h3>
+          <div id="calendarList" class="space-y-2 max-h-[155px] overflow-y-auto pr-1 custom-scrollbar text-xs">
             <span class="text-slate-500">Connect Calendar CSV to view schedule</span>
           </div>
         </div>
@@ -276,35 +415,43 @@
     </div>
 
     <!-- Row 2: Practice Topics & Question Bank -->
-    <div class="glass-panel rounded-2xl p-6 transition-all duration-300">
-      <div class="flex justify-between items-center mb-5">
+    <div class="glass-panel rounded-2xl p-5 md:p-6">
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
         <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="code-2" class="w-4 h-4 text-sky-400"></i> Practice Topics & Question Bank
+          <h2 class="text-sm font-semibold flex items-center gap-2 text-slate-100">
+            <span class="p-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              <i data-lucide="code-2" class="w-4 h-4"></i>
+            </span>
+            <span>Practice Topics & Question Bank</span>
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">Live problem progress from connected Google Sheets</p>
         </div>
-        <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-medium">Live Dropdown Sync</span>
+        <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-mono font-medium flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live Dropdown Sync
+        </span>
       </div>
 
       <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-        <span class="text-slate-500">Connect Questions CSV to load topics</span>
+        <span class="text-slate-500 col-span-full py-4 text-center">Connect Questions CSV in settings to load practice topics</span>
       </div>
     </div>
 
     <!-- Row 3: STARK DOUBT VAULT (SCREENSHOT, PASTE & MULTI-FORMAT RESOLUTIONS) -->
-    <div class="glass-panel rounded-2xl p-6 space-y-4 transition-all duration-300">
+    <div class="glass-panel rounded-2xl p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i> Stark Doubt Vault & Multi-Format Archive
+          <h2 class="text-sm font-semibold flex items-center gap-2 text-slate-100">
+            <span class="p-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <i data-lucide="help-circle" class="w-4 h-4"></i>
+            </span>
+            <span>Stark Doubt Vault & Multi-Format Archive</span>
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">Paste/upload screenshots of questions, ask J.A.R.V.I.S., and resolve with notes, photos, or PDFs</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-            <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-all">All (<span id="doubtTotalBadge">0</span>)</button>
+          <div class="flex items-center gap-1 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+            <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-all shadow-sm">All (<span id="doubtTotalBadge">0</span>)</button>
             <button onclick="setDoubtFilter('pending')" id="doubtFilterPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="doubtPendingBadge">0</span>)</button>
             <button onclick="setDoubtFilter('resolved')" id="doubtFilterResolved" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Resolved</button>
           </div>
@@ -312,29 +459,29 @@
       </div>
 
       <!-- Doubt Creation Form with Screenshot & Paste Zone -->
-      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 text-xs bg-slate-900/70 p-4 rounded-xl border border-white/[0.06]">
-        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 text-xs bg-slate-900/75 p-4 rounded-xl border border-white/[0.07] shadow-inner">
+        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-slate-800/80 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" />
+        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-slate-800/80 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" />
         <button type="submit" class="md:col-span-3 px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-md shadow-amber-600/20 active:scale-95">
           <i data-lucide="plus" class="w-3.5 h-3.5"></i>
           Log New Doubt
         </button>
 
-        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-[11px]"></textarea>
+        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-slate-800/80 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-[11px] transition-colors"></textarea>
 
         <!-- Screenshot Dropzone -->
-        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border-2 border-dashed border-slate-700 hover:border-amber-500/60 bg-slate-950/40 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none transition-colors">
+        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border-2 border-dashed border-slate-700/80 hover:border-amber-500/60 bg-slate-950/40 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none transition-colors">
           <div class="flex items-center gap-2.5">
             <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
               <i data-lucide="image" class="w-4 h-4"></i>
             </div>
             <div>
               <span class="text-xs font-semibold text-slate-200 block">Attach Question Screenshot</span>
-              <span class="text-[10px] text-slate-400">Click & press <kbd class="px-1 py-0.5 rounded bg-slate-800 border border-slate-700 font-mono text-slate-300">Cmd+V</kbd> to paste screenshot directly, or browse:</span>
+              <span class="text-[10px] text-slate-400">Click & press <kbd class="kbd-chip">Cmd+V</kbd> to paste screenshot directly, or browse:</span>
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <label class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5">
+            <label class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition-colors">
               <i data-lucide="upload" class="w-3 h-3"></i> Upload Image
               <input type="file" id="doubtImageInput" accept="image/*" onchange="handleDoubtImageUpload(event)" class="hidden" />
             </label>
@@ -351,28 +498,45 @@
     </div>
 
     <!-- Row 4: Upgraded Assignments & Submissions -->
-    <div class="glass-panel rounded-2xl p-6 space-y-4 transition-all duration-300">
+    <div class="glass-panel rounded-2xl p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div>
-          <h2 class="text-sm font-semibold flex items-center gap-2">
-            <i data-lucide="file-check-2" class="w-4 h-4 text-amber-400"></i> Assignments & Lab Submissions
+          <h2 class="text-sm font-semibold flex items-center gap-2 text-slate-100">
+            <span class="p-1 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              <i data-lucide="file-check-2" class="w-4 h-4"></i>
+            </span>
+            <span>Assignments & Lab Submissions</span>
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">Coursework deadlines with urgency warnings and submission links</p>
         </div>
 
         <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all">All</button>
+          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all shadow-sm">All</button>
           <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="filterPendingBadge">0</span>)</button>
           <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Submitted</button>
         </div>
       </div>
 
       <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
-        <span class="text-slate-500">Connect Assignments CSV to view submissions</span>
+        <span class="text-slate-500 col-span-full py-4 text-center">Connect Assignments CSV to view submissions</span>
       </div>
     </div>
 
   </main>
+
+  <!-- QUICK COMMAND PALETTE MODAL (CMD+K) -->
+  <div id="cmdPaletteModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
+    <div class="bg-[#0e1422] border border-white/[0.12] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden transition-all transform scale-100" onclick="event.stopPropagation()">
+      <div class="p-3.5 border-b border-white/[0.08] flex items-center gap-3">
+        <i data-lucide="search" class="w-4 h-4 text-indigo-400"></i>
+        <input type="text" id="cmdPaletteInput" oninput="filterPaletteActions()" placeholder="Type a command or jump to feature... (e.g. simulator, prompt, focus)" class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none" />
+        <span class="kbd-chip">ESC</span>
+      </div>
+      <div id="cmdPaletteResults" class="p-2 max-h-72 overflow-y-auto custom-scrollbar text-xs space-y-1">
+        <!-- Palette Action Items injected dynamically -->
+      </div>
+    </div>
+  </div>
 
   <!-- MULTI-FORMAT RESOLUTION MODAL -->
   <div id="resolveModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
@@ -410,13 +574,13 @@
 
           <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2">
             <span class="text-[11px] font-bold text-slate-300 block flex items-center gap-1.5">
-              <i data-lucide="file-text" class="w-3.5 h-3.5 text-sky-400"></i> Solution PDF Document
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i> Solution PDF Document
             </span>
             <label class="w-full px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold cursor-pointer flex items-center justify-center gap-1.5 transition-all">
               <i data-lucide="upload" class="w-3.5 h-3.5"></i> Select PDF File
               <input type="file" id="resolvePdfFile" accept="application/pdf" onchange="handleResolvePdfUpload(event)" class="hidden" />
             </label>
-            <div id="resolvePdfPreview" class="hidden text-[10px] text-sky-400 font-mono truncate">PDF Attached ✅</div>
+            <div id="resolvePdfPreview" class="hidden text-[10px] text-cyan-400 font-mono truncate">PDF Attached ✅</div>
           </div>
         </div>
       </div>
@@ -448,7 +612,7 @@
       </div>
 
       <div class="p-3 bg-slate-900/80 border border-white/[0.06] rounded-xl space-y-2">
-        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block">Cross-Device Data Backup</span>
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block font-mono">Cross-Device Data Backup</span>
         <p class="text-[11px] text-slate-400">Export or restore your focus history, doubts, tasks, and XP to sync between devices.</p>
         <div class="flex gap-2 pt-1">
           <button onclick="exportAllDataBackup()" class="flex-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
@@ -464,19 +628,19 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-300 font-medium mb-1">Attendance CSV Link</label>
-          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Calendar CSV Link</label>
-          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Assignments CSV Link</label>
-          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Questions CSV Link</label>
-          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
       </div>
 
@@ -490,9 +654,28 @@
     lucide.createIcons();
 
     /* =========================================================================
-       J.A.R.V.I.S. NATIVE SPEECH SYNTHESIS ENGINE (Calibrated Natural Voice)
+       AUDIO FEEDBACK & J.A.R.V.I.S. SPEECH SYNTHESIS ENGINE
        ========================================================================= */
     let jarvisMuted = localStorage.getItem('JARVIS_VOICE_MUTED') === 'true';
+
+    // Native Web Audio UI Sound FX
+    const audioCtx = (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+    function playBeep(freq = 600, duration = 0.06, type = 'sine') {
+      if (jarvisMuted || !audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
 
     function updateJarvisVoiceUI() {
       const btn = document.getElementById('jarvisVoiceBtn');
@@ -503,7 +686,7 @@
         icon.setAttribute('data-lucide', 'volume-x');
         label.innerText = 'J.A.R.V.I.S. Muted';
       } else {
-        btn.className = 'px-2.5 py-1.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold';
+        btn.className = 'px-2.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-all flex items-center gap-1.5 text-xs font-semibold shadow-sm';
         icon.setAttribute('data-lucide', 'volume-2');
         label.innerText = 'J.A.R.V.I.S. Online';
       }
@@ -515,6 +698,7 @@
       localStorage.setItem('JARVIS_VOICE_MUTED', jarvisMuted);
       updateJarvisVoiceUI();
       if (!jarvisMuted) {
+        playBeep(880, 0.1, 'triangle');
         speakJarvis("Audio synthesized. J.A.R.V.I.S. online, sir.");
       }
     }
@@ -526,7 +710,6 @@
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(phrase);
       
-      // Soft, refined cadence
       utterance.rate = 0.96;
       utterance.pitch = 0.98;
       utterance.volume = 0.85;
@@ -545,8 +728,103 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    // Keybind
+    // Arc Reactor Interactive Overcharge
+    function triggerReactorOvercharge() {
+      playBeep(920, 0.15, 'sawtooth');
+      const core = document.getElementById('reactorPowerPct');
+      core.innerText = "100.0% MAX";
+      core.className = "text-sm font-mono font-bold text-emerald-400 drop-shadow-[0_0_12px_#34d399]";
+      speakJarvis("Arc reactor energized to maximum efficiency, sir.");
+      setTimeout(() => {
+        core.innerText = "98.4%";
+        core.className = "text-sm font-mono font-bold text-cyan-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]";
+      }, 4000);
+    }
+
+    /* =========================================================================
+       LIVE CLOCK & COMMAND PALETTE (CMD+K)
+       ========================================================================= */
+    function updateTacticalClock() {
+      const now = new Date();
+      const clockEl = document.getElementById('tacticalClock');
+      if (clockEl) {
+        clockEl.innerText = now.toLocaleTimeString('en-US', { hour12: false });
+      }
+    }
+    setInterval(updateTacticalClock, 1000);
+
+    const PALETTE_ACTIONS = [
+      { name: "Go to Productivity & Focus Cockpit", shortcut: "2", icon: "flame", action: () => window.location.href = "productivity.html" },
+      { name: "Toggle What-If Attendance Simulator", shortcut: "S", icon: "sliders", action: () => toggleSimulator() },
+      { name: "Export Rich AI Study Prompt", shortcut: "P", icon: "sparkles", action: () => exportAIPrompt() },
+      { name: "Toggle J.A.R.V.I.S. Audio Synthesizer", shortcut: "V", icon: "volume-2", action: () => toggleJarvisVoice() },
+      { name: "Dashboard Settings & CSV Links", shortcut: ",", icon: "settings", action: () => toggleSettingsModal() },
+      { name: "Backup Data Export (JSON)", shortcut: "B", icon: "download", action: () => exportAllDataBackup() },
+      { name: "Show Pending Assignments Only", shortcut: "A", icon: "file-check-2", action: () => setAssignmentFilter('pending') },
+      { name: "Show Pending Doubts in Vault", shortcut: "D", icon: "help-circle", action: () => setDoubtFilter('pending') }
+    ];
+
+    function openCommandPalette() {
+      playBeep(700, 0.05);
+      document.getElementById('cmdPaletteModal').classList.remove('hidden');
+      const input = document.getElementById('cmdPaletteInput');
+      input.value = '';
+      input.focus();
+      filterPaletteActions();
+    }
+
+    function closeCommandPalette() {
+      document.getElementById('cmdPaletteModal').classList.add('hidden');
+    }
+
+    function filterPaletteActions() {
+      const query = (document.getElementById('cmdPaletteInput').value || '').toLowerCase().trim();
+      const container = document.getElementById('cmdPaletteResults');
+      container.innerHTML = '';
+
+      const matched = PALETTE_ACTIONS.filter(a => a.name.toLowerCase().includes(query));
+      if (matched.length === 0) {
+        container.innerHTML = `<div class="p-4 text-center text-slate-500">No actions matching "${query}"</div>`;
+        return;
+      }
+
+      matched.forEach((a, idx) => {
+        const item = document.createElement('div');
+        item.className = "flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-800/80 cursor-pointer text-slate-200 transition-colors group";
+        item.onclick = () => {
+          closeCommandPalette();
+          a.action();
+        };
+        item.innerHTML = `
+          <div class="flex items-center gap-2.5">
+            <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:text-indigo-300">
+              <i data-lucide="${a.icon}" class="w-4 h-4"></i>
+            </div>
+            <span class="font-medium text-xs">${a.name}</span>
+          </div>
+          <span class="kbd-chip">${a.shortcut}</span>
+        `;
+        container.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    // Global Keybinds
     document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const modal = document.getElementById('cmdPaletteModal');
+        if (modal.classList.contains('hidden')) openCommandPalette(); else closeCommandPalette();
+        return;
+      }
+      if (e.key === 'Escape') {
+        closeCommandPalette();
+        closeResolveModal();
+        closeImageLightbox();
+        const settings = document.getElementById('settingsModal');
+        if (!settings.classList.contains('hidden')) toggleSettingsModal();
+        return;
+      }
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
       if (e.key === '2') {
         window.location.href = 'productivity.html';
@@ -566,6 +844,7 @@
     }
 
     function toggleSettingsModal() {
+      playBeep(520, 0.05);
       document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
@@ -633,6 +912,7 @@
     let baseTotal = 0;
 
     function toggleSimulator() {
+      playBeep(650, 0.05);
       document.getElementById('simulatorDrawer').classList.toggle('hidden');
     }
 
@@ -652,9 +932,9 @@
       const res = document.getElementById('simResultPct');
       res.innerText = `${simPct}%`;
       if (simPct >= 75) {
-        res.className = 'font-mono font-bold text-sm text-emerald-400';
+        res.className = 'font-mono font-bold text-sm text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]';
       } else {
-        res.className = 'font-mono font-bold text-sm text-rose-400';
+        res.className = 'font-mono font-bold text-sm text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]';
       }
     }
 
@@ -732,6 +1012,7 @@
       currentStagedDoubtImage = dataUrl;
       document.getElementById('doubtImagePreviewBox').classList.remove('hidden');
       document.getElementById('doubtImageName').innerText = label;
+      playBeep(750, 0.08);
       speakJarvis("Screenshot loaded into question buffer, sir.");
     }
 
@@ -770,6 +1051,7 @@
       clearDoubtImageAttachment();
 
       saveDoubts();
+      playBeep(880, 0.1);
       speakJarvis(`Doubt registered under ${topic}, sir. Added to active clearance vault.`);
     }
 
@@ -779,11 +1061,12 @@
     }
 
     function setDoubtFilter(filter) {
+      playBeep(600, 0.04);
       currentDoubtFilter = filter;
       ['all', 'pending', 'resolved'].forEach(f => {
         const btn = document.getElementById(`doubtFilter${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-all';
+          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-all shadow-sm';
         } else {
           btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
         }
@@ -803,6 +1086,7 @@
     let stagedResolvePdfName = '';
 
     function openResolveModal(id) {
+      playBeep(700, 0.05);
       const d = doubts.find(item => item.id === id);
       if (!d) return;
 
@@ -881,6 +1165,7 @@
 
       saveDoubts();
       closeResolveModal();
+      playBeep(980, 0.15, 'triangle');
       speakJarvis(`Outstanding, sir. Concept neutralized across all formats. 50 XP credited.`);
       alert(`🎉 Doubt Cleared! +50 XP gained.`);
     }
@@ -894,6 +1179,7 @@
     }
 
     function openImageLightbox(dataUrl) {
+      playBeep(650, 0.05);
       document.getElementById('lightboxImg').src = dataUrl;
       document.getElementById('imageLightboxModal').classList.remove('hidden');
     }
@@ -919,6 +1205,7 @@ TASK:
 3. Mention 1 tricky edge case to remember for exams or interviews.`;
 
       navigator.clipboard.writeText(aiPrompt);
+      playBeep(880, 0.1);
       speakJarvis(`Diagnostic prompt compiled to clipboard, sir. Ready for analysis.`);
       alert(`📋 J.A.R.V.I.S. Copilot Prompt copied!\nPaste directly into Gemini or ChatGPT to get immediate resolution steps.`);
     }
@@ -942,7 +1229,7 @@ TASK:
       filtered.forEach(d => {
         const card = document.createElement('div');
         card.className = `p-4 rounded-xl border transition-all duration-200 ${
-          d.isResolved ? 'bg-slate-900/40 border-white/[0.06]' : 'bg-slate-900/80 border-amber-500/30 shadow-lg shadow-amber-950/20'
+          d.isResolved ? 'bg-slate-900/40 border-white/[0.06]' : 'bg-slate-900/80 border-amber-500/35 shadow-lg shadow-amber-950/20'
         }`;
 
         let questionImgHtml = '';
@@ -982,7 +1269,7 @@ TASK:
                 ` : ''}
 
                 ${solPdf ? `
-                  <a href="${solPdf}" download="${solPdfName}" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/30 flex items-center gap-1.5 font-medium transition-colors">
+                  <a href="${solPdf}" download="${solPdfName}" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 font-medium transition-colors">
                     <i data-lucide="file-text" class="w-3 h-3"></i> Download ${solPdfName}
                   </a>
                 ` : ''}
@@ -1002,8 +1289,8 @@ TASK:
             </div>
 
             <div class="flex items-center gap-1.5">
-              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="px-2.5 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/20 flex items-center gap-1 font-semibold transition-all">
-                <i data-lucide="sparkles" class="w-3 h-3 text-sky-400"></i> J.A.R.V.I.S. Copilot
+              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="px-2.5 py-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/20 flex items-center gap-1 font-semibold transition-all">
+                <i data-lucide="sparkles" class="w-3 h-3 text-cyan-400"></i> J.A.R.V.I.S. Copilot
               </button>
               
               ${d.isResolved ? `
@@ -1039,11 +1326,12 @@ TASK:
     let currentAssignmentFilter = 'all';
 
     function setAssignmentFilter(filter) {
+      playBeep(620, 0.04);
       currentAssignmentFilter = filter;
       ['all', 'pending', 'submitted'].forEach(f => {
         const btn = document.getElementById(`btnAssign${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all';
+          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all shadow-sm';
         } else {
           btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
         }
@@ -1073,7 +1361,7 @@ TASK:
 
         const card = document.createElement('div');
         card.className = `p-4 bg-slate-900/60 border rounded-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 ${
-          isUrgent ? 'border-rose-500/80 bg-rose-950/20 urgent-assignment' : 'border-white/[0.06] hover:border-white/[0.12]'
+          isUrgent ? 'border-rose-500/80 bg-rose-950/20 urgent-assignment' : 'border-white/[0.07] hover:border-white/[0.14]'
         }`;
 
         let urgencyTag = '';
@@ -1089,11 +1377,11 @@ TASK:
               <div>
                 <h4 class="font-semibold text-slate-200 text-xs">${a.title}</h4>
                 <div class="flex items-center gap-1.5 mt-1">
-                  <span class="text-[10px] text-slate-400">Due: <b>${a.dueDate}</b></span>
+                  <span class="text-[10px] text-slate-400">Due: <b class="font-mono text-slate-300">${a.dueDate}</b></span>
                   ${urgencyTag}
                 </div>
               </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-lg ${a.isCompleted ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium'} whitespace-nowrap">${a.status}</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-lg ${a.isCompleted ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium'} whitespace-nowrap font-mono">${a.status}</span>
             </div>
           </div>
           
@@ -1146,7 +1434,7 @@ TASK:
 
                 const isP = status === 'P';
                 const el = document.createElement('div');
-                el.className = `flex flex-col items-center px-2 py-1 rounded-lg border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0`;
+                el.className = `flex flex-col items-center px-2 py-1 rounded-lg border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0 font-mono`;
                 el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status || '-'}</span>`;
                 log.appendChild(el);
               }
@@ -1172,7 +1460,7 @@ TASK:
                 document.title = `(${aggStr}) Cockpit | Vikas N`;
 
                 headline.innerText = 'J.A.R.V.I.S.: DEFENSE SHIELDS OPTIMAL';
-                headline.className = 'text-xs font-bold text-emerald-300 mt-0.5 tracking-wide';
+                headline.className = 'text-xs font-bold text-emerald-300 mt-0.5 tracking-wide font-hud';
                 detail.innerText = `All academic protocols nominal at ${aggStr}. Arc reactor buffer: ${aggMarginInfo.text}.`;
               } else {
                 badge.innerText = 'Warning: Below 75%';
@@ -1182,10 +1470,9 @@ TASK:
                 document.title = `⚠ (${aggStr}) Below 75% | Cockpit`;
 
                 headline.innerText = `J.A.R.V.I.S.: DEFICIT DETECTED (${aggStr})`;
-                headline.className = 'text-xs font-bold text-rose-300 mt-0.5 tracking-wide';
+                headline.className = 'text-xs font-bold text-rose-300 mt-0.5 tracking-wide font-hud';
                 detail.innerText = `Warning sir: Shields depleted below 75%. You must attend the next ${aggMarginInfo.count} classes to restore equilibrium.`;
                 
-                // Alert once per session
                 if (!sessionStorage.getItem('JARVIS_ATTENDANCE_WARNED')) {
                   sessionStorage.setItem('JARVIS_ATTENDANCE_WARNED', 'true');
                   speakJarvis(`Tactical alert, sir. Aggregate attendance is currently ${aggStr}. You must attend the next ${aggMarginInfo.count} lectures to restore safe shields.`);
@@ -1195,12 +1482,12 @@ TASK:
               const theoryVal = parseFloat(theoryStr.replace('%', ''));
               if (!isNaN(theoryVal)) {
                 document.getElementById('theoryMargin').innerText = theoryVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
-                document.getElementById('theoryMargin').className = theoryVal >= 75 ? 'text-[10px] text-emerald-400 mt-1' : 'text-[10px] text-rose-400 mt-1 font-semibold';
+                document.getElementById('theoryMargin').className = theoryVal >= 75 ? 'text-[10px] text-emerald-400 mt-1 font-mono' : 'text-[10px] text-rose-400 mt-1 font-semibold font-mono';
               }
               const labVal = parseFloat(labStr.replace('%', ''));
               if (!isNaN(labVal)) {
                 document.getElementById('labMargin').innerText = labVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
-                document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-1' : 'text-[10px] text-rose-400 mt-1 font-semibold';
+                document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-1 font-mono' : 'text-[10px] text-rose-400 mt-1 font-semibold font-mono';
               }
 
               cachedAttendance = {
@@ -1254,14 +1541,14 @@ TASK:
               }
 
               const el = document.createElement('div');
-              el.className = 'flex justify-between items-center p-2.5 rounded-xl bg-slate-900/60 border border-white/[0.06] hover:border-white/[0.1] transition-all';
-              const badgeClass = item.days >= 0 ? 'text-indigo-300' : 'text-slate-500';
+              el.className = 'flex justify-between items-center p-2.5 rounded-xl bg-slate-900/60 border border-white/[0.06] hover:border-white/[0.12] transition-all';
+              const badgeClass = item.days >= 0 ? 'text-indigo-300 font-mono' : 'text-slate-500 font-mono';
               el.innerHTML = `
                 <div>
-                  <div class="font-medium text-slate-200">${item.name}</div>
+                  <div class="font-medium text-slate-200 text-xs">${item.name}</div>
                   <div class="text-[10px] text-slate-400">${item.dateStr} &bull; <span class="${badgeClass}">${formatDaysBadge(item.days)}</span></div>
                 </div>
-                <span class="text-[10px] px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300">${item.type}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 font-mono">${item.type}</span>
               `;
               list.appendChild(el);
             });
@@ -1320,37 +1607,37 @@ TASK:
               });
 
               const card = document.createElement('div');
-              card.className = 'p-4 bg-slate-900/60 border border-white/[0.06] hover:border-white/[0.12] rounded-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5';
+              card.className = 'p-4 bg-slate-900/60 border border-white/[0.07] hover:border-indigo-500/30 rounded-xl flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 shadow-sm';
               card.innerHTML = `
                 <div>
                   <div class="flex justify-between items-start mb-2">
-                    <span class="font-semibold text-slate-200 capitalize truncate pr-1">${topicName}</span>
+                    <span class="font-semibold text-slate-200 capitalize truncate pr-1 text-xs">${topicName}</span>
                     <a href="${sheetUrl}" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium whitespace-nowrap">Open ↗</a>
                   </div>
 
                   <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-3">
-                    <div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                    <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
                   </div>
 
                   <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
                     <div class="bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 p-1.5 rounded-lg">
-                      <div class="font-bold text-xs">${completedQ}</div>
+                      <div class="font-bold text-xs font-mono">${completedQ}</div>
                       <div class="text-[9px] text-slate-400">Done</div>
                     </div>
                     <div class="bg-amber-950/40 border border-amber-800/60 text-amber-300 p-1.5 rounded-lg">
-                      <div class="font-bold text-xs">${doubtQ}</div>
+                      <div class="font-bold text-xs font-mono">${doubtQ}</div>
                       <div class="text-[9px] text-slate-400">Doubts</div>
                     </div>
                     <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1.5 rounded-lg">
-                      <div class="font-bold text-xs">${notAttemptedQ}</div>
+                      <div class="font-bold text-xs font-mono">${notAttemptedQ}</div>
                       <div class="text-[9px] text-slate-400">Pending</div>
                     </div>
                   </div>
                 </div>
 
                 <div class="mt-3.5 flex items-center justify-between pt-2.5 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-slate-400">Total: <b>${totalQ}</b></span>
-                  <span class="font-semibold ${pct === 100 ? 'text-emerald-400' : 'text-indigo-400'}">${pct}% Completed</span>
+                  <span class="text-slate-400">Total: <b class="font-mono text-slate-300">${totalQ}</b></span>
+                  <span class="font-semibold font-mono ${pct === 100 ? 'text-emerald-400' : 'text-indigo-400'}">${pct}% Completed</span>
                 </div>
               `;
               container.appendChild(card);
@@ -1439,6 +1726,7 @@ Acting as an expert academic and software engineering mentor, generate an optimi
 3. Provides 3 high-yield conceptual tips for my pending topics.`;
 
       navigator.clipboard.writeText(prompt);
+      playBeep(880, 0.1);
       speakJarvis("Strategic roadmap prompt copied to clipboard, sir.");
       alert('📋 Rich Context AI Study Prompt copied to clipboard!\nPaste it directly into Gemini or ChatGPT for your tailored study plan.');
     }
@@ -1452,6 +1740,7 @@ Acting as an expert academic and software engineering mentor, generate an optimi
       initInputs();
       renderDoubtsLedger();
       loadAllData();
+      updateTacticalClock();
       if (!localStorage.getItem('ATTENDANCE_CSV')) {
         toggleSettingsModal();
       } else {
