@@ -296,14 +296,14 @@
        ========================================================================= -->
   <main class="max-w-4xl mx-auto p-4 md:p-6 space-y-6" id="heroSection">
 
-    <!-- HERO SECTION: THE OPAL ARC GAUGE (EXACTLY LIKE SCREEN 4 OF REFERENCE) -->
-    <div class="relative opal-card p-6 md:p-10 flex flex-col items-center justify-center text-center overflow-hidden">
+    <!-- HERO SECTION: AUTHENTIC OPAL GEMSTONE & ARC GAUGE (SCREEN 3 & SCREEN 4) -->
+    <div class="relative opal-card p-6 md:p-8 flex flex-col items-center justify-center text-center overflow-hidden">
       
       <!-- Subtle Ambient Glow -->
       <div class="absolute -top-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Top Tag: Highlight pill from Screen 4 -->
-      <div class="flex items-center gap-2 mb-2">
+      <div class="flex items-center gap-2 mb-1">
         <span class="text-[10px] uppercase font-mono font-semibold tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
           Academic Telemetry
         </span>
@@ -312,17 +312,25 @@
         </span>
       </div>
 
-      <!-- The Luminous Arc Gauge (Directly modeled on Opal Screen 4) -->
-      <div class="relative w-72 sm:w-80 h-40 flex flex-col items-center justify-end mt-2">
-        <svg class="w-full h-full" viewBox="0 0 200 115">
+      <!-- 3D IRIDESCENT OPAL GEMSTONE (AUTHENTIC OPAL APP CENTERPIECE) -->
+      <div class="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center -my-2 select-none group">
+        <!-- Interactive 3D WebGL Shader Canvas -->
+        <canvas id="opalGemCanvas" width="300" height="300" class="w-full h-full cursor-grab active:cursor-grabbing rounded-full touch-none" title="Drag or hover to inspect Opal mineral"></canvas>
+        <!-- Luminous Ethereal Pedestal Fog (Screen 3 style) -->
+        <div class="absolute bottom-2 w-36 h-6 bg-emerald-400/20 rounded-full blur-xl pointer-events-none group-hover:bg-emerald-400/35 transition-all duration-500"></div>
+      </div>
+
+      <!-- The Luminous Arc Gauge Framing Score (Screen 3 & Screen 4) -->
+      <div class="relative w-72 sm:w-80 h-36 flex flex-col items-center justify-end mt-1">
+        <svg class="w-full h-full" viewBox="0 0 200 110">
           <defs>
             <linearGradient id="opalArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#06b6d4" />
-              <stop offset="60%" stop-color="#10b981" />
+              <stop offset="50%" stop-color="#10b981" />
               <stop offset="100%" stop-color="#34d399" />
             </linearGradient>
             <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -330,9 +338,9 @@
             </filter>
           </defs>
           <!-- Background Base Track -->
-          <path d="M 25 102 A 75 75 0 0 1 175 102" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6" stroke-linecap="round" />
+          <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6.5" stroke-linecap="round" />
           <!-- Radiant Value Arc -->
-          <path id="opalGaugePath" d="M 25 102 A 75 75 0 0 1 175 102" fill="none" stroke="url(#opalArcGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="235.6" stroke-dashoffset="35" filter="url(#arcGlow)" />
+          <path id="opalGaugePath" d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="url(#opalArcGrad)" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="235.6" stroke-dashoffset="35" filter="url(#arcGlow)" />
         </svg>
         
         <!-- Score Readout inside Arc -->
@@ -341,12 +349,12 @@
             <span id="aggPct" class="text-5xl sm:text-6xl font-extrabold tracking-tight text-white font-sans">--%</span>
             <span class="text-emerald-400 text-lg font-bold">▲</span>
           </div>
-          <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400 mt-1">Opal Defense Score</span>
+          <span class="text-[10px] font-mono uppercase tracking-[0.22em] text-zinc-400 mt-1">Opal Defense Score</span>
         </div>
       </div>
 
       <!-- Fine Branch Connector Lines (Screen 4 Style) -->
-      <div class="flex flex-col items-center mt-3 w-full">
+      <div class="flex flex-col items-center mt-2 w-full">
         <svg class="w-56 h-4 text-white/10" viewBox="0 0 160 16" fill="none">
           <path d="M 80 0 L 80 8 M 80 8 L 25 15 M 80 8 L 80 15 M 80 8 L 135 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
         </svg>
@@ -374,12 +382,12 @@
       </div>
 
       <!-- Opal Action Pill (Screen 3 Style) -->
-      <div class="flex items-center justify-center gap-3 mt-6">
+      <div class="flex items-center justify-center gap-3 mt-5">
         <button onclick="toggleSimulator()" class="btn-opal-primary">
           <i data-lucide="sliders" class="w-3.5 h-3.5 text-emerald-400"></i>
           <span>Attendance Simulator</span>
         </button>
-        <button onclick="triggerReactorOvercharge()" class="btn-opal-secondary px-3 py-2 text-xs">
+        <button onclick="triggerReactorOvercharge()" class="btn-opal-secondary px-3.5 py-2 text-xs">
           <i data-lucide="zap" class="w-3 h-3 text-emerald-400"></i>
           <span>Energize</span>
         </button>
@@ -764,6 +772,296 @@
     lucide.createIcons();
 
     /* =========================================================================
+       AUTHENTIC 3D WEBGL OPAL GEMSTONE RENDERER (SCREEN 3 SIGNATURE ARTIFACT)
+       ========================================================================= */
+    function initOpalGemstone() {
+      const canvas = document.getElementById('opalGemCanvas');
+      if (!canvas) return;
+
+      const gl = canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: false }) ||
+                 canvas.getContext('experimental-webgl', { alpha: true, antialias: true, premultipliedAlpha: false });
+
+      if (!gl) {
+        console.warn('WebGL not supported; falling back to high-res display.');
+        return;
+      }
+
+      const vsSource = `
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      `;
+
+      const fsSource = `
+        precision highp float;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform vec2 u_mouse;
+        uniform float u_energy;
+
+        mat3 rotateY(float a) {
+          float c = cos(a), s = sin(a);
+          return mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c);
+        }
+        mat3 rotateX(float a) {
+          float c = cos(a), s = sin(a);
+          return mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c);
+        }
+        mat3 rotateZ(float a) {
+          float c = cos(a), s = sin(a);
+          return mat3(c, -s, 0.0, s, c, 0.0, 0.0, 0.0, 1.0);
+        }
+
+        // Mineral Faceted SDF
+        float gemSDF(vec3 p) {
+          vec3 q = p;
+          q.y -= 0.08;
+          float taper = 1.0 - 0.18 * q.y;
+          float d = length(q / vec3(taper, 1.35 * taper, taper)) - 0.95;
+          
+          vec3 c1 = normalize(vec3(1.0, 0.8, 0.5));
+          vec3 c2 = normalize(vec3(-0.9, 1.0, 0.4));
+          vec3 c3 = normalize(vec3(0.3, -1.0, 0.8));
+          vec3 c4 = normalize(vec3(-0.8, -0.8, -0.6));
+          vec3 c5 = normalize(vec3(0.8, 0.3, -0.9));
+          vec3 c6 = normalize(vec3(-0.9, 0.2, 0.7));
+          vec3 c7 = normalize(vec3(0.2, 1.2, -0.6));
+          
+          d = max(d, dot(p, c1) - 1.0);
+          d = max(d, dot(p, c2) - 1.05);
+          d = max(d, dot(p, c3) - 1.02);
+          d = max(d, dot(p, c4) - 1.02);
+          d = max(d, dot(p, c5) - 1.04);
+          d = max(d, dot(p, c6) - 1.01);
+          d = max(d, dot(p, c7) - 1.08);
+          
+          return d;
+        }
+
+        vec3 calcNormal(vec3 p) {
+          float h = 0.002;
+          vec2 k = vec2(1.0, -1.0);
+          return normalize(
+            k.xyy * gemSDF(p + k.xyy * h) +
+            k.yyx * gemSDF(p + k.yyx * h) +
+            k.yxy * gemSDF(p + k.yxy * h) +
+            k.xxx * gemSDF(p + k.xxx * h)
+          );
+        }
+
+        // Opal spectral thin-film iridescent formula
+        vec3 opalSpectral(float t) {
+          vec3 a = vec3(0.5, 0.65, 0.65);
+          vec3 b = vec3(0.5, 0.45, 0.45);
+          vec3 c = vec3(1.0, 1.2, 1.3);
+          vec3 d = vec3(0.08, 0.38, 0.68);
+          return clamp(a + b * cos(6.28318 * (c * t + d)), 0.0, 1.0);
+        }
+
+        void main() {
+          vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / min(u_resolution.y, u_resolution.x);
+          vec3 ro = vec3(0.0, 0.0, 3.6);
+          vec3 rd = normalize(vec3(uv, -1.8));
+          
+          float t = u_time * 0.75;
+          float floatY = sin(t * 1.35) * 0.065;
+          
+          vec2 tilt = (u_mouse - 0.5) * 1.6;
+          mat3 rot = rotateY(t * 0.85 + tilt.x) * rotateX(0.22 + sin(t * 0.6) * 0.1 + tilt.y) * rotateZ(sin(t * 0.4) * 0.06);
+          
+          vec3 roTrans = ro - vec3(0.0, floatY, 0.0);
+          vec3 roLocal = rot * roTrans;
+          vec3 rdLocal = rot * rd;
+          
+          float dist = 0.0;
+          bool hit = false;
+          vec3 p = roLocal;
+          
+          for (int i = 0; i < 50; i++) {
+            p = roLocal + rdLocal * dist;
+            float d = gemSDF(p);
+            if (d < 0.001) {
+              hit = true;
+              break;
+            }
+            dist += d;
+            if (dist > 5.5) break;
+          }
+          
+          vec3 col = vec3(0.0, 0.0, 0.0);
+          
+          // Ethereal glowing pedestal ring below the stone (Screen 3)
+          float ringDist = length(vec2(uv.x * 2.2, (uv.y + 0.38 - floatY * 0.4) * 5.0));
+          float ringGlow = exp(-ringDist * 4.2) * (1.0 + u_energy * 0.6);
+          col += vec3(0.05, 0.42, 0.38) * ringGlow;
+          
+          // Ambient haze
+          float centerDist = length(uv - vec2(0.0, floatY));
+          col += vec3(0.015, 0.12, 0.14) * exp(-centerDist * 2.5);
+          
+          if (hit) {
+            vec3 N = calcNormal(p);
+            vec3 V = -rdLocal;
+            
+            vec3 L1 = normalize(vec3(0.8, 1.2, 1.2));
+            vec3 L2 = normalize(vec3(-0.9, -0.4, 0.5));
+            
+            float diff1 = max(dot(N, L1), 0.0);
+            vec3 H1 = normalize(L1 + V);
+            float spec = pow(max(dot(N, H1), 0.0), 36.0);
+            float specSharp = pow(max(dot(N, H1), 0.0), 120.0);
+            
+            // Fresnel edge glow
+            float fresnel = pow(1.0 - max(dot(N, V), 0.0), 2.6);
+            
+            // Iridescent chromatic fire
+            float fire = dot(N, V) * 1.6 + p.y * 0.7 + p.x * 0.5 + sin(p.z * 3.5 + t) * 0.25;
+            vec3 iridescentCol = opalSpectral(fire);
+            
+            // Translucent milky mineral core
+            vec3 gemBody = vec3(0.12, 0.18, 0.22) * (diff1 * 0.5 + 0.4);
+            vec3 finalGem = mix(gemBody, iridescentCol, 0.78 + u_energy * 0.15);
+            
+            // Vibrant neon Fresnel rim
+            vec3 rimCol = mix(vec3(0.2, 0.9, 0.7), vec3(0.3, 0.8, 1.0), sin(t + p.y * 2.5) * 0.5 + 0.5);
+            finalGem += rimCol * (fresnel * (1.3 + u_energy * 0.8));
+            
+            // Specular caustic glints
+            finalGem += vec3(1.0, 1.0, 1.0) * (spec * 0.6 + specSharp * 1.4);
+            finalGem += vec3(0.1, 0.6, 0.7) * max(dot(N, L2), 0.0) * 0.3;
+            
+            col = finalGem;
+          }
+          
+          if (!hit) {
+            float halo = exp(-centerDist * 3.5);
+            col += vec3(0.06, 0.4, 0.35) * halo * 0.35;
+          }
+          
+          float alpha = hit ? 1.0 : clamp(length(col) * 3.0, 0.0, 1.0);
+          gl_FragColor = vec4(col, alpha);
+        }
+      `;
+
+      function compileShader(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(s));
+          gl.deleteShader(s);
+          return null;
+        }
+        return s;
+      }
+
+      const vs = compileShader(gl.VERTEX_SHADER, vsSource);
+      const fs = compileShader(gl.FRAGMENT_SHADER, fsSource);
+      if (!vs || !fs) return;
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        return;
+      }
+
+      const posBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1
+      ]), gl.STATIC_DRAW);
+
+      const aPos = gl.getAttribLocation(program, 'position');
+      const uRes = gl.getUniformLocation(program, 'u_resolution');
+      const uTime = gl.getUniformLocation(program, 'u_time');
+      const uMouse = gl.getUniformLocation(program, 'u_mouse');
+      const uEnergy = gl.getUniformLocation(program, 'u_energy');
+
+      let mouseX = 0.5, mouseY = 0.5;
+      let targetMouseX = 0.5, targetMouseY = 0.5;
+      let energy = 0.0;
+      let targetEnergy = 0.0;
+
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = canvas.clientWidth || 280;
+        const h = canvas.clientHeight || 280;
+        if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+          canvas.width = Math.round(w * dpr);
+          canvas.height = Math.round(h * dpr);
+        }
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      function handlePointer(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        targetMouseX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        targetMouseY = Math.max(0, Math.min(1, 1.0 - (clientY - rect.top) / rect.height));
+      }
+
+      canvas.addEventListener('mousemove', (e) => handlePointer(e.clientX, e.clientY));
+      canvas.addEventListener('mouseleave', () => {
+        targetMouseX = 0.5;
+        targetMouseY = 0.5;
+      });
+
+      canvas.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) {
+          handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      canvas.addEventListener('touchend', () => {
+        targetMouseX = 0.5;
+        targetMouseY = 0.5;
+      });
+
+      canvas.addEventListener('click', () => {
+        energy = 1.0;
+      });
+
+      window.boostOpalEnergy = function() {
+        energy = 1.0;
+      };
+
+      const startTime = performance.now();
+      function renderLoop() {
+        if (!document.hidden) {
+          const now = performance.now();
+          const elapsed = (now - startTime) * 0.001;
+
+          mouseX += (targetMouseX - mouseX) * 0.08;
+          mouseY += (targetMouseY - mouseY) * 0.08;
+          energy += (targetEnergy - energy) * 0.05;
+
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.useProgram(program);
+
+          gl.enableVertexAttribArray(aPos);
+          gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+          gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+          gl.uniform1f(uTime, elapsed);
+          gl.uniform2f(uMouse, mouseX, mouseY);
+          gl.uniform1f(uEnergy, energy);
+
+          gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+        requestAnimationFrame(renderLoop);
+      }
+      requestAnimationFrame(renderLoop);
+    }
+
+    /* =========================================================================
        DYNAMIC OPAL GAUGE ARC UPDATE
        ========================================================================= */
     function updateOpalGauge(pct) {
@@ -868,7 +1166,10 @@
     }
 
     function triggerReactorOvercharge() {
-      speakJarvis("Opal Defense Grid active.");
+      if (typeof window.boostOpalEnergy === 'function') {
+        window.boostOpalEnergy();
+      }
+      speakJarvis("Opal Defense Grid energized.");
     }
 
     /* =========================================================================
@@ -1911,6 +2212,7 @@ Based on my schedule and current attendance buffer, provide a prioritized study 
 
     // Initialize all subsystems on DOM ready
     window.addEventListener('DOMContentLoaded', () => {
+      initOpalGemstone();
       initInputs();
       syncNavXP();
       updateJarvisVoiceUI();
