@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#05070c" />
+  <meta name="theme-color" content="#060911" />
   <title>Academic Cockpit | Vikas N</title>
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,13 +23,6 @@
             sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             display: ['Outfit', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
-          },
-          colors: {
-            void: '#05070c',
-            surface: 'rgba(12, 16, 26, 0.72)',
-            surfaceHover: 'rgba(18, 24, 38, 0.85)',
-            subtle: 'rgba(255, 255, 255, 0.06)',
-            highlight: 'rgba(255, 255, 255, 0.12)'
           }
         }
       }
@@ -42,7 +35,7 @@
 
   <style>
     /* =========================================================================
-       AWWWARDS / LINEAR LEVEL GLASS & AMBIENT AESTHETIC
+       ULTRA-FAST, HIGH-PERFORMANCE LIGHTWEIGHT DARK ARCHITECTURE (60-120 FPS)
        ========================================================================= */
     :root {
       color-scheme: dark;
@@ -57,64 +50,50 @@
     /* Minimalist Precision Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.15); border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.35); }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-    /* Canvas Architecture */
+    /* Clean, Lightweight Canvas (Zero GPU Repaint Strain) */
     body {
-      background-color: #05070c;
+      background-color: #060911;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 45%),
-        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 40%),
-        radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px;
+        radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 40%),
+        radial-gradient(at 85% 10%, rgba(6, 182, 212, 0.07) 0px, transparent 40%),
+        radial-gradient(at 50% 90%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
       color: #f1f5f9;
       overflow-x: hidden;
     }
 
-    /* Multi-layered Glass Panel with Beveled Light Edge */
+    /* High-Performance Surface Cards (Solid with subtle top highlight - Zero Blur Lag) */
     .glass-card {
-      background: linear-gradient(180deg, rgba(16, 22, 36, 0.75) 0%, rgba(10, 14, 24, 0.65) 100%);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #0b0f19;
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-top: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 
-        0 1px 2px 0 rgba(0, 0, 0, 0.4),
-        0 8px 24px -4px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      transition: border-color 0.12s ease, transform 0.12s ease;
     }
     .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
-      border-top-color: rgba(147, 197, 253, 0.35);
-      box-shadow: 
-        0 1px 2px 0 rgba(0, 0, 0, 0.4),
-        0 16px 36px -8px rgba(0, 0, 0, 0.75),
-        0 0 24px -4px rgba(99, 102, 241, 0.12),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
-      transform: translateY(-1.5px);
+      border-color: rgba(99, 102, 241, 0.35);
+      border-top-color: rgba(147, 197, 253, 0.4);
+      transform: translateY(-1px);
     }
 
-    /* Sub-card inside cards */
+    /* Internal sub-cards */
     .glass-subcard {
-      background: rgba(18, 25, 41, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-top: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 14px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      background: #111726;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      transition: border-color 0.12s ease;
     }
     .glass-subcard:hover {
-      background: rgba(22, 31, 52, 0.75);
-      border-color: rgba(255, 255, 255, 0.1);
-      border-top-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.14);
     }
 
-    /* Tactile Glass Button with Linear-grade Physics */
+    /* Instant-Response Tactile Buttons (Zero Latency) */
     .btn-action {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -122,163 +101,139 @@
       font-weight: 600;
       cursor: pointer;
       user-select: none;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(18, 24, 38, 0.7);
+      border-radius: 10px;
+      background: #141b2d;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       color: #e2e8f0;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background-color 0.1s ease, border-color 0.1s ease, transform 0.08s ease;
     }
     .btn-action:hover {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(26, 35, 56, 0.85);
+      background: #1c263f;
       border-color: rgba(99, 102, 241, 0.4);
-      border-top-color: rgba(165, 180, 252, 0.45);
-      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.5), 0 0 16px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.18);
       color: #ffffff;
-      transform: translateY(-1px);
     }
     .btn-action:active {
-      transform: translateY(0.5px) scale(0.985);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transform: scale(0.98);
+      background: #0f1524;
     }
 
     /* Primary Gradient Button */
     .btn-primary-grad {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       font-weight: 600;
       cursor: pointer;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #4338ca 100%);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
       color: #ffffff;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.1s ease, transform 0.08s ease;
     }
     .btn-primary-grad:hover {
-      background: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #6366f1 100%);
-      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      transform: translateY(-1px);
+      opacity: 0.95;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
     }
     .btn-primary-grad:active {
-      transform: translateY(0.5px) scale(0.985);
-      box-shadow: 0 1px 4px rgba(79, 70, 229, 0.5);
+      transform: scale(0.98);
     }
 
-    /* Keyboard Shortcut Chip */
+    /* Keyboard Shortcut Tag */
     .kbd-chip {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
-      padding: 1.5px 5.5px;
-      border-radius: 5px;
+      padding: 1px 5px;
+      border-radius: 4px;
       color: #94a3b8;
     }
 
-    /* Holographic Arc Reactor Animations */
-    @keyframes reactorSlowSpin {
+    /* Lightweight GPU-Accelerated Arc Reactor */
+    @keyframes reactorRotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    @keyframes reactorReverseSpin {
+    @keyframes reactorReverse {
       from { transform: rotate(360deg); }
       to { transform: rotate(0deg); }
     }
-    @keyframes reactorAuraPulse {
-      0%, 100% { filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.5)) drop-shadow(0 0 28px rgba(59, 130, 246, 0.25)); }
-      50% { filter: drop-shadow(0 0 22px rgba(6, 182, 212, 0.85)) drop-shadow(0 0 45px rgba(59, 130, 246, 0.45)); }
+    .arc-spin-slow {
+      animation: reactorRotate 24s linear infinite;
+      will-change: transform;
     }
-    .arc-spin-slow { animation: reactorSlowSpin 26s linear infinite; }
-    .arc-spin-rev { animation: reactorReverseSpin 18s linear infinite; }
-    .reactor-glow { animation: reactorAuraPulse 4s ease-in-out infinite; }
-
-    /* Shimmer Badge */
-    @keyframes badgeGleam {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    .badge-gleam {
-      background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.28) 50%, rgba(99, 102, 241, 0.12) 100%);
-      background-size: 200% 100%;
-      animation: badgeGleam 5s infinite linear;
+    .arc-spin-rev {
+      animation: reactorReverse 16s linear infinite;
+      will-change: transform;
     }
 
-    /* Urgent Assignment Subtle Border Breathe (No harsh flashing) */
-    @keyframes urgentAura {
-      0%, 100% { border-color: rgba(244, 63, 94, 0.35); box-shadow: 0 0 12px rgba(244, 63, 94, 0.12); }
-      50% { border-color: rgba(244, 63, 94, 0.7); box-shadow: 0 0 22px rgba(244, 63, 94, 0.25); }
+    /* Gentle Urgency Tag */
+    .urgent-assignment {
+      border-color: rgba(244, 63, 94, 0.5) !important;
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.15);
     }
-    .urgent-assignment { animation: urgentAura 3s ease-in-out infinite; }
   </style>
 </head>
 
-<body class="selection:bg-indigo-500 selection:text-white font-sans min-h-screen pb-20">
-
-  <!-- Ambient Glow Canvas Lights -->
-  <div class="fixed top-[-10%] left-[12%] w-[600px] h-[600px] rounded-full bg-indigo-600/12 blur-[150px] pointer-events-none -z-10"></div>
-  <div class="fixed top-[45%] right-[-10%] w-[650px] h-[650px] rounded-full bg-cyan-600/10 blur-[160px] pointer-events-none -z-10"></div>
-  <div class="fixed bottom-[-10%] left-[25%] w-[550px] h-[550px] rounded-full bg-violet-600/10 blur-[150px] pointer-events-none -z-10"></div>
+<body class="selection:bg-indigo-500 selection:text-white font-sans min-h-screen pb-16">
 
   <!-- Top Navigation Header -->
-  <nav class="sticky top-0 z-40 px-4 md:px-8 py-3 bg-[#05070c]/80 backdrop-blur-2xl border-b border-white/[0.07]">
+  <nav class="sticky top-0 z-40 px-4 md:px-8 py-2.5 bg-[#060911]/95 border-b border-white/[0.08]">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
       
       <!-- Brand & Student Badge -->
-      <div class="flex items-center gap-3.5">
-        <div class="relative group cursor-pointer" onclick="openCommandPalette()" title="Open Command Palette (Cmd+K)">
-          <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-all duration-200">
-            <div class="h-full w-full bg-[#090d16] rounded-2xl flex items-center justify-center font-display font-extrabold text-white text-base">
+      <div class="flex items-center gap-3">
+        <div class="relative cursor-pointer" onclick="openCommandPalette()" title="Command Palette (Cmd+K)">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-[1px] shadow-sm">
+            <div class="h-full w-full bg-[#0a0e18] rounded-xl flex items-center justify-center font-display font-extrabold text-white text-sm">
               V
             </div>
           </div>
-          <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#05070c]" title="Sync Live"></div>
+          <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#060911]" title="Sync Live"></div>
         </div>
 
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-sm font-bold tracking-tight text-white font-display">Academic Cockpit</h1>
-            <span id="navRankBadge" class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full badge-gleam text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
+            <span id="navRankBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
           </div>
-          <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+          <div class="flex items-center gap-2 text-[11px] text-slate-400">
             <span class="font-mono text-slate-300">USN: 2392608146</span>
             <span class="text-slate-600">&bull;</span>
             <span>Sec B · AIML</span>
             <span class="text-slate-600 hidden sm:inline">&bull;</span>
-            <span id="tacticalClock" class="font-mono text-cyan-300/90 text-[10px] hidden sm:inline">--:--:--</span>
+            <span id="tacticalClock" class="font-mono text-cyan-400 text-[10px] hidden sm:inline">--:--:--</span>
           </div>
         </div>
       </div>
 
       <!-- Action Controls -->
-      <div class="flex items-center gap-2 md:gap-2.5">
+      <div class="flex items-center gap-2">
         
         <!-- Command Palette Trigger -->
-        <button onclick="openCommandPalette()" class="hidden md:flex btn-action px-3 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
+        <button onclick="openCommandPalette()" class="hidden md:flex btn-action px-2.5 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
           <span class="text-[11px]">Command Palette</span>
           <span class="kbd-chip">⌘K</span>
         </button>
 
         <!-- J.A.R.V.I.S. Audio Synthesizer Button -->
-        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="btn-action px-3 py-1.5 text-xs text-cyan-300 border-cyan-500/25 bg-cyan-950/20" title="Toggle J.A.R.V.I.S. Speech Synthesizer">
+        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20" title="Toggle J.A.R.V.I.S. Speech Synthesizer">
           <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-cyan-400"></i>
           <span class="hidden sm:inline font-mono text-[11px]" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
         </button>
 
         <!-- Page View Switcher Tabs -->
-        <div class="flex items-center bg-slate-900/80 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold shadow-inner">
-          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all">
+        <div class="flex items-center bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm flex items-center gap-1.5">
             <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
             <span>Dashboard</span>
             <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200 font-mono">1</span>
           </a>
-          <a href="productivity.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
+          <a href="productivity.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] flex items-center gap-1.5 transition-colors">
             <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400"></i>
             <span>Productivity</span>
             <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400 font-mono">2</span>
@@ -286,9 +241,9 @@
         </div>
 
         <!-- Export AI Study Roadmap Prompt -->
-        <button onclick="exportAIPrompt()" class="btn-action px-3 py-1.5 text-xs text-indigo-300 border-indigo-500/30 bg-indigo-950/20" title="Compile comprehensive AI mentor prompt">
+        <button onclick="exportAIPrompt()" class="btn-action px-2.5 py-1.5 text-xs text-indigo-300 border-indigo-500/30" title="Compile comprehensive AI mentor prompt">
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span class="hidden md:inline text-[11px]">Export AI Prompt</span>
+          <span class="hidden md:inline text-[11px]">Export AI</span>
         </button>
 
         <!-- Settings Button -->
@@ -307,12 +262,12 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
       <!-- Attendance Shield with Holographic ARC Reactor HUD (7 cols) -->
-      <div class="lg:col-span-7 glass-card p-6 flex flex-col justify-between">
+      <div class="lg:col-span-7 glass-card p-5 md:p-6 flex flex-col justify-between">
         <div>
           <!-- Header Bar -->
-          <div class="flex flex-wrap justify-between items-center gap-2 mb-5">
-            <div class="flex items-center gap-2.5">
-              <div class="p-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 <i data-lucide="shield-check" class="w-4 h-4"></i>
               </div>
               <div>
@@ -322,8 +277,8 @@
             </div>
 
             <div class="flex items-center gap-2 flex-wrap">
-              <button onclick="toggleSimulator()" class="btn-action px-3 py-1 text-xs text-indigo-300 border-indigo-500/30">
-                <i data-lucide="sliders" class="w-3 h-3 text-indigo-400"></i>
+              <button onclick="toggleSimulator()" class="btn-action px-2.5 py-1 text-xs text-indigo-300 border-indigo-500/30">
+                <i data-lucide="sliders" class="w-3.5 h-3.5 text-indigo-400"></i>
                 <span class="text-[11px]">Simulator</span>
               </button>
               <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-white/[0.08] text-slate-300 font-mono font-medium">Calculating...</span>
@@ -332,7 +287,7 @@
           </div>
 
           <!-- Attendance What-If Simulator Drawer -->
-          <div id="simulatorDrawer" class="hidden mb-5 p-4 rounded-2xl bg-[#090d18] border border-indigo-500/30 text-xs space-y-3 shadow-xl transition-all">
+          <div id="simulatorDrawer" class="hidden mb-4 p-4 rounded-xl bg-[#0e1322] border border-indigo-500/30 text-xs space-y-3">
             <div class="flex justify-between items-center">
               <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px] font-mono">
                 <i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-400"></i> Attendance Margin Simulator
@@ -342,65 +297,61 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="text-slate-400 block mb-1 text-[11px]">Simulate Attended Lectures (+P):</label>
-                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-white font-mono outline-none focus:border-indigo-500 transition-colors" />
+                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-indigo-500" />
               </div>
               <div>
                 <label class="text-slate-400 block mb-1 text-[11px]">Simulate Missed Lectures (+A):</label>
-                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-1.5 text-white font-mono outline-none focus:border-rose-500 transition-colors" />
+                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-rose-500" />
               </div>
             </div>
-            <div id="simResultBox" class="p-3 rounded-xl bg-slate-900/90 border border-white/[0.06] flex justify-between items-center">
+            <div id="simResultBox" class="p-2.5 rounded-lg bg-slate-900 border border-white/[0.06] flex justify-between items-center">
               <span class="text-slate-300 font-medium">Projected Equilibrium:</span>
               <span id="simResultPct" class="font-mono font-bold text-sm text-indigo-400">--%</span>
             </div>
           </div>
 
           <!-- 3 Metric Gauges (Theory, Lab, Aggregate) -->
-          <div class="grid grid-cols-3 gap-3 mb-5">
-            <div class="glass-subcard p-4 text-center">
+          <div class="grid grid-cols-3 gap-3 mb-4">
+            <div class="glass-subcard p-3 text-center">
               <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block">Theory</span>
               <div id="theoryPct" class="text-2xl font-extrabold font-mono text-slate-100 mt-1">--%</div>
               <div id="theoryMargin" class="text-[10px] font-mono text-slate-500 mt-1">Margin: --</div>
             </div>
 
-            <div class="glass-subcard p-4 text-center">
+            <div class="glass-subcard p-3 text-center">
               <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block">Lab</span>
               <div id="labPct" class="text-2xl font-extrabold font-mono text-slate-100 mt-1">--%</div>
               <div id="labMargin" class="text-[10px] font-mono text-slate-500 mt-1">Margin: --</div>
             </div>
 
-            <div class="glass-subcard p-4 text-center border-indigo-500/25 bg-indigo-950/20">
+            <div class="glass-subcard p-3 text-center border-indigo-500/25 bg-indigo-950/20">
               <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-indigo-300 block">Aggregate</span>
-              <div id="aggPct" class="text-2xl font-extrabold font-mono text-indigo-300 mt-1 drop-shadow-sm">--%</div>
+              <div id="aggPct" class="text-2xl font-extrabold font-mono text-indigo-300 mt-1">--%</div>
               <div id="aggMargin" class="text-[10px] font-mono text-indigo-400 mt-1 font-semibold">Margin: --</div>
             </div>
           </div>
 
           <!-- Holographic Stark Arc Reactor Mark-85 HUD -->
-          <div class="relative bg-gradient-to-r from-cyan-950/30 via-slate-900/80 to-slate-900/50 border border-cyan-500/25 rounded-2xl p-4 mb-5 backdrop-blur-md shadow-inner flex items-center justify-between gap-4 cursor-pointer group hover:border-cyan-400/45 transition-all" onclick="triggerReactorOvercharge()" title="Click to trigger Stark Overcharge Telemetry">
-            <div class="flex items-center gap-4">
+          <div class="relative bg-gradient-to-r from-cyan-950/30 via-slate-900/80 to-slate-900/50 border border-cyan-500/25 rounded-xl p-3.5 mb-4 flex items-center justify-between gap-4 cursor-pointer group hover:border-cyan-400/40" onclick="triggerReactorOvercharge()" title="Click for Stark Overcharge Telemetry">
+            <div class="flex items-center gap-3.5">
               
               <!-- Multi-ring Precision Hologram SVG -->
-              <div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0 reactor-glow">
-                <!-- Outer Tech Calibrator Ring -->
-                <svg class="w-16 h-16 absolute arc-spin-slow text-cyan-400/50" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="1.5" stroke-dasharray="10 8 4 8" fill="transparent"></circle>
-                  <circle cx="50" cy="50" r="41" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6" fill="transparent" class="text-cyan-300/40"></circle>
+              <div class="relative w-14 h-14 flex items-center justify-center flex-shrink-0">
+                <svg class="w-14 h-14 absolute arc-spin-slow text-cyan-400/60" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8 4 8" fill="transparent"></circle>
                 </svg>
-                <!-- Inner Reverse Ring with Hexagon Nodes -->
-                <svg class="w-12 h-12 absolute arc-spin-rev text-sky-300/75" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2.5" stroke-dasharray="16 12" fill="transparent"></circle>
-                  <polygon points="50,16 79,33 79,67 50,84 21,67 21,33" stroke="currentColor" stroke-width="1.2" fill="transparent" class="text-cyan-400/35"></polygon>
+                <svg class="w-10 h-10 absolute arc-spin-rev text-sky-300/80" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2.5" stroke-dasharray="14 10" fill="transparent"></circle>
+                  <polygon points="50,16 79,33 79,67 50,84 21,67 21,33" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-cyan-400/35"></polygon>
                 </svg>
-                <!-- Pulsing Core -->
-                <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-400 to-sky-200 shadow-[0_0_20px_#22d3ee] flex items-center justify-center">
-                  <div class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></div>
+                <div class="w-5 h-5 rounded-full bg-cyan-400 shadow-[0_0_15px_#22d3ee] flex items-center justify-center">
+                  <div class="w-2 h-2 rounded-full bg-white animate-ping"></div>
                 </div>
               </div>
 
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-mono font-bold tracking-widest text-cyan-400 flex items-center gap-1.5 uppercase">
+                  <span class="text-[10px] font-mono font-bold tracking-widest text-cyan-400 flex items-center gap-1 uppercase">
                     <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Stark Defense Protocol
                   </span>
                   <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">MARK-85</span>
@@ -414,7 +365,7 @@
 
             <div class="hidden sm:flex flex-col items-end flex-shrink-0 text-right">
               <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold font-mono">Core Power</span>
-              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-cyan-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">98.4%</span>
+              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-cyan-300">98.4%</span>
             </div>
           </div>
         </div>
@@ -425,31 +376,31 @@
             <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider font-mono">Class Log Timeline</h3>
             <span class="text-[10px] text-slate-500 font-mono">Real-Time Sync</span>
           </div>
-          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs min-h-[48px] items-center">
+          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs min-h-[44px] items-center">
             <span class="text-slate-500 text-xs">Connect Attendance CSV in settings to stream lecture status</span>
           </div>
         </div>
       </div>
 
       <!-- Smart Milestones Card (5 cols) -->
-      <div class="lg:col-span-5 glass-card p-6 flex flex-col justify-between">
+      <div class="lg:col-span-5 glass-card p-5 md:p-6 flex flex-col justify-between">
         <div>
-          <div class="flex items-center justify-between mb-5">
-            <div class="flex items-center gap-2.5">
-              <div class="p-1.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                 <i data-lucide="calendar" class="w-4 h-4"></i>
               </div>
               <h2 class="text-sm font-bold text-white tracking-tight font-display">Next Milestones</h2>
             </div>
-            <span class="text-[10px] text-indigo-400/90 font-mono font-semibold bg-indigo-500/10 px-2.5 py-0.5 rounded-full border border-indigo-500/20">Auto-Tracking</span>
+            <span class="text-[10px] text-indigo-400/90 font-mono font-semibold bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Auto-Tracking</span>
           </div>
 
           <!-- Countdown Tiles -->
-          <div class="space-y-3 mb-5">
+          <div class="space-y-2.5 mb-4">
             <!-- Next Exam Tile -->
-            <div id="nextExamCard" class="glass-subcard p-3.5 flex items-center justify-between border-rose-500/20 bg-rose-950/15">
+            <div id="nextExamCard" class="glass-subcard p-3 flex items-center justify-between border-rose-500/25 bg-rose-950/15">
               <div class="flex items-center gap-3">
-                <div class="p-2 rounded-xl bg-rose-500/15 text-rose-400 border border-rose-500/25 flex-shrink-0">
+                <div class="p-1.5 rounded-lg bg-rose-500/15 text-rose-400 border border-rose-500/25 flex-shrink-0">
                   <i data-lucide="alert-circle" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -461,9 +412,9 @@
             </div>
 
             <!-- Next Holiday Tile -->
-            <div id="nextHolidayCard" class="glass-subcard p-3.5 flex items-center justify-between border-emerald-500/20 bg-emerald-950/15">
+            <div id="nextHolidayCard" class="glass-subcard p-3 flex items-center justify-between border-emerald-500/25 bg-emerald-950/15">
               <div class="flex items-center gap-3">
-                <div class="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex-shrink-0">
+                <div class="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex-shrink-0">
                   <i data-lucide="sun" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -475,9 +426,9 @@
             </div>
 
             <!-- Next Event Tile -->
-            <div id="nextEventCard" class="glass-subcard p-3.5 flex items-center justify-between border-indigo-500/20 bg-indigo-950/15">
+            <div id="nextEventCard" class="glass-subcard p-3 flex items-center justify-between border-indigo-500/25 bg-indigo-950/15">
               <div class="flex items-center gap-3">
-                <div class="p-2 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/25 flex-shrink-0">
+                <div class="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/25 flex-shrink-0">
                   <i data-lucide="clock" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -500,15 +451,15 @@
     </div>
 
     <!-- Row 2: Practice Topics & Question Bank -->
-    <div class="glass-card p-6">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
-        <div class="flex items-center gap-2.5">
-          <div class="p-1.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+    <div class="glass-card p-5 md:p-6">
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
             <i data-lucide="code-2" class="w-4 h-4"></i>
           </div>
           <div>
             <h2 class="text-sm font-bold text-white tracking-tight font-display">Practice Topics & Question Bank</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Live problem progress from connected Google Sheets</p>
+            <p class="text-xs text-slate-400">Live problem progress from connected Google Sheets</p>
           </div>
         </div>
         <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-mono font-medium flex items-center gap-1.5">
@@ -516,46 +467,46 @@
         </span>
       </div>
 
-      <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+      <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
         <span class="text-slate-500 col-span-full py-6 text-center">Connect Questions CSV in settings to load practice topics</span>
       </div>
     </div>
 
     <!-- Row 3: STARK DOUBT VAULT -->
-    <div class="glass-card p-6 space-y-5">
+    <div class="glass-card p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center gap-2.5">
-          <div class="p-1.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
             <i data-lucide="help-circle" class="w-4 h-4"></i>
           </div>
           <div>
             <h2 class="text-sm font-bold text-white tracking-tight font-display">Stark Doubt Vault & Multi-Format Archive</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Paste/upload screenshots of questions, consult J.A.R.V.I.S., and store multi-format solutions</p>
+            <p class="text-xs text-slate-400">Paste/upload screenshots of questions, consult J.A.R.V.I.S., and store multi-format solutions</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-3 py-1 rounded-lg bg-indigo-600 text-white transition-all shadow-sm">All (<span id="doubtTotalBadge">0</span>)</button>
-          <button onclick="setDoubtFilter('pending')" id="doubtFilterPending" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="doubtPendingBadge">0</span>)</button>
-          <button onclick="setDoubtFilter('resolved')" id="doubtFilterResolved" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Resolved</button>
+        <div class="flex items-center gap-1.5 bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+          <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-colors">All (<span id="doubtTotalBadge">0</span>)</button>
+          <button onclick="setDoubtFilter('pending')" id="doubtFilterPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors">Pending (<span id="doubtPendingBadge">0</span>)</button>
+          <button onclick="setDoubtFilter('resolved')" id="doubtFilterResolved" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors">Resolved</button>
         </div>
       </div>
 
       <!-- Creation Form -->
-      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-3 text-xs bg-[#090d18] p-4 rounded-2xl border border-white/[0.07] shadow-inner">
-        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" />
-        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" />
+      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2.5 text-xs bg-[#0a0e18] p-3.5 rounded-xl border border-white/[0.07]">
+        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
         <button type="submit" class="md:col-span-3 btn-primary-grad px-4 py-2 text-white text-xs">
           <i data-lucide="plus" class="w-3.5 h-3.5"></i>
           Log New Doubt
         </button>
 
-        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-slate-900/90 border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-[11px] transition-colors"></textarea>
+        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-[11px]"></textarea>
 
         <!-- Screenshot Dropzone -->
-        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border-2 border-dashed border-slate-700/80 hover:border-amber-500/60 bg-slate-950/40 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none transition-colors">
+        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border border-dashed border-slate-700 hover:border-amber-500/60 bg-slate-950/40 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none">
           <div class="flex items-center gap-2.5">
-            <div class="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
               <i data-lucide="image" class="w-4 h-4"></i>
             </div>
             <div>
@@ -568,7 +519,7 @@
               <i data-lucide="upload" class="w-3 h-3"></i> Upload Image
               <input type="file" id="doubtImageInput" accept="image/*" onchange="handleDoubtImageUpload(event)" class="hidden" />
             </label>
-            <div id="doubtImagePreviewBox" class="hidden flex items-center gap-1.5 bg-slate-800/90 border border-emerald-500/30 px-2 py-1 rounded-lg">
+            <div id="doubtImagePreviewBox" class="hidden flex items-center gap-1.5 bg-slate-800 border border-emerald-500/30 px-2 py-1 rounded-lg">
               <span class="text-[10px] text-emerald-400 font-semibold truncate max-w-[120px]" id="doubtImageName">Screenshot Ready</span>
               <button type="button" onclick="clearDoubtImageAttachment()" class="text-slate-400 hover:text-rose-400"><i data-lucide="x" class="w-3 h-3"></i></button>
             </div>
@@ -577,30 +528,30 @@
       </form>
 
       <!-- Ledger Container -->
-      <div id="doubtsLedgerContainer" class="space-y-3 min-h-[100px] max-h-[460px] overflow-y-auto pr-1 custom-scrollbar text-xs"></div>
+      <div id="doubtsLedgerContainer" class="space-y-2.5 min-h-[100px] max-h-[460px] overflow-y-auto pr-1 custom-scrollbar text-xs"></div>
     </div>
 
     <!-- Row 4: Coursework Assignments -->
-    <div class="glass-card p-6 space-y-5">
+    <div class="glass-card p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center gap-2.5">
-          <div class="p-1.5 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
             <i data-lucide="file-check-2" class="w-4 h-4"></i>
           </div>
           <div>
             <h2 class="text-sm font-bold text-white tracking-tight font-display">Assignments & Lab Submissions</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Coursework deadlines with urgency warnings and submission links</p>
+            <p class="text-xs text-slate-400">Coursework deadlines with urgency warnings and submission links</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all shadow-sm">All</button>
-          <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Pending (<span id="filterPendingBadge">0</span>)</button>
-          <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Submitted</button>
+        <div class="flex items-center gap-1.5 bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium">All</button>
+          <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Pending (<span id="filterPendingBadge">0</span>)</button>
+          <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Submitted</button>
         </div>
       </div>
 
-      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
         <span class="text-slate-500 col-span-full py-6 text-center">Connect Assignments CSV to view submissions</span>
       </div>
     </div>
@@ -608,9 +559,9 @@
   </main>
 
   <!-- QUICK COMMAND PALETTE MODAL (CMD+K) -->
-  <div id="cmdPaletteModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
-    <div class="bg-[#0b0f19] border border-white/[0.14] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden transition-all transform scale-100" onclick="event.stopPropagation()">
-      <div class="p-3.5 border-b border-white/[0.08] flex items-center gap-3">
+  <div id="cmdPaletteModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
+    <div class="bg-[#0b0f19] border border-white/[0.14] rounded-xl max-w-xl w-full shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+      <div class="p-3 border-b border-white/[0.08] flex items-center gap-2.5">
         <i data-lucide="search" class="w-4 h-4 text-indigo-400"></i>
         <input type="text" id="cmdPaletteInput" oninput="filterPaletteActions()" placeholder="Search action, jump to simulator, export prompt..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none" />
         <span class="kbd-chip">ESC</span>
@@ -620,8 +571,8 @@
   </div>
 
   <!-- MULTI-FORMAT RESOLUTION MODAL -->
-  <div id="resolveModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b0f19] border border-white/[0.1] rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+  <div id="resolveModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b0f19] border border-white/[0.12] rounded-xl max-w-xl w-full p-5 shadow-2xl space-y-4">
       <div class="flex justify-between items-start">
         <div>
           <div class="flex items-center gap-2">
@@ -630,7 +581,7 @@
           </div>
           <h3 class="text-base font-bold text-white mt-1" id="resolveModalTitle">Question Title</h3>
         </div>
-        <button onclick="closeResolveModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+        <button onclick="closeResolveModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -638,11 +589,11 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-300 font-medium mb-1">1. Written Explanation / Code Notes:</label>
-          <textarea id="resolveTextNotes" rows="3" placeholder="Explain the key logic or paste the working Java snippet..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white font-mono text-[11px] outline-none focus:border-indigo-500"></textarea>
+          <textarea id="resolveTextNotes" rows="3" placeholder="Explain the key logic or paste the working Java snippet..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono text-[11px] outline-none focus:border-indigo-500"></textarea>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2">
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
             <span class="text-[11px] font-bold text-slate-300 block flex items-center gap-1.5">
               <i data-lucide="camera" class="w-3.5 h-3.5 text-indigo-400"></i> Solution Photo / Notes Image
             </span>
@@ -653,7 +604,7 @@
             <div id="resolveImgPreview" class="hidden text-[10px] text-emerald-400 font-mono truncate">Photo Attached ✅</div>
           </div>
 
-          <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2">
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
             <span class="text-[11px] font-bold text-slate-300 block flex items-center gap-1.5">
               <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i> Solution PDF Document
             </span>
@@ -669,30 +620,30 @@
       <div class="flex justify-between items-center pt-2 border-t border-white/[0.06]">
         <span class="text-[11px] text-emerald-400 font-semibold font-mono">+50 XP upon resolution</span>
         <div class="flex gap-2">
-          <button onclick="closeResolveModal()" class="btn-action px-4 py-2 text-xs">Cancel</button>
-          <button onclick="submitDoubtResolution()" class="btn-primary-grad px-5 py-2 text-xs font-bold">Mark Cleared</button>
+          <button onclick="closeResolveModal()" class="btn-action px-3 py-1.5 text-xs">Cancel</button>
+          <button onclick="submitDoubtResolution()" class="btn-primary-grad px-4 py-1.5 text-xs font-bold">Mark Cleared</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- LIGHTBOX IMAGE MODAL -->
-  <div id="imageLightboxModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="closeImageLightbox()">
-    <div class="max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/[0.12] relative" onclick="event.stopPropagation()">
-      <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-2xl" />
+  <div id="imageLightboxModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="closeImageLightbox()">
+    <div class="max-w-4xl max-h-[90vh] overflow-hidden rounded-xl border border-white/[0.12] relative" onclick="event.stopPropagation()">
+      <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-xl" />
       <button onclick="closeImageLightbox()" class="absolute top-3 right-3 bg-slate-900/90 text-white p-2 rounded-full border border-white/20 hover:bg-slate-800"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>
   </div>
 
   <!-- Settings Modal -->
-  <div id="settingsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b0f19] border border-white/[0.1] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+  <div id="settingsModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b0f19] border border-white/[0.12] rounded-xl max-w-lg w-full p-5 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
         <h3 class="text-base font-semibold text-white">Dashboard Settings & Backup</h3>
-        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
 
-      <div class="p-3 bg-slate-900/80 border border-white/[0.06] rounded-xl space-y-2">
+      <div class="p-3 bg-slate-900 border border-white/[0.06] rounded-xl space-y-2">
         <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block font-mono">Cross-Device Data Backup</span>
         <p class="text-[11px] text-slate-400">Export or restore your focus history, doubts, tasks, and XP to sync between devices.</p>
         <div class="flex gap-2 pt-1">
@@ -709,19 +660,19 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-300 font-medium mb-1">Attendance CSV Link</label>
-          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Calendar CSV Link</label>
-          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Assignments CSV Link</label>
-          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Questions CSV Link</label>
-          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
       </div>
 
@@ -732,46 +683,28 @@
   </div>
 
   <script>
+    // Initial static icons render
     lucide.createIcons();
 
     /* =========================================================================
-       AUDIO FEEDBACK & J.A.R.V.I.S. SPEECH SYNTHESIS ENGINE
+       NON-BLOCKING J.A.R.V.I.S. SPEECH SYNTHESIS ENGINE
        ========================================================================= */
     let jarvisMuted = localStorage.getItem('JARVIS_VOICE_MUTED') === 'true';
-
-    // Soft Native Web Audio UI Clicks (Gentle, low-volume chime)
-    const audioCtx = (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) ? new (window.AudioContext || window.webkitAudioContext)() : null;
-    function playBeep(freq = 600, duration = 0.05, type = 'sine') {
-      if (jarvisMuted || !audioCtx) return;
-      try {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
-    }
 
     function updateJarvisVoiceUI() {
       const btn = document.getElementById('jarvisVoiceBtn');
       const icon = document.getElementById('jarvisVoiceIcon');
       const label = document.getElementById('jarvisVoiceLabel');
       if (jarvisMuted) {
-        btn.className = 'btn-action px-3 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800/80';
+        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800';
         icon.setAttribute('data-lucide', 'volume-x');
         label.innerText = 'J.A.R.V.I.S. Muted';
       } else {
-        btn.className = 'btn-action px-3 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20';
+        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20';
         icon.setAttribute('data-lucide', 'volume-2');
         label.innerText = 'J.A.R.V.I.S. Online';
       }
-      lucide.createIcons();
+      lucide.createIcons({ root: btn });
     }
 
     function toggleJarvisVoice() {
@@ -779,47 +712,46 @@
       localStorage.setItem('JARVIS_VOICE_MUTED', jarvisMuted);
       updateJarvisVoiceUI();
       if (!jarvisMuted) {
-        playBeep(880, 0.08);
         speakJarvis("Audio synthesized. J.A.R.V.I.S. online, sir.");
       }
     }
 
     function speakJarvis(phrase) {
-      if (jarvisMuted) return;
-      if (!('speechSynthesis' in window)) return;
+      if (jarvisMuted || !('speechSynthesis' in window)) return;
+      setTimeout(() => {
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(phrase);
+          utterance.rate = 0.96;
+          utterance.pitch = 0.98;
+          utterance.volume = 0.85;
 
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(phrase);
-      
-      utterance.rate = 0.96;
-      utterance.pitch = 0.98;
-      utterance.volume = 0.85;
+          const voices = window.speechSynthesis.getVoices();
+          const naturalVoice = voices.find(v => 
+            (v.name.includes('Daniel') && !v.name.includes('Compact')) ||
+            v.name.includes('Oliver') ||
+            v.name.includes('Arthur') ||
+            v.name.includes('Serena') ||
+            (v.lang === 'en-GB' && !v.name.includes('Compact')) ||
+            v.name.includes('Google UK English Male')
+          ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
 
-      const voices = window.speechSynthesis.getVoices();
-      const naturalVoice = voices.find(v => 
-        (v.name.includes('Daniel') && !v.name.includes('Compact')) ||
-        v.name.includes('Oliver') ||
-        v.name.includes('Arthur') ||
-        v.name.includes('Serena') ||
-        (v.lang === 'en-GB' && !v.name.includes('Compact')) ||
-        v.name.includes('Google UK English Male')
-      ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
-
-      if (naturalVoice) utterance.voice = naturalVoice;
-      window.speechSynthesis.speak(utterance);
+          if (naturalVoice) utterance.voice = naturalVoice;
+          window.speechSynthesis.speak(utterance);
+        } catch (e) {}
+      }, 10);
     }
 
     // Arc Reactor Interactive Overcharge
     function triggerReactorOvercharge() {
-      playBeep(940, 0.12, 'triangle');
       const core = document.getElementById('reactorPowerPct');
       core.innerText = "100.0% MAX";
-      core.className = "text-sm font-mono font-bold text-emerald-400 drop-shadow-[0_0_12px_#34d399]";
+      core.className = "text-sm font-mono font-bold text-emerald-400";
       speakJarvis("Arc reactor energized to maximum efficiency, sir.");
       setTimeout(() => {
         core.innerText = "98.4%";
-        core.className = "text-sm font-mono font-bold text-cyan-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]";
-      }, 4000);
+        core.className = "text-sm font-mono font-bold text-cyan-300";
+      }, 3500);
     }
 
     /* =========================================================================
@@ -846,7 +778,6 @@
     ];
 
     function openCommandPalette() {
-      playBeep(720, 0.04);
       document.getElementById('cmdPaletteModal').classList.remove('hidden');
       const input = document.getElementById('cmdPaletteInput');
       input.value = '';
@@ -871,7 +802,7 @@
 
       matched.forEach(a => {
         const item = document.createElement('div');
-        item.className = "flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-800/80 cursor-pointer text-slate-200 transition-colors group";
+        item.className = "flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 cursor-pointer text-slate-200 transition-colors group";
         item.onclick = () => {
           closeCommandPalette();
           a.action();
@@ -887,10 +818,10 @@
         `;
         container.appendChild(item);
       });
-      lucide.createIcons();
+      lucide.createIcons({ root: container });
     }
 
-    // Global Keybinds
+    // Global Keybinds (Instant)
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -925,7 +856,6 @@
     }
 
     function toggleSettingsModal() {
-      playBeep(520, 0.04);
       document.getElementById('settingsModal').classList.toggle('hidden');
     }
 
@@ -993,7 +923,6 @@
     let baseTotal = 0;
 
     function toggleSimulator() {
-      playBeep(640, 0.04);
       document.getElementById('simulatorDrawer').classList.toggle('hidden');
     }
 
@@ -1013,9 +942,9 @@
       const res = document.getElementById('simResultPct');
       res.innerText = `${simPct}%`;
       if (simPct >= 75) {
-        res.className = 'font-mono font-bold text-sm text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]';
+        res.className = 'font-mono font-bold text-sm text-emerald-400';
       } else {
-        res.className = 'font-mono font-bold text-sm text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]';
+        res.className = 'font-mono font-bold text-sm text-rose-400';
       }
     }
 
@@ -1093,7 +1022,6 @@
       currentStagedDoubtImage = dataUrl;
       document.getElementById('doubtImagePreviewBox').classList.remove('hidden');
       document.getElementById('doubtImageName').innerText = label;
-      playBeep(750, 0.05);
       speakJarvis("Screenshot loaded into question buffer, sir.");
     }
 
@@ -1132,7 +1060,6 @@
       clearDoubtImageAttachment();
 
       saveDoubts();
-      playBeep(880, 0.08);
       speakJarvis(`Doubt registered under ${topic}, sir. Added to active clearance vault.`);
     }
 
@@ -1142,14 +1069,13 @@
     }
 
     function setDoubtFilter(filter) {
-      playBeep(600, 0.03);
       currentDoubtFilter = filter;
       ['all', 'pending', 'resolved'].forEach(f => {
         const btn = document.getElementById(`doubtFilter${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-3 py-1 rounded-lg bg-indigo-600 text-white transition-all shadow-sm';
+          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-colors';
         } else {
-          btn.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
+          btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors';
         }
       });
       renderDoubtsLedger();
@@ -1167,7 +1093,6 @@
     let stagedResolvePdfName = '';
 
     function openResolveModal(id) {
-      playBeep(700, 0.04);
       const d = doubts.find(item => item.id === id);
       if (!d) return;
 
@@ -1246,7 +1171,6 @@
 
       saveDoubts();
       closeResolveModal();
-      playBeep(980, 0.1, 'triangle');
       speakJarvis(`Outstanding, sir. Concept neutralized across all formats. 50 XP credited.`);
       alert(`🎉 Doubt Cleared! +50 XP gained.`);
     }
@@ -1260,7 +1184,6 @@
     }
 
     function openImageLightbox(dataUrl) {
-      playBeep(650, 0.04);
       document.getElementById('lightboxImg').src = dataUrl;
       document.getElementById('imageLightboxModal').classList.remove('hidden');
     }
@@ -1286,7 +1209,6 @@ TASK:
 3. Mention 1 tricky edge case to remember for exams or interviews.`;
 
       navigator.clipboard.writeText(aiPrompt);
-      playBeep(880, 0.06);
       speakJarvis(`Diagnostic prompt compiled to clipboard, sir. Ready for analysis.`);
       alert(`📋 J.A.R.V.I.S. Copilot Prompt copied!\nPaste directly into Gemini or ChatGPT to get immediate resolution steps.`);
     }
@@ -1309,8 +1231,8 @@ TASK:
 
       filtered.forEach(d => {
         const card = document.createElement('div');
-        card.className = `p-4 rounded-xl border transition-all duration-200 ${
-          d.isResolved ? 'bg-slate-900/40 border-white/[0.06]' : 'bg-slate-900/80 border-amber-500/35 shadow-lg shadow-amber-950/20'
+        card.className = `p-3.5 rounded-xl border transition-colors ${
+          d.isResolved ? 'bg-[#0b0f19] border-white/[0.06]' : 'bg-[#0f1424] border-amber-500/35'
         }`;
 
         let questionImgHtml = '';
@@ -1318,7 +1240,7 @@ TASK:
           questionImgHtml = `
             <div class="mt-2.5 flex items-center gap-2">
               <span class="text-[10px] text-slate-400 font-mono">Question Screenshot:</span>
-              <img src="${d.questionImage}" onclick="openImageLightbox('${d.questionImage}')" title="Click to view full screenshot" class="h-14 w-auto rounded-lg border border-slate-700 hover:border-amber-400 cursor-pointer object-cover shadow-sm transition-all hover:scale-105" />
+              <img src="${d.questionImage}" onclick="openImageLightbox('${d.questionImage}')" title="Click to view full screenshot" class="h-12 w-auto rounded border border-slate-700 hover:border-amber-400 cursor-pointer object-cover" />
             </div>
           `;
         }
@@ -1344,13 +1266,13 @@ TASK:
 
               <div class="flex flex-wrap gap-2 pt-1">
                 ${solImg ? `
-                  <button onclick="openImageLightbox('${solImg}')" class="btn-action px-2.5 py-1 text-emerald-300 border-emerald-500/30">
+                  <button onclick="openImageLightbox('${solImg}')" class="btn-action px-2 py-1 text-emerald-300 border-emerald-500/30">
                     <i data-lucide="image" class="w-3 h-3"></i> View Photo
                   </button>
                 ` : ''}
 
                 ${solPdf ? `
-                  <a href="${solPdf}" download="${solPdfName}" class="btn-action px-2.5 py-1 text-cyan-300 border-cyan-500/30">
+                  <a href="${solPdf}" download="${solPdfName}" class="btn-action px-2 py-1 text-cyan-300 border-cyan-500/30">
                     <i data-lucide="file-text" class="w-3 h-3"></i> Download PDF
                   </a>
                 ` : ''}
@@ -1360,7 +1282,7 @@ TASK:
         }
 
         card.innerHTML = `
-          <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+          <div class="flex flex-wrap justify-between items-start gap-2 mb-1.5">
             <div>
               <div class="flex items-center gap-2">
                 <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">${d.topic}</span>
@@ -1370,34 +1292,34 @@ TASK:
             </div>
 
             <div class="flex items-center gap-1.5">
-              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="btn-action px-2.5 py-1 text-cyan-300 border-cyan-500/30">
+              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="btn-action px-2 py-1 text-cyan-300 border-cyan-500/30">
                 <i data-lucide="sparkles" class="w-3 h-3 text-cyan-400"></i> Copilot
               </button>
               
               ${d.isResolved ? `
-                <button onclick="unresolveDoubt(${d.id})" class="btn-action px-2.5 py-1 text-emerald-400 border-emerald-500/30">
+                <button onclick="unresolveDoubt(${d.id})" class="btn-action px-2 py-1 text-emerald-400 border-emerald-500/30">
                   <i data-lucide="check-check" class="w-3 h-3"></i> Cleared (+50 XP)
                 </button>
               ` : `
-                <button onclick="openResolveModal(${d.id})" class="btn-action px-2.5 py-1 text-amber-300 border-amber-500/30">
+                <button onclick="openResolveModal(${d.id})" class="btn-action px-2 py-1 text-amber-300 border-amber-500/30">
                   <i data-lucide="plus" class="w-3 h-3"></i> Add Solution
                 </button>
               `}
 
-              <button onclick="deleteDoubt(${d.id})" class="p-1 text-slate-500 hover:text-rose-400 transition-colors">
+              <button onclick="deleteDoubt(${d.id})" class="p-1 text-slate-500 hover:text-rose-400">
                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
               </button>
             </div>
           </div>
 
-          ${d.notes ? `<p class="text-[11px] text-slate-300 font-mono bg-black/40 p-2.5 rounded-lg border border-white/[0.04] mt-2 whitespace-pre-wrap">${d.notes}</p>` : ''}
+          ${d.notes ? `<p class="text-[11px] text-slate-300 font-mono bg-black/40 p-2 rounded border border-white/[0.04] mt-1.5 whitespace-pre-wrap">${d.notes}</p>` : ''}
           ${questionImgHtml}
           ${solutionBlockHtml}
         `;
 
         container.appendChild(card);
       });
-      lucide.createIcons();
+      lucide.createIcons({ root: container });
     }
 
     let cachedAttendance = {};
@@ -1407,14 +1329,13 @@ TASK:
     let currentAssignmentFilter = 'all';
 
     function setAssignmentFilter(filter) {
-      playBeep(620, 0.03);
       currentAssignmentFilter = filter;
       ['all', 'pending', 'submitted'].forEach(f => {
         const btn = document.getElementById(`btnAssign${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium transition-all shadow-sm';
+          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium';
         } else {
-          btn.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
+          btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white';
         }
       });
       renderAssignmentsList();
@@ -1441,14 +1362,14 @@ TASK:
         const isUrgent = !a.isCompleted && daysLeft <= 3;
 
         const card = document.createElement('div');
-        card.className = `glass-subcard p-4 flex flex-col justify-between transition-all duration-200 ${
-          isUrgent ? 'border-rose-500/70 bg-rose-950/20 urgent-assignment' : 'hover:border-white/[0.14]'
+        card.className = `glass-subcard p-3.5 flex flex-col justify-between ${
+          isUrgent ? 'border-rose-500/70 bg-rose-950/20 urgent-assignment' : ''
         }`;
 
         let urgencyTag = '';
         if (!a.isCompleted) {
           if (daysLeft < 0) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">Overdue</span>`;
-          else if (daysLeft <= 1) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40 animate-pulse">Due soon!</span>`;
+          else if (daysLeft <= 1) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">Due soon!</span>`;
           else if (daysLeft <= 3) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/40">In ${daysLeft} days</span>`;
         }
 
@@ -1468,12 +1389,12 @@ TASK:
           
           <div class="flex justify-between items-center pt-2.5 border-t border-white/[0.06] text-[11px] mt-2">
             <span class="text-slate-400">Grade: <span class="font-mono font-semibold text-slate-200">${a.score}</span></span>
-            ${a.portalUrl ? `<a href="${a.portalUrl}" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 text-[10px] hover:translate-x-0.5 transition-transform">Submit ↗</a>` : `<span class="text-slate-600 text-[10px]">No Link</span>`}
+            ${a.portalUrl ? `<a href="${a.portalUrl}" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 text-[10px]">Submit ↗</a>` : `<span class="text-slate-600 text-[10px]">No Link</span>`}
           </div>
         `;
         container.appendChild(card);
       });
-      lucide.createIcons();
+      lucide.createIcons({ root: container });
     }
 
     function loadAllData() {
@@ -1622,7 +1543,7 @@ TASK:
               }
 
               const el = document.createElement('div');
-              el.className = 'glass-subcard p-2.5 flex justify-between items-center transition-all hover:border-white/[0.14]';
+              el.className = 'glass-subcard p-2 flex justify-between items-center';
               const badgeClass = item.days >= 0 ? 'text-indigo-300 font-mono' : 'text-slate-500 font-mono';
               el.innerHTML = `
                 <div>
@@ -1653,7 +1574,7 @@ TASK:
               document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
               document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
             }
-            lucide.createIcons();
+            lucide.createIcons({ root: list });
           }
         });
       }
@@ -1688,42 +1609,42 @@ TASK:
               });
 
               const card = document.createElement('div');
-              card.className = 'glass-subcard p-4 flex flex-col justify-between transition-all duration-200 hover:border-indigo-500/35 hover:-translate-y-0.5';
+              card.className = 'glass-subcard p-3.5 flex flex-col justify-between';
               card.innerHTML = `
                 <div>
                   <div class="flex justify-between items-start mb-2">
                     <span class="font-semibold text-slate-200 capitalize truncate pr-1 text-xs">${topicName}</span>
-                    <a href="${sheetUrl}" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium whitespace-nowrap hover:translate-x-0.5 transition-transform">Open ↗</a>
+                    <a href="${sheetUrl}" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium whitespace-nowrap">Open ↗</a>
                   </div>
 
-                  <div class="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden mb-3">
-                    <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                  <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-3">
+                    <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
                   </div>
 
-                  <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
-                    <div class="bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 p-1.5 rounded-lg">
+                  <div class="grid grid-cols-3 gap-1 text-center text-[10px]">
+                    <div class="bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 p-1 rounded-md">
                       <div class="font-bold text-xs font-mono">${completedQ}</div>
                       <div class="text-[9px] text-slate-400">Done</div>
                     </div>
-                    <div class="bg-amber-950/40 border border-amber-800/60 text-amber-300 p-1.5 rounded-lg">
+                    <div class="bg-amber-950/40 border border-amber-800/60 text-amber-300 p-1 rounded-md">
                       <div class="font-bold text-xs font-mono">${doubtQ}</div>
                       <div class="text-[9px] text-slate-400">Doubts</div>
                     </div>
-                    <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1.5 rounded-lg">
+                    <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1 rounded-md">
                       <div class="font-bold text-xs font-mono">${notAttemptedQ}</div>
                       <div class="text-[9px] text-slate-400">Pending</div>
                     </div>
                   </div>
                 </div>
 
-                <div class="mt-3.5 flex items-center justify-between pt-2.5 border-t border-white/[0.06] text-[11px]">
+                <div class="mt-3 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
                   <span class="text-slate-400">Total: <b class="font-mono text-slate-300">${totalQ}</b></span>
                   <span class="font-semibold font-mono ${pct === 100 ? 'text-emerald-400' : 'text-indigo-400'}">${pct}% Completed</span>
                 </div>
               `;
               container.appendChild(card);
             });
-            lucide.createIcons();
+            lucide.createIcons({ root: container });
           }
         });
       }
@@ -1807,7 +1728,6 @@ Acting as an expert academic and software engineering mentor, generate an optimi
 3. Provides 3 high-yield conceptual tips for my pending topics.`;
 
       navigator.clipboard.writeText(prompt);
-      playBeep(880, 0.08);
       speakJarvis("Strategic roadmap prompt copied to clipboard, sir.");
       alert('📋 Rich Context AI Study Prompt copied to clipboard!\nPaste it directly into Gemini or ChatGPT for your tailored study plan.');
     }

@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#05070c" />
+  <meta name="theme-color" content="#060911" />
   <title>Focus Cockpit | Vikas N</title>
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,13 +23,6 @@
             sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             display: ['Outfit', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
-          },
-          colors: {
-            void: '#05070c',
-            surface: 'rgba(12, 16, 26, 0.72)',
-            surfaceHover: 'rgba(18, 24, 38, 0.85)',
-            subtle: 'rgba(255, 255, 255, 0.06)',
-            highlight: 'rgba(255, 255, 255, 0.12)'
           }
         }
       }
@@ -44,7 +37,7 @@
 
   <style>
     /* =========================================================================
-       AWWWARDS / LINEAR LEVEL GLASS & AMBIENT AESTHETIC
+       ULTRA-FAST, HIGH-PERFORMANCE LIGHTWEIGHT DARK ARCHITECTURE (60-120 FPS)
        ========================================================================= */
     :root {
       color-scheme: dark;
@@ -59,64 +52,50 @@
     /* Minimalist Precision Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.15); border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.35); }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
 
-    /* Canvas Architecture */
+    /* Clean Canvas Architecture */
     body {
-      background-color: #05070c;
+      background-color: #060911;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 45%),
-        radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 40%),
-        radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px;
+        radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 40%),
+        radial-gradient(at 85% 10%, rgba(16, 185, 129, 0.07) 0px, transparent 40%),
+        radial-gradient(at 50% 90%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
       color: #f1f5f9;
       overflow-x: hidden;
     }
 
-    /* Multi-layered Glass Panel with Beveled Light Edge */
+    /* High-Performance Surface Cards (Solid with subtle top highlight - Zero Blur Lag) */
     .glass-card {
-      background: linear-gradient(180deg, rgba(16, 22, 36, 0.75) 0%, rgba(10, 14, 24, 0.65) 100%);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #0b0f19;
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-top: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 
-        0 1px 2px 0 rgba(0, 0, 0, 0.4),
-        0 8px 24px -4px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      transition: border-color 0.12s ease, transform 0.12s ease;
     }
     .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
-      border-top-color: rgba(147, 197, 253, 0.35);
-      box-shadow: 
-        0 1px 2px 0 rgba(0, 0, 0, 0.4),
-        0 16px 36px -8px rgba(0, 0, 0, 0.75),
-        0 0 24px -4px rgba(99, 102, 241, 0.12),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
-      transform: translateY(-1.5px);
+      border-color: rgba(99, 102, 241, 0.35);
+      border-top-color: rgba(147, 197, 253, 0.4);
+      transform: translateY(-1px);
     }
 
-    /* Sub-card inside cards */
+    /* Internal sub-cards */
     .glass-subcard {
-      background: rgba(18, 25, 41, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-top: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 14px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      background: #111726;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      transition: border-color 0.12s ease;
     }
     .glass-subcard:hover {
-      background: rgba(22, 31, 52, 0.75);
-      border-color: rgba(255, 255, 255, 0.1);
-      border-top-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.14);
     }
 
-    /* Tactile Glass Button with Linear-grade Physics */
+    /* Instant-Response Tactile Buttons (Zero Latency) */
     .btn-action {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -124,155 +103,125 @@
       font-weight: 600;
       cursor: pointer;
       user-select: none;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(18, 24, 38, 0.7);
+      border-radius: 10px;
+      background: #141b2d;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       color: #e2e8f0;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background-color 0.1s ease, border-color 0.1s ease, transform 0.08s ease;
     }
     .btn-action:hover {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(26, 35, 56, 0.85);
+      background: #1c263f;
       border-color: rgba(99, 102, 241, 0.4);
-      border-top-color: rgba(165, 180, 252, 0.45);
-      box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.5), 0 0 16px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.18);
       color: #ffffff;
-      transform: translateY(-1px);
     }
     .btn-action:active {
-      transform: translateY(0.5px) scale(0.985);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      transform: scale(0.98);
+      background: #0f1524;
     }
 
     /* Primary Gradient Button */
     .btn-primary-grad {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       font-weight: 600;
       cursor: pointer;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #4338ca 100%);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
       color: #ffffff;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.1s ease, transform 0.08s ease;
     }
     .btn-primary-grad:hover {
-      background: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #6366f1 100%);
-      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      transform: translateY(-1px);
+      opacity: 0.95;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
     }
     .btn-primary-grad:active {
-      transform: translateY(0.5px) scale(0.985);
-      box-shadow: 0 1px 4px rgba(79, 70, 229, 0.5);
+      transform: scale(0.98);
     }
 
-    /* Keyboard Shortcut Chip */
+    /* Keyboard Shortcut Tag */
     .kbd-chip {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
       font-family: 'JetBrains Mono', monospace;
       font-size: 10px;
-      padding: 1.5px 5.5px;
-      border-radius: 5px;
+      padding: 1px 5px;
+      border-radius: 4px;
       color: #94a3b8;
     }
 
-    /* Timer Ring Transition */
-    .timer-ring { transition: stroke-dashoffset 0.8s ease-in-out; }
-
-    @keyframes auraBreathe {
-      0%, 100% { filter: drop-shadow(0 0 14px rgba(99, 102, 241, 0.35)); }
-      50% { filter: drop-shadow(0 0 28px rgba(99, 102, 241, 0.75)); }
-    }
-    .timer-active-aura { animation: auraBreathe 3s ease-in-out infinite; }
-
-    /* Shimmer Badge */
-    @keyframes badgeGleam {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    .badge-gleam {
-      background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, rgba(16, 185, 129, 0.28) 50%, rgba(99, 102, 241, 0.12) 100%);
-      background-size: 200% 100%;
-      animation: badgeGleam 5s infinite linear;
-    }
+    .timer-ring { transition: stroke-dashoffset 0.6s ease-out; }
   </style>
 </head>
 
-<body class="selection:bg-indigo-500 selection:text-white font-sans min-h-screen pb-20">
-
-  <!-- Ambient Background Lights -->
-  <div class="fixed top-[-10%] left-[20%] w-[550px] h-[550px] rounded-full bg-indigo-600/12 blur-[150px] pointer-events-none -z-10"></div>
-  <div class="fixed bottom-[-10%] right-[10%] w-[600px] h-[600px] rounded-full bg-emerald-600/10 blur-[160px] pointer-events-none -z-10"></div>
+<body class="selection:bg-indigo-500 selection:text-white font-sans min-h-screen pb-16">
 
   <!-- Top Navigation Header -->
-  <nav class="sticky top-0 z-40 px-4 md:px-8 py-3 bg-[#05070c]/80 backdrop-blur-2xl border-b border-white/[0.07]">
+  <nav class="sticky top-0 z-40 px-4 md:px-8 py-2.5 bg-[#060911]/95 border-b border-white/[0.08]">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
       
       <!-- Brand & Student Badge -->
-      <div class="flex items-center gap-3.5">
-        <div class="relative group cursor-pointer" onclick="openCommandPalette()" title="Open Command Palette (Cmd+K)">
-          <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-emerald-400 p-[1px] shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-all duration-200">
-            <div class="h-full w-full bg-[#090d16] rounded-2xl flex items-center justify-center font-display font-extrabold text-white text-base">
-              <i data-lucide="zap" class="w-5 h-5 text-emerald-400"></i>
+      <div class="flex items-center gap-3">
+        <div class="relative cursor-pointer" onclick="openCommandPalette()" title="Command Palette (Cmd+K)">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-emerald-400 p-[1px] shadow-sm">
+            <div class="h-full w-full bg-[#0a0e18] rounded-xl flex items-center justify-center font-display font-extrabold text-white text-sm">
+              <i data-lucide="zap" class="w-4 h-4 text-emerald-400"></i>
             </div>
           </div>
-          <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#05070c]"></div>
+          <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#060911]"></div>
         </div>
 
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-sm font-bold tracking-tight text-white font-display">Focus Cockpit</h1>
-            <span id="playerRankBadge" class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full badge-gleam text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
+            <span id="playerRankBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
           </div>
           <div class="flex items-center gap-2 mt-0.5">
-            <div class="w-28 bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-              <div id="playerXpBar" class="bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 h-1.5 rounded-full transition-all duration-700 ease-out" style="width: 20%"></div>
+            <div class="w-24 bg-slate-800 rounded-full h-1.5 overflow-hidden">
+              <div id="playerXpBar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-300" style="width: 20%"></div>
             </div>
             <span id="playerXpText" class="text-[10px] text-slate-400 font-mono">100 / 500 XP</span>
             <span class="text-slate-600 hidden sm:inline">&bull;</span>
-            <span id="tacticalClock" class="font-mono text-emerald-300/90 text-[10px] hidden sm:inline">--:--:--</span>
+            <span id="tacticalClock" class="font-mono text-emerald-400 text-[10px] hidden sm:inline">--:--:--</span>
           </div>
         </div>
       </div>
 
       <!-- Action Controls -->
-      <div class="flex items-center gap-2 md:gap-2.5">
+      <div class="flex items-center gap-2">
         
         <!-- Command Palette Trigger -->
-        <button onclick="openCommandPalette()" class="hidden md:flex btn-action px-3 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
+        <button onclick="openCommandPalette()" class="hidden md:flex btn-action px-2.5 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
           <span class="text-[11px]">Command Palette</span>
           <span class="kbd-chip">⌘K</span>
         </button>
 
         <!-- J.A.R.V.I.S. Audio Synthesizer Button -->
-        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="btn-action px-3 py-1.5 text-xs text-cyan-300 border-cyan-500/25 bg-cyan-950/20" title="Toggle J.A.R.V.I.S. Speech Synthesizer">
+        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20" title="Toggle J.A.R.V.I.S. Speech Synthesizer">
           <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-cyan-400"></i>
           <span class="hidden sm:inline font-mono text-[11px]" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
         </button>
 
         <!-- Zen Mode Button -->
-        <button onclick="toggleZenMode()" class="btn-action px-3 py-1.5 text-xs text-indigo-300 border-indigo-500/30 bg-indigo-950/20" title="Enter Zen Mode (Key: F)">
+        <button onclick="toggleZenMode()" class="btn-action px-2.5 py-1.5 text-xs text-indigo-300 border-indigo-500/30" title="Enter Zen Mode (Key: F)">
           <i data-lucide="maximize-2" class="w-3.5 h-3.5 text-indigo-400"></i>
           <span class="text-[11px]">Zen Mode</span>
           <span class="kbd-chip">F</span>
         </button>
 
         <!-- Page View Switcher Tabs -->
-        <div class="flex items-center bg-slate-900/80 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold shadow-inner">
-          <a href="index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
+        <div class="flex items-center bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] flex items-center gap-1.5 transition-colors">
             <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
             <span>Dashboard</span>
             <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400 font-mono">1</span>
           </a>
-          <a href="productivity.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all">
+          <a href="productivity.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm flex items-center gap-1.5">
             <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-300"></i>
             <span>Productivity</span>
             <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200 font-mono">2</span>
@@ -286,7 +235,7 @@
   <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
     <!-- Mindset Spark Banner -->
-    <div class="relative bg-gradient-to-r from-indigo-950/40 via-slate-900/80 to-slate-900/50 border border-indigo-500/25 rounded-2xl px-5 py-3.5 backdrop-blur-md shadow-lg flex items-center justify-between gap-4 transition-all hover:border-indigo-500/40">
+    <div class="relative bg-[#0b0f19] border border-indigo-500/25 rounded-2xl px-5 py-3.5 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <div class="p-2 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex-shrink-0">
           <i data-lucide="quote" class="w-4 h-4"></i>
@@ -305,25 +254,25 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
       <!-- Focus Timer Suite (7 cols) -->
-      <div class="lg:col-span-7 glass-card p-6 flex flex-col justify-between">
+      <div class="lg:col-span-7 glass-card p-5 md:p-6 flex flex-col justify-between">
         <div>
           <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
                 <i data-lucide="timer" class="w-4 h-4"></i>
               </span>
               <h2 class="text-sm font-bold text-white tracking-tight font-display" id="timerModeTitle">Pomodoro Focus Timer</h2>
             </div>
 
             <div class="flex items-center gap-2 flex-wrap">
-              <select id="sessionSubjectCategory" class="bg-slate-900 border border-white/[0.08] text-indigo-300 rounded-xl px-3 py-1.5 text-xs font-semibold outline-none focus:border-indigo-500">
+              <select id="sessionSubjectCategory" class="bg-slate-900 border border-white/[0.08] text-indigo-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold outline-none focus:border-indigo-500">
                 <option value="DSA">💻 DSA Practice</option>
                 <option value="Theory">📚 College Theory</option>
                 <option value="Lab">🧪 Lab Coding</option>
                 <option value="Personal">⚡ Core Review</option>
               </select>
 
-              <div class="flex bg-slate-900 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold shadow-inner">
+              <div class="flex bg-slate-900 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
                 <button onclick="setTimerTab('pomo')" id="tabBtnPomo" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm transition-all">Pomodoro</button>
                 <button onclick="setTimerTab('custom')" id="tabBtnCustom" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Custom</button>
                 <button onclick="setTimerTab('stopwatch')" id="tabBtnStopwatch" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all">Stopwatch</button>
@@ -333,13 +282,13 @@
 
           <!-- Timer Clock Display with Floating Ring -->
           <div class="flex flex-col items-center justify-center my-4 relative">
-            <div id="timerContainerRing" class="relative w-56 h-56 flex items-center justify-center transition-all duration-500">
+            <div id="timerContainerRing" class="relative w-52 h-52 flex items-center justify-center">
               <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" class="text-slate-800/60 fill-transparent"></circle>
-                <circle id="timerProgressCircle" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round" class="text-indigo-500 fill-transparent timer-ring transition-all duration-700 ease-out"></circle>
+                <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" class="text-slate-800/80 fill-transparent"></circle>
+                <circle id="timerProgressCircle" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4.5" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round" class="text-indigo-500 fill-transparent timer-ring"></circle>
               </svg>
               <div class="absolute flex flex-col items-center justify-center text-center">
-                <span id="timerDisplay" class="text-5xl font-mono font-extrabold tracking-tight text-white drop-shadow-[0_0_20px_rgba(99,102,241,0.4)]">25:00</span>
+                <span id="timerDisplay" class="text-5xl font-mono font-extrabold tracking-tight text-white">25:00</span>
                 <span id="timerSubtext" class="text-[11px] text-indigo-400 uppercase tracking-widest font-semibold mt-1 font-mono">Deep Work</span>
               </div>
             </div>
@@ -365,7 +314,7 @@
 
         <!-- Controls -->
         <div class="flex items-center justify-center gap-3 pt-4 border-t border-white/[0.06]">
-          <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="btn-primary-grad px-8 py-2.5 text-xs font-bold shadow-lg shadow-indigo-600/30">
+          <button id="mainTimerToggleBtn" onclick="toggleMainTimer()" class="btn-primary-grad px-8 py-2.5 text-xs font-bold">
             <i data-lucide="play" id="mainTimerIcon" class="w-4 h-4 fill-white"></i>
             <span id="mainTimerBtnText">Start Session</span>
           </button>
@@ -377,25 +326,25 @@
       </div>
 
       <!-- Spotify & Audio Lounge (5 cols) -->
-      <div class="lg:col-span-5 glass-card p-6 flex flex-col justify-between">
+      <div class="lg:col-span-5 glass-card p-5 md:p-6 flex flex-col justify-between">
         <div>
           <div class="flex justify-between items-center mb-3">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                 <i data-lucide="music-2" class="w-4 h-4"></i>
               </span>
               <h2 class="text-sm font-bold text-white tracking-tight font-display">Study Beats & Audio Lounge</h2>
             </div>
-            <span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-mono">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Desktop Stream
+            <span class="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full flex items-center gap-1 font-mono">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Stream Ready
             </span>
           </div>
 
           <!-- Native Spotify Launcher Card -->
-          <div class="rounded-2xl border border-emerald-500/25 bg-emerald-950/20 backdrop-blur p-4 space-y-3">
+          <div class="rounded-xl border border-emerald-500/25 bg-emerald-950/20 p-3.5 space-y-2.5">
             <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <div class="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+              <div class="flex items-center gap-2">
+                <div class="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
                   <i data-lucide="headphones" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -408,21 +357,21 @@
 
             <!-- 1-Click Launchers -->
             <div class="grid grid-cols-2 gap-2 text-xs">
-              <a href="spotify:playlist:37i9dQZF1DX8Uebhn9wzrS" class="btn-action p-2.5 text-xs justify-between group">
+              <a href="spotify:playlist:37i9dQZF1DX8Uebhn9wzrS" class="btn-action p-2 text-xs justify-between group">
                 <span class="font-medium truncate">🎧 Lofi Beats</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
               </a>
-              <a href="spotify:playlist:37i9dQZF1DX3qCx52SuA8Q" class="btn-action p-2.5 text-xs justify-between group">
+              <a href="spotify:playlist:37i9dQZF1DX3qCx52SuA8Q" class="btn-action p-2 text-xs justify-between group">
                 <span class="font-medium truncate">🧠 Deep Focus</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
               </a>
-              <a href="spotify:playlist:37i9dQZF1DXdLEN7aqioXM" class="btn-action p-2.5 text-xs justify-between group">
+              <a href="spotify:playlist:37i9dQZF1DXdLEN7aqioXM" class="btn-action p-2 text-xs justify-between group">
                 <span class="font-medium truncate">💻 Synthwave Code</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
               </a>
-              <a href="spotify:playlist:37i9dQZF1DX4sWSpwq3LiO" class="btn-action p-2.5 text-xs justify-between group">
+              <a href="spotify:playlist:37i9dQZF1DX4sWSpwq3LiO" class="btn-action p-2 text-xs justify-between group">
                 <span class="font-medium truncate">🌧 Peaceful Piano</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400"></i>
               </a>
             </div>
           </div>
@@ -450,28 +399,28 @@
     </div>
 
     <!-- SUBJECT ALLOCATION & HEATMAP -->
-    <div class="glass-card p-6 space-y-5">
+    <div class="glass-card p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center gap-2.5">
-          <span class="p-1.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
             <i data-lucide="layout-grid" class="w-4 h-4"></i>
           </span>
           <div>
             <h2 class="text-sm font-bold text-white tracking-tight font-display">Study Consistency Heatmap & Subject Allocation</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Tracking daily focus density and exact time invested across subjects this week</p>
+            <p class="text-xs text-slate-400">Tracking daily focus density and exact time invested across subjects this week</p>
           </div>
         </div>
         <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-semibold" id="heatmapTotalHoursText">0.0 Focus Hours</span>
       </div>
 
       <!-- Consistency Heatmap Grid -->
-      <div class="bg-[#090d18] border border-white/[0.06] rounded-2xl p-4 shadow-inner">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-3 font-mono">Daily Consistency Matrix</span>
-        <div id="heatmapGrid" class="grid grid-cols-7 gap-2.5 text-center"></div>
+      <div class="bg-[#090d18] border border-white/[0.06] rounded-xl p-3.5">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2 font-mono">Daily Consistency Matrix</span>
+        <div id="heatmapGrid" class="grid grid-cols-7 gap-2 text-center"></div>
       </div>
 
       <!-- Subject Time Distribution Bar -->
-      <div class="space-y-2">
+      <div class="space-y-1.5">
         <div class="flex justify-between items-center text-xs flex-wrap gap-2">
           <span class="text-slate-300 font-semibold">Subject Split:</span>
           <div class="flex items-center gap-4 text-[11px] font-mono" id="subjectLegendContainer">
@@ -482,40 +431,40 @@
           </div>
         </div>
 
-        <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden flex border border-white/[0.06]" id="allocationDistributionBar">
-          <div id="barDsaSegment" class="bg-indigo-500 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barTheorySegment" class="bg-sky-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barLabSegment" class="bg-emerald-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
-          <div id="barReviewSegment" class="bg-amber-400 h-full transition-all duration-700 ease-out" style="width: 25%"></div>
+        <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex border border-white/[0.06]" id="allocationDistributionBar">
+          <div id="barDsaSegment" class="bg-indigo-500 h-full transition-all duration-300" style="width: 25%"></div>
+          <div id="barTheorySegment" class="bg-sky-400 h-full transition-all duration-300" style="width: 25%"></div>
+          <div id="barLabSegment" class="bg-emerald-400 h-full transition-all duration-300" style="width: 25%"></div>
+          <div id="barReviewSegment" class="bg-amber-400 h-full transition-all duration-300" style="width: 25%"></div>
         </div>
       </div>
     </div>
 
     <!-- Daily Task Engine with Weekly Reset & Archive Controls -->
-    <div class="glass-card p-6 space-y-4">
+    <div class="glass-card p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center gap-2.5">
-          <span class="p-1.5 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
             <i data-lucide="check-square" class="w-4 h-4"></i>
           </span>
           <div>
             <h2 class="text-sm font-bold text-white tracking-tight font-display">Daily Task Engine</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Auto-archives completed tasks every Sunday night to keep your cockpit pristine.</p>
+            <p class="text-xs text-slate-400">Auto-archives completed tasks every Sunday night to keep your cockpit pristine.</p>
           </div>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-          <button onclick="toggleArchiveModal()" class="btn-action px-3 py-1 text-xs text-slate-300">
+          <button onclick="toggleArchiveModal()" class="btn-action px-2.5 py-1 text-xs text-slate-300">
             <i data-lucide="archive" class="w-3.5 h-3.5 text-slate-400"></i>
-            <span>Archived Logs (<span id="archiveCountBadge" class="font-mono">0</span>)</span>
+            <span>Archived (<span id="archiveCountBadge" class="font-mono">0</span>)</span>
           </button>
 
-          <button onclick="manualArchiveCompleted()" title="Archive finished tasks now" class="btn-action px-3 py-1 text-xs text-indigo-300 border-indigo-500/30">
+          <button onclick="manualArchiveCompleted()" title="Archive finished tasks now" class="btn-action px-2.5 py-1 text-xs text-indigo-300 border-indigo-500/30">
             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
             <span>Sweep Completed</span>
           </button>
 
-          <div class="flex items-center gap-1 bg-slate-900 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold shadow-inner">
+          <div class="flex items-center gap-1 bg-slate-900 border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
             <button onclick="setTodoFilter('all')" id="filterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium">All</button>
             <button onclick="setTodoFilter('dsa')" id="filterDSA" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">DSA</button>
             <button onclick="setTodoFilter('theory')" id="filterTheory" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Theory</button>
@@ -524,17 +473,17 @@
         </div>
       </div>
 
-      <form onsubmit="handleAddTask(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2 text-xs bg-[#090d18] p-3 rounded-2xl border border-white/[0.06]">
-        <input type="text" id="taskTitleInput" placeholder="What are you tackling right now? (e.g. Solve 5 Loop problems, Review Lab 2...)" required class="md:col-span-6 bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors" />
+      <form onsubmit="handleAddTask(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2 text-xs bg-[#090d18] p-3 rounded-xl border border-white/[0.06]">
+        <input type="text" id="taskTitleInput" placeholder="What are you tackling right now? (e.g. Solve 5 Loop problems, Review Lab 2...)" required class="md:col-span-6 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
         
-        <select id="taskCategorySelect" class="md:col-span-2 bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+        <select id="taskCategorySelect" class="md:col-span-2 bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500">
           <option value="DSA">💻 DSA Practice</option>
           <option value="Theory">📚 Theory / College</option>
           <option value="Lab">🧪 Lab Program</option>
           <option value="Personal">⚡ Core Review</option>
         </select>
 
-        <select id="taskPrioritySelect" class="md:col-span-2 bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 font-mono">
+        <select id="taskPrioritySelect" class="md:col-span-2 bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-indigo-500 font-mono">
           <option value="High">🔴 High (+75 XP)</option>
           <option value="Medium" selected>🟡 Medium (+50 XP)</option>
           <option value="Low">🟢 Low (+30 XP)</option>
@@ -546,15 +495,15 @@
         </button>
       </form>
 
-      <div id="todoListContainer" class="space-y-2.5 min-h-[140px] max-h-[360px] overflow-y-auto pr-1 custom-scrollbar"></div>
+      <div id="todoListContainer" class="space-y-2 min-h-[140px] max-h-[360px] overflow-y-auto pr-1 custom-scrollbar"></div>
     </div>
 
     <!-- Analytics & Consistency Reports -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div class="lg:col-span-7 glass-card p-6">
+      <div class="lg:col-span-7 glass-card p-5 md:p-6">
         <div class="flex justify-between items-center mb-4">
-          <div class="flex items-center gap-2.5">
-            <span class="p-1.5 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/30">
+          <div class="flex items-center gap-2">
+            <span class="p-1.5 rounded-lg bg-sky-500/15 text-sky-400 border border-sky-500/30">
               <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
             </span>
             <div>
@@ -569,11 +518,11 @@
         </div>
       </div>
 
-      <div class="lg:col-span-5 glass-card p-6 flex flex-col justify-between">
+      <div class="lg:col-span-5 glass-card p-5 md:p-6 flex flex-col justify-between">
         <div>
           <div class="flex justify-between items-center mb-3">
-            <div class="flex items-center gap-2.5">
-              <span class="p-1.5 rounded-xl bg-violet-500/15 text-violet-400 border border-violet-500/30">
+            <div class="flex items-center gap-2">
+              <span class="p-1.5 rounded-lg bg-violet-500/15 text-violet-400 border border-violet-500/30">
                 <i data-lucide="pie-chart" class="w-4 h-4"></i>
               </span>
               <h3 class="text-sm font-bold text-white tracking-tight font-display">Monthly Focus Breakdown</h3>
@@ -585,7 +534,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-white/[0.06] text-center text-xs">
+        <div class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-white/[0.06] text-center text-xs">
           <div class="glass-subcard p-2.5">
             <span class="text-[10px] text-slate-400 uppercase font-semibold">Tasks Completed</span>
             <div id="metricCompletedTasks" class="text-xl font-bold font-mono text-white mt-0.5">0</div>
@@ -599,15 +548,15 @@
     </div>
 
     <!-- Daily Victory & Evening Reflection Debrief -->
-    <div class="glass-card p-6 space-y-4">
+    <div class="glass-card p-5 md:p-6 space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-2">
-        <div class="flex items-center gap-2.5">
-          <span class="p-1.5 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30">
+        <div class="flex items-center gap-2">
+          <span class="p-1.5 rounded-lg bg-amber-500/15 text-amber-400 border border-amber-500/30">
             <i data-lucide="trophy" class="w-4 h-4"></i>
           </span>
           <div>
             <h3 class="text-sm font-bold text-white tracking-tight font-display">Today's Victory & Evening Debrief</h3>
-            <p class="text-xs text-slate-400 mt-0.5">Automatic log of everything you accomplished today.</p>
+            <p class="text-xs text-slate-400">Automatic log of everything you accomplished today.</p>
           </div>
         </div>
         <button onclick="copyDailyDebrief()" class="btn-action px-3 py-1.5 text-xs text-emerald-400 border-emerald-500/25 bg-emerald-950/20">
@@ -616,15 +565,15 @@
         </button>
       </div>
 
-      <div id="dailyDebriefContainer" class="bg-[#090d18] border border-white/[0.06] rounded-2xl p-4 text-xs font-mono space-y-1.5 text-slate-300 max-h-48 overflow-y-auto custom-scrollbar shadow-inner"></div>
+      <div id="dailyDebriefContainer" class="bg-[#090d18] border border-white/[0.06] rounded-xl p-3.5 text-xs font-mono space-y-1.5 text-slate-300 max-h-48 overflow-y-auto custom-scrollbar"></div>
     </div>
 
   </main>
 
   <!-- QUICK COMMAND PALETTE MODAL (CMD+K) -->
-  <div id="cmdPaletteModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
-    <div class="bg-[#0b0f19] border border-white/[0.14] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden transition-all transform scale-100" onclick="event.stopPropagation()">
-      <div class="p-3.5 border-b border-white/[0.08] flex items-center gap-3">
+  <div id="cmdPaletteModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
+    <div class="bg-[#0b0f19] border border-white/[0.14] rounded-xl max-w-xl w-full shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+      <div class="p-3 border-b border-white/[0.08] flex items-center gap-2.5">
         <i data-lucide="search" class="w-4 h-4 text-indigo-400"></i>
         <input type="text" id="cmdPaletteInput" oninput="filterPaletteActions()" placeholder="Search action, jump to dashboard, toggle timer..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none" />
         <span class="kbd-chip">ESC</span>
@@ -634,8 +583,8 @@
   </div>
 
   <!-- Archived Tasks Modal Drawer -->
-  <div id="archiveModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b0f19] border border-white/[0.1] rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+  <div id="archiveModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b0f19] border border-white/[0.12] rounded-xl max-w-xl w-full p-5 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
         <div>
           <h3 class="text-base font-semibold text-white flex items-center gap-2">
@@ -643,7 +592,7 @@
           </h3>
           <p class="text-xs text-slate-400">Completed tasks rolled over from past weeks</p>
         </div>
-        <button onclick="toggleArchiveModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+        <button onclick="toggleArchiveModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
@@ -652,13 +601,13 @@
 
       <div class="flex justify-between items-center pt-2 border-t border-white/[0.06] text-xs">
         <button onclick="clearAllArchived()" class="text-rose-400 hover:text-rose-300 underline text-[11px]">Clear Archive History</button>
-        <button onclick="toggleArchiveModal()" class="btn-action px-4 py-1.5 text-xs text-slate-200">Close</button>
+        <button onclick="toggleArchiveModal()" class="btn-action px-3 py-1.5 text-xs text-slate-200">Close</button>
       </div>
     </div>
   </div>
 
   <!-- Fullscreen Zen Mode Overlay -->
-  <div id="zenOverlay" class="fixed inset-0 bg-[#05070a]/95 backdrop-blur-2xl z-50 hidden flex flex-col justify-between items-center p-6 md:p-12 transition-opacity duration-300">
+  <div id="zenOverlay" class="fixed inset-0 bg-[#05070a]/95 z-50 hidden flex flex-col justify-between items-center p-6 md:p-12">
     <div class="w-full max-w-4xl flex justify-between items-center text-xs">
       <div class="flex items-center gap-2 text-indigo-400 font-semibold tracking-wider uppercase text-[11px] font-mono">
         <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
@@ -670,7 +619,7 @@
     </div>
 
     <div class="flex flex-col items-center justify-center text-center">
-      <div id="zenTimerDisplay" class="text-8xl md:text-9xl font-mono font-extrabold tracking-tighter text-white drop-shadow-[0_0_35px_rgba(99,102,241,0.5)]">25:00</div>
+      <div id="zenTimerDisplay" class="text-8xl md:text-9xl font-mono font-extrabold tracking-tighter text-white">25:00</div>
       <div id="zenCurrentTarget" class="mt-5 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs md:text-sm font-medium font-mono">Target: Deep Focus Session</div>
       
       <div class="flex items-center gap-3 mt-8">
@@ -706,15 +655,15 @@
       const icon = document.getElementById('jarvisVoiceIcon');
       const label = document.getElementById('jarvisVoiceLabel');
       if (jarvisMuted) {
-        btn.className = 'btn-action px-3 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800/80';
+        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800';
         icon.setAttribute('data-lucide', 'volume-x');
         label.innerText = 'J.A.R.V.I.S. Muted';
       } else {
-        btn.className = 'btn-action px-3 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20';
+        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20';
         icon.setAttribute('data-lucide', 'volume-2');
         label.innerText = 'J.A.R.V.I.S. Online';
       }
-      lucide.createIcons();
+      lucide.createIcons({ root: btn });
     }
 
     function toggleJarvisVoice() {
@@ -727,28 +676,29 @@
     }
 
     function speakJarvis(phrase) {
-      if (jarvisMuted) return;
-      if (!('speechSynthesis' in window)) return;
+      if (jarvisMuted || !('speechSynthesis' in window)) return;
+      setTimeout(() => {
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(phrase);
+          utterance.rate = 0.96;
+          utterance.pitch = 0.98;
+          utterance.volume = 0.85;
 
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(phrase);
-      
-      utterance.rate = 0.96;
-      utterance.pitch = 0.98;
-      utterance.volume = 0.85;
+          const voices = window.speechSynthesis.getVoices();
+          const naturalVoice = voices.find(v => 
+            (v.name.includes('Daniel') && !v.name.includes('Compact')) ||
+            v.name.includes('Oliver') ||
+            v.name.includes('Arthur') ||
+            v.name.includes('Serena') ||
+            (v.lang === 'en-GB' && !v.name.includes('Compact')) ||
+            v.name.includes('Google UK English Male')
+          ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
 
-      const voices = window.speechSynthesis.getVoices();
-      const naturalVoice = voices.find(v => 
-        (v.name.includes('Daniel') && !v.name.includes('Compact')) ||
-        v.name.includes('Oliver') ||
-        v.name.includes('Arthur') ||
-        v.name.includes('Serena') ||
-        (v.lang === 'en-GB' && !v.name.includes('Compact')) ||
-        v.name.includes('Google UK English Male')
-      ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
-
-      if (naturalVoice) utterance.voice = naturalVoice;
-      window.speechSynthesis.speak(utterance);
+          if (naturalVoice) utterance.voice = naturalVoice;
+          window.speechSynthesis.speak(utterance);
+        } catch (e) {}
+      }, 10);
     }
 
     /* =========================================================================
@@ -798,7 +748,7 @@
 
       matched.forEach(a => {
         const item = document.createElement('div');
-        item.className = "flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-800/80 cursor-pointer text-slate-200 transition-colors group";
+        item.className = "flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 cursor-pointer text-slate-200 transition-colors group";
         item.onclick = () => {
           closeCommandPalette();
           a.action();
@@ -814,10 +764,10 @@
         `;
         container.appendChild(item);
       });
-      lucide.createIcons();
+      lucide.createIcons({ root: container });
     }
 
-    // Keybinds
+    // Keybinds (Instant)
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -899,7 +849,7 @@
       document.getElementById('metricTotalXp').innerText = playerXP;
     }
 
-    // Zen Mode
+    // Zen Mode (Instant)
     let isZenActive = false;
     function toggleZenMode() {
       isZenActive = !isZenActive;
@@ -933,23 +883,23 @@
       const title = document.getElementById('timerModeTitle');
 
       [btnPomo, btnCustom, btnStopwatch].forEach(b => {
-        b.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-all';
+        b.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white';
       });
 
       if (mode === 'pomo') {
-        btnPomo.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
+        btnPomo.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold';
         pomoPresets.classList.remove('hidden');
         customInputs.classList.add('hidden');
         title.innerText = 'Pomodoro Focus Timer';
         setPomodoroPreset(25, 'Deep Work');
       } else if (mode === 'custom') {
-        btnCustom.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
+        btnCustom.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold';
         pomoPresets.classList.add('hidden');
         customInputs.classList.remove('hidden');
         title.innerText = 'Custom Study Timer';
         applyCustomDuration();
       } else if (mode === 'stopwatch') {
-        btnStopwatch.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold transition-all';
+        btnStopwatch.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white shadow-sm font-semibold';
         pomoPresets.classList.add('hidden');
         customInputs.classList.add('hidden');
         title.innerText = 'Continuous Activity Stopwatch';
@@ -1008,17 +958,16 @@
       const txt = document.getElementById('mainTimerBtnText');
       const zenBtn = document.getElementById('zenBtnText');
       const zenIcon = document.getElementById('zenPlayIcon');
-      const ringContainer = document.getElementById('timerContainerRing');
 
-      btn.className = 'btn-primary-grad px-8 py-2.5 text-xs font-bold shadow-lg shadow-indigo-600/30';
+      btn.className = 'btn-primary-grad px-8 py-2.5 text-xs font-bold';
       icon.setAttribute('data-lucide', 'play');
       zenIcon.setAttribute('data-lucide', 'play');
       const label = timerMode === 'stopwatch' ? 'Start Stopwatch' : 'Start Session';
       txt.innerText = label;
       zenBtn.innerText = label;
-      ringContainer.classList.remove('timer-active-aura');
       document.title = 'Focus Cockpit | Vikas N';
-      lucide.createIcons();
+      lucide.createIcons({ root: btn });
+      lucide.createIcons({ root: document.getElementById('zenTimerBtn') });
     }
 
     function toggleMainTimer() {
@@ -1026,7 +975,6 @@
       const icon = document.getElementById('mainTimerIcon');
       const zenTxt = document.getElementById('zenBtnText');
       const zenIcon = document.getElementById('zenPlayIcon');
-      const ringContainer = document.getElementById('timerContainerRing');
 
       if (timerInterval) {
         clearInterval(timerInterval);
@@ -1035,13 +983,11 @@
         zenTxt.innerText = 'Resume';
         icon.setAttribute('data-lucide', 'play');
         zenIcon.setAttribute('data-lucide', 'play');
-        ringContainer.classList.remove('timer-active-aura');
       } else {
         txt.innerText = 'Pause';
         zenTxt.innerText = 'Pause';
         icon.setAttribute('data-lucide', 'pause');
         zenIcon.setAttribute('data-lucide', 'pause');
-        ringContainer.classList.add('timer-active-aura');
 
         timerInterval = setInterval(() => {
           if (timerMode === 'stopwatch') {
@@ -1082,7 +1028,8 @@
           }
         }, 1000);
       }
-      lucide.createIcons();
+      lucide.createIcons({ root: document.getElementById('mainTimerToggleBtn') });
+      lucide.createIcons({ root: document.getElementById('zenTimerBtn') });
     }
 
     function resetMainTimer() {
@@ -1102,7 +1049,7 @@
       resetTimerControlsUI();
     }
 
-    // Synthesizer Audio
+    // Synthesizer Audio (Non-blocking Web Audio)
     let audioCtx = null;
     let activeAmbientNodes = {};
 
@@ -1118,11 +1065,11 @@
       const btn = document.getElementById(`ambient${type.charAt(0).toUpperCase() + type.slice(1)}Btn`);
 
       if (activeAmbientNodes[type]) {
-        activeAmbientNodes[type].gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+        activeAmbientNodes[type].gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.3);
         setTimeout(() => {
           activeAmbientNodes[type].source.stop();
           delete activeAmbientNodes[type];
-        }, 400);
+        }, 300);
         btn.classList.remove('border-indigo-500', 'text-indigo-300', 'bg-indigo-950/40');
         return;
       }
@@ -1172,22 +1119,7 @@
 
     // EPIC CELEBRATION
     function triggerEpicCelebration(xpGained, taskTitle) {
-      const count = 220;
-      const defaults = { origin: { y: 0.7 } };
-
-      function fire(particleRatio, opts) {
-        confetti(Object.assign({}, defaults, opts, {
-          particleCount: Math.floor(count * particleRatio)
-        }));
-      }
-
-      fire(0.25, { spread: 26, startVelocity: 55, colors: ['#6366f1', '#10b981', '#38bdf8'] });
-      fire(0.2, { spread: 60, colors: ['#f59e0b', '#ec4899', '#ffffff'] });
-      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, colors: ['#6366f1', '#a855f7'] });
-      fire(0.1, { spread: 120, startVelocity: 45 });
-
-      playEpicVictorySound();
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
       showVictoryToast(xpGained, taskTitle);
     }
 
@@ -1197,47 +1129,23 @@
 
       const toast = document.createElement('div');
       toast.id = 'victoryToastHUD';
-      toast.className = 'fixed bottom-8 right-8 z-50 bg-[#0b0f19]/95 border border-indigo-500/40 rounded-2xl p-4 shadow-2xl backdrop-blur-xl flex items-center gap-3.5 transform translate-y-12 opacity-0 transition-all duration-300';
+      toast.className = 'fixed bottom-6 right-6 z-50 bg-[#0b0f19] border border-indigo-500/40 rounded-xl p-3.5 shadow-xl flex items-center gap-3 transition-opacity';
       toast.innerHTML = `
-        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/40 flex-shrink-0 animate-bounce">
-          <i data-lucide="zap" class="w-5 h-5"></i>
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center font-bold text-white shadow flex-shrink-0">
+          <i data-lucide="zap" class="w-4 h-4"></i>
         </div>
         <div>
-          <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-emerald-400">+${xp} XP GAINED · TASK CRUSHED</div>
-          <div class="text-xs font-bold text-slate-100 truncate max-w-[220px]">${title}</div>
+          <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-emerald-400">+${xp} XP GAINED</div>
+          <div class="text-xs font-bold text-slate-100 truncate max-w-[200px]">${title}</div>
         </div>
       `;
       document.body.appendChild(toast);
-      lucide.createIcons();
+      lucide.createIcons({ root: toast });
 
       setTimeout(() => {
-        toast.classList.remove('translate-y-12', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-      }, 50);
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-12', 'opacity-0');
-        setTimeout(() => toast.remove(), 400);
-      }, 3400);
-    }
-
-    function playEpicVictorySound() {
-      try {
-        const ctx = getAudioContext();
-        const now = ctx.currentTime;
-        [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((f, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(f, now + idx * 0.07);
-          gain.gain.setValueAtTime(0.18, now + idx * 0.07);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.35);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now + idx * 0.07);
-          osc.stop(now + idx * 0.07 + 0.4);
-        });
-      } catch (e) {}
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
     }
 
     /* Tasks, Sessions & Heatmap System */
@@ -1299,8 +1207,8 @@
       saveTodos();
       localStorage.setItem(STORAGE_KEY_ARCHIVE, JSON.stringify(archivedTodos));
       renderArchivedList();
-      confetti({ particleCount: 50, spread: 45, origin: { y: 0.7 } });
-      speakJarvis(`Completed objectives swept to archives, sir. Deck cleared.`);
+      confetti({ particleCount: 40, spread: 40, origin: { y: 0.7 } });
+      speakJarvis(`Completed objectives swept to archives, sir.`);
     }
 
     function toggleArchiveModal() {
@@ -1321,7 +1229,7 @@
 
       archivedTodos.forEach((task, idx) => {
         const el = document.createElement('div');
-        el.className = 'glass-subcard p-3 flex items-center justify-between gap-3';
+        el.className = 'glass-subcard p-2.5 flex items-center justify-between gap-3';
         el.innerHTML = `
           <div>
             <div class="font-medium text-slate-200 line-through text-xs">${task.title}</div>
@@ -1430,7 +1338,7 @@
           const xpGain = task.priority === 'High' ? 75 : (task.priority === 'Medium' ? 50 : 30);
           addXP(xpGain, 'Task Completed');
           triggerEpicCelebration(xpGain, task.title);
-          speakJarvis(`Objective neutralized, sir. ${xpGain} XP added to your matrix.`);
+          speakJarvis(`Objective neutralized, sir. +${xpGain} XP.`);
         }
         saveTodos();
       }
@@ -1457,8 +1365,8 @@
 
       filtered.forEach(task => {
         const el = document.createElement('div');
-        el.className = `glass-subcard p-3 flex items-center justify-between gap-3 transition-all duration-200 ${
-          task.completed ? 'opacity-50' : 'hover:border-white/[0.12] hover:-translate-y-0.5'
+        el.className = `glass-subcard p-2.5 flex items-center justify-between gap-3 ${
+          task.completed ? 'opacity-50' : ''
         }`;
 
         const priorityColor = task.priority === 'High' ? 'text-rose-400 bg-rose-500/10 border-rose-500/20' : (task.priority === 'Medium' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20');
@@ -1474,13 +1382,13 @@
               </div>
             </div>
           </div>
-          <button onclick="deleteTask(${task.id})" class="text-slate-500 hover:text-rose-400 p-1 transition-colors">
+          <button onclick="deleteTask(${task.id})" class="text-slate-500 hover:text-rose-400 p-1">
             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
           </button>
         `;
         container.appendChild(el);
       });
-      lucide.createIcons();
+      lucide.createIcons({ root: container });
     }
 
     function renderHeatmapAndDistribution() {
@@ -1505,14 +1413,14 @@
 
       dayLabels.forEach((label, idx) => {
         const mins = dayMinutes[idx];
-        let colorClass = 'bg-slate-900/60 border-white/[0.04] text-slate-500';
-        if (mins > 180) colorClass = 'bg-emerald-500/40 border-emerald-400/60 text-emerald-200 shadow-sm shadow-emerald-500/20';
-        else if (mins > 90) colorClass = 'bg-emerald-600/30 border-emerald-500/40 text-emerald-300';
-        else if (mins > 30) colorClass = 'bg-emerald-700/20 border-emerald-600/30 text-emerald-400';
-        else if (mins > 0) colorClass = 'bg-slate-800/80 border-slate-700 text-slate-400';
+        let colorClass = 'bg-slate-900 border-white/[0.04] text-slate-500';
+        if (mins > 180) colorClass = 'bg-emerald-500/35 border-emerald-400/50 text-emerald-200';
+        else if (mins > 90) colorClass = 'bg-emerald-600/25 border-emerald-500/35 text-emerald-300';
+        else if (mins > 30) colorClass = 'bg-emerald-700/15 border-emerald-600/25 text-emerald-400';
+        else if (mins > 0) colorClass = 'bg-slate-800 border-slate-700 text-slate-400';
 
         const cell = document.createElement('div');
-        cell.className = `p-3 rounded-xl border flex flex-col items-center justify-between gap-1 transition-all hover:scale-105 duration-200 ${colorClass}`;
+        cell.className = `p-2.5 rounded-xl border flex flex-col items-center justify-between gap-1 ${colorClass}`;
         cell.innerHTML = `
           <span class="text-[10px] uppercase font-bold tracking-wider font-mono">${label}</span>
           <span class="font-mono text-xs font-bold">${mins > 0 ? (mins / 60).toFixed(1) + 'h' : '0h'}</span>
@@ -1619,9 +1527,8 @@
           datasets: [{
             label: 'Hours',
             data: [2.5, 3.0, 1.8, 4.0, 2.0, 3.5, 1.5],
-            backgroundColor: 'rgba(99, 102, 241, 0.85)',
-            borderColor: '#6366f1',
-            borderRadius: 8
+            backgroundColor: '#6366f1',
+            borderRadius: 6
           }]
         },
         options: {
