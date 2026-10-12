@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#060911" />
-  <title>Academic Cockpit | Vikas N</title>
+  <meta name="theme-color" content="#020408" />
+  <title>Opal Cockpit | Vikas N</title>
   
-  <!-- Premium Fonts -->
+  <!-- Premium Fonts (Outfit & Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,6 +23,17 @@
             sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             display: ['Outfit', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            opal: {
+              mint: '#34d399',
+              emerald: '#10b981',
+              cyan: '#06b6d4',
+              teal: '#14b8a6',
+              dark: '#03060d',
+              card: '#080d1a',
+              subcard: '#0e1526'
+            }
           }
         }
       }
@@ -35,7 +46,7 @@
 
   <style>
     /* =========================================================================
-       ULTRA-FAST, HIGH-PERFORMANCE LIGHTWEIGHT DARK ARCHITECTURE (60-120 FPS)
+       OPAL ETHEREAL OLED DESIGN SYSTEM (ULTRA-FAST 60-120 FPS)
        ========================================================================= */
     :root {
       color-scheme: dark;
@@ -48,97 +59,145 @@
     }
 
     /* Minimalist Precision Scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    ::-webkit-scrollbar-thumb:hover { background: #34d399; }
 
-    /* Clean, Lightweight Canvas (Zero GPU Repaint Strain) */
+    /* Deepest OLED Canvas with Subtle Cosmic Ambient Radiance */
     body {
-      background-color: #060911;
+      background-color: #020408;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 40%),
-        radial-gradient(at 85% 10%, rgba(6, 182, 212, 0.07) 0px, transparent 40%),
-        radial-gradient(at 50% 90%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+        radial-gradient(at 50% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 55%),
+        radial-gradient(at 15% 35%, rgba(6, 182, 212, 0.05) 0px, transparent 45%),
+        radial-gradient(at 85% 65%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px;
       color: #f1f5f9;
       overflow-x: hidden;
     }
 
-    /* High-Performance Surface Cards (Solid with subtle top highlight - Zero Blur Lag) */
-    .glass-card {
-      background: #0b0f19;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-      border-radius: 16px;
-      transition: border-color 0.12s ease, transform 0.12s ease;
+    /* Opal Floating Glass Surface (Rounded-3xl with 1px top sheen) */
+    .opal-card {
+      background: #080d19;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7);
+      border-radius: 24px;
+      transition: border-color 0.15s ease, transform 0.15s ease;
     }
-    .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.35);
-      border-top-color: rgba(147, 197, 253, 0.4);
-      transform: translateY(-1px);
+    .opal-card:hover {
+      border-color: rgba(52, 211, 153, 0.3);
+      border-top-color: rgba(167, 243, 208, 0.5);
     }
 
-    /* Internal sub-cards */
-    .glass-subcard {
-      background: #111726;
+    /* Opal Subcard */
+    .opal-subcard {
+      background: #0d1424;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
+      border-radius: 16px;
       transition: border-color 0.12s ease;
     }
-    .glass-subcard:hover {
-      border-color: rgba(255, 255, 255, 0.14);
+    .opal-subcard:hover {
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
-    /* Instant-Response Tactile Buttons (Zero Latency) */
-    .btn-action {
+    /* Opal Capsule Button */
+    .opal-capsule {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #0b1120;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       user-select: none;
-      border-radius: 10px;
-      background: #141b2d;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      color: #e2e8f0;
       transition: background-color 0.1s ease, border-color 0.1s ease, transform 0.08s ease;
     }
-    .btn-action:hover {
-      background: #1c263f;
-      border-color: rgba(99, 102, 241, 0.4);
+    .opal-capsule:hover {
+      background: #131c33;
+      border-color: rgba(52, 211, 153, 0.4);
       color: #ffffff;
     }
-    .btn-action:active {
-      transform: scale(0.98);
-      background: #0f1524;
+    .opal-capsule:active {
+      transform: scale(0.97);
     }
 
-    /* Primary Gradient Button */
-    .btn-primary-grad {
+    /* Primary Opal Pill Button */
+    .btn-opal-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.1s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    }
+    .btn-opal-primary:hover {
+      opacity: 0.95;
+      box-shadow: 0 6px 20px rgba(52, 211, 153, 0.5);
+    }
+    .btn-opal-primary:active {
+      transform: scale(0.97);
+    }
+
+    /* Secondary Opal Pill Button */
+    .btn-opal-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
       font-weight: 600;
       cursor: pointer;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+      user-select: none;
+      transition: background-color 0.1s ease, border-color 0.1s ease, transform 0.08s ease;
+    }
+    .btn-opal-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
       color: #ffffff;
-      transition: opacity 0.1s ease, transform 0.08s ease;
     }
-    .btn-primary-grad:hover {
-      opacity: 0.95;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+    .btn-opal-secondary:active {
+      transform: scale(0.97);
     }
-    .btn-primary-grad:active {
-      transform: scale(0.98);
+
+    /* Floating Dock Navigation Item */
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 600;
+      gap: 3px;
+      cursor: pointer;
+      transition: color 0.1s ease, background-color 0.1s ease, transform 0.08s ease;
+    }
+    .dock-item:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .dock-item.active {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.25);
     }
 
     /* Keyboard Shortcut Tag */
@@ -152,297 +211,384 @@
       color: #94a3b8;
     }
 
-    /* Lightweight GPU-Accelerated Arc Reactor */
-    @keyframes reactorRotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    /* Floating Opal Shard Float Animation */
+    @keyframes opalFloating {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(1.2deg);
+      }
     }
-    @keyframes reactorReverse {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
-    }
-    .arc-spin-slow {
-      animation: reactorRotate 24s linear infinite;
-      will-change: transform;
-    }
-    .arc-spin-rev {
-      animation: reactorReverse 16s linear infinite;
+    .opal-gem-float {
+      animation: opalFloating 5s ease-in-out infinite;
       will-change: transform;
     }
 
-    /* Gentle Urgency Tag */
-    .urgent-assignment {
-      border-color: rgba(244, 63, 94, 0.5) !important;
-      box-shadow: 0 0 12px rgba(244, 63, 94, 0.15);
+    /* Subtle Arc Gauge Transition */
+    #opalGaugePath {
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
 </head>
 
-<body class="selection:bg-indigo-500 selection:text-white font-sans min-h-screen pb-16">
+<body class="selection:bg-emerald-500 selection:text-black font-sans min-h-screen pb-28">
 
-  <!-- Top Navigation Header -->
-  <nav class="sticky top-0 z-40 px-4 md:px-8 py-2.5 bg-[#060911]/95 border-b border-white/[0.08]">
+  <!-- =========================================================================
+       TOP NAVIGATION BAR (OPAL AESTHETIC)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 px-4 md:px-8 py-3 bg-[#020408]/90 backdrop-blur-md border-b border-white/[0.06]">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
       
-      <!-- Brand & Student Badge -->
+      <!-- Left: Opal Brand & Live Indicator -->
       <div class="flex items-center gap-3">
-        <div class="relative cursor-pointer" onclick="openCommandPalette()" title="Command Palette (Cmd+K)">
-          <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 p-[1px] shadow-sm">
-            <div class="h-full w-full bg-[#0a0e18] rounded-xl flex items-center justify-center font-display font-extrabold text-white text-sm">
-              V
+        <div class="relative cursor-pointer flex items-center gap-2.5" onclick="openCommandPalette()" title="Command Palette (Cmd+K)">
+          <!-- Glowing Opal Ring Logo -->
+          <div class="h-8 w-8 rounded-full border border-emerald-400/40 p-[2px] flex items-center justify-center bg-emerald-950/20 shadow-[0_0_12px_rgba(52,211,153,0.3)]">
+            <div class="h-full w-full rounded-full border-2 border-dashed border-emerald-400 animate-spin" style="animation-duration: 20s;"></div>
+            <div class="absolute w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold tracking-tight text-white font-display">Opal Cockpit</span>
+              <span id="navRankBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-mono">Lvl 1 · Code Novice</span>
             </div>
-          </div>
-          <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#060911]" title="Sync Live"></div>
-        </div>
-
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-sm font-bold tracking-tight text-white font-display">Academic Cockpit</h1>
-            <span id="navRankBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-mono">Lvl 1 · Code Novice</span>
-          </div>
-          <div class="flex items-center gap-2 text-[11px] text-slate-400">
-            <span class="font-mono text-slate-300">USN: 2392608146</span>
-            <span class="text-slate-600">&bull;</span>
-            <span>Sec B · AIML</span>
-            <span class="text-slate-600 hidden sm:inline">&bull;</span>
-            <span id="tacticalClock" class="font-mono text-cyan-400 text-[10px] hidden sm:inline">--:--:--</span>
+            <div class="flex items-center gap-2 text-[10px] text-slate-400">
+              <span class="font-mono text-slate-300">USN: 2392608146</span>
+              <span>&bull;</span>
+              <span>AIML Sec B</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Action Controls -->
+      <!-- Center: Opal Date Switcher Pill (< Today >) -->
+      <div class="hidden sm:flex items-center gap-2 bg-[#090e1c] border border-white/[0.08] px-3 py-1 rounded-full text-xs font-semibold">
+        <button onclick="shiftDate(-1)" class="text-slate-400 hover:text-white transition-colors" title="Previous Day">
+          <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+        </button>
+        <span class="flex items-center gap-1.5 text-slate-200 font-mono text-[11px]">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span id="tacticalDateDisplay">Today</span>
+          <span class="text-slate-500">&bull;</span>
+          <span id="tacticalClock" class="text-emerald-400">--:--:--</span>
+        </span>
+        <button onclick="shiftDate(1)" class="text-slate-400 hover:text-white transition-colors" title="Next Day">
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Right Action Controls -->
       <div class="flex items-center gap-2">
-        
+        <!-- Streak Flame -->
+        <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-bold font-mono" title="Daily Active Streak">
+          <span>🔥</span>
+          <span id="activeStreakCount">5</span>
+        </div>
+
         <!-- Command Palette Trigger -->
-        <button onclick="openCommandPalette()" class="hidden md:flex btn-action px-2.5 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
+        <button onclick="openCommandPalette()" class="hidden md:flex opal-capsule px-2.5 py-1.5 text-xs text-slate-300" title="Search actions (Cmd+K)">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span class="text-[11px]">Command Palette</span>
           <span class="kbd-chip">⌘K</span>
         </button>
 
-        <!-- J.A.R.V.I.S. Audio Synthesizer Button -->
-        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20" title="Toggle J.A.R.V.I.S. Speech Synthesizer">
-          <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-cyan-400"></i>
-          <span class="hidden sm:inline font-mono text-[11px]" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
+        <!-- J.A.R.V.I.S. Voice Pill -->
+        <button id="jarvisVoiceBtn" onclick="toggleJarvisVoice()" class="opal-capsule px-2.5 py-1.5 text-xs text-emerald-300 border-emerald-500/30 bg-emerald-950/20" title="Toggle Speech Synthesizer">
+          <i data-lucide="volume-2" id="jarvisVoiceIcon" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span class="hidden lg:inline font-mono text-[10px]" id="jarvisVoiceLabel">J.A.R.V.I.S. Online</span>
         </button>
 
-        <!-- Page View Switcher Tabs -->
-        <div class="flex items-center bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <a href="index.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white shadow-sm flex items-center gap-1.5">
-            <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
-            <span>Dashboard</span>
-            <span class="text-[9px] bg-indigo-900/80 px-1 py-0.2 rounded text-indigo-200 font-mono">1</span>
-          </a>
-          <a href="productivity.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] flex items-center gap-1.5 transition-colors">
-            <i data-lucide="flame" class="w-3.5 h-3.5 text-amber-400"></i>
-            <span>Productivity</span>
-            <span class="text-[9px] bg-slate-800 px-1 py-0.2 rounded text-slate-400 font-mono">2</span>
-          </a>
-        </div>
+        <!-- Switch to Productivity Page -->
+        <a href="productivity.html" class="opal-capsule px-3 py-1.5 text-xs text-amber-300 border-amber-500/30 hover:border-amber-400" title="Go to Productivity Focus Timer">
+          <i data-lucide="timer" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span class="hidden sm:inline">Focus Cockpit</span>
+        </a>
 
-        <!-- Export AI Study Roadmap Prompt -->
-        <button onclick="exportAIPrompt()" class="btn-action px-2.5 py-1.5 text-xs text-indigo-300 border-indigo-500/30" title="Compile comprehensive AI mentor prompt">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span class="hidden md:inline text-[11px]">Export AI</span>
+        <!-- Export AI Mentor Prompt -->
+        <button onclick="exportAIPrompt()" class="opal-capsule p-2 text-emerald-300 border-emerald-500/30" title="Export AI Mentor Prompt">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400"></i>
         </button>
 
         <!-- Settings Button -->
-        <button onclick="toggleSettingsModal()" class="btn-action p-2 text-slate-400 hover:text-white" title="Settings & Google Sheet URLs">
-          <i data-lucide="settings" class="w-4 h-4"></i>
+        <button onclick="toggleSettingsModal()" class="opal-capsule p-2 text-slate-400 hover:text-white" title="Settings & Sheet URLs">
+          <i data-lucide="settings" class="w-3.5 h-3.5"></i>
         </button>
       </div>
 
     </div>
-  </nav>
+  </header>
 
-  <!-- Main Content Grid -->
-  <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+  <!-- =========================================================================
+       MAIN GRID
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6" id="heroSection">
 
-    <!-- Row 1: Attendance Shield & Next Milestones -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+    <!-- HERO SECTION: THE OPAL CRYSTAL ARTIFACT & ARC DEFENSE GAUGE -->
+    <div class="relative opal-card p-6 md:p-8 flex flex-col items-center justify-center text-center overflow-hidden">
+      
+      <!-- Atmospheric Volumetric Glows -->
+      <div class="absolute -top-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <!-- Attendance Shield with Holographic ARC Reactor HUD (7 cols) -->
-      <div class="lg:col-span-7 glass-card p-5 md:p-6 flex flex-col justify-between">
-        <div>
-          <!-- Header Bar -->
-          <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-            <div class="flex items-center gap-2">
-              <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
-              </div>
-              <div>
-                <h2 class="text-sm font-bold text-white tracking-tight font-display">Attendance Defense Grid</h2>
-                <p class="text-[11px] text-slate-400">Real-time telemetry against 75% college threshold</p>
-              </div>
-            </div>
+      <!-- Top Tag -->
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[10px] uppercase font-mono font-bold tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Telemetry Grid Active
+        </span>
+        <span id="bufferBadge" class="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-slate-900 border border-white/10 text-emerald-400">Safe: Above 75%</span>
+      </div>
 
-            <div class="flex items-center gap-2 flex-wrap">
-              <button onclick="toggleSimulator()" class="btn-action px-2.5 py-1 text-xs text-indigo-300 border-indigo-500/30">
-                <i data-lucide="sliders" class="w-3.5 h-3.5 text-indigo-400"></i>
-                <span class="text-[11px]">Simulator</span>
-              </button>
-              <span id="bunkCalculatorBadge" class="text-xs px-2.5 py-1 rounded-full bg-slate-900 border border-white/[0.08] text-slate-300 font-mono font-medium">Calculating...</span>
-              <span id="bufferBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono">Safe: Above 75%</span>
-            </div>
+      <!-- The Levitating Opal Shard (Pure SVG Iridescent Gemstone) -->
+      <div class="relative w-36 h-36 flex items-center justify-center my-1 cursor-pointer" onclick="triggerReactorOvercharge()" title="Click for Stark Overcharge Telemetry">
+        <!-- Volumetric Spotlight Base / Altar -->
+        <div class="absolute bottom-2 w-28 h-6 bg-emerald-400/10 rounded-full blur-md"></div>
+        
+        <!-- Multi-Facet Crystalline Opal Shard -->
+        <svg class="w-28 h-28 opal-gem-float drop-shadow-[0_0_24px_rgba(52,211,153,0.4)]" viewBox="0 0 120 120" fill="none">
+          <defs>
+            <linearGradient id="gemGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#a7f3d0" stop-opacity="0.95" />
+              <stop offset="45%" stop-color="#34d399" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.85" />
+            </linearGradient>
+            <linearGradient id="gemGradB" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#67e8f9" stop-opacity="0.9" />
+              <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.8" />
+            </linearGradient>
+            <linearGradient id="gemGradC" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#34d399" stop-opacity="0.85" />
+              <stop offset="70%" stop-color="#8b5cf6" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="#6ee7b7" stop-opacity="0.9" />
+            </linearGradient>
+            <linearGradient id="gemSheen" x1="20%" y1="0%" x2="80%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+              <stop offset="100%" stop-color="#a7f3d0" stop-opacity="0.25" />
+            </linearGradient>
+          </defs>
+          <polygon points="60,10 88,38 78,84 60,106 38,84 32,42" fill="url(#gemGradA)" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" />
+          <polygon points="60,10 88,38 64,54 42,32" fill="url(#gemSheen)" opacity="0.65" />
+          <polygon points="64,54 88,38 98,62 78,84" fill="url(#gemGradB)" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
+          <polygon points="64,54 78,84 60,106 46,74" fill="url(#gemGradC)" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
+          <polygon points="42,32 64,54 46,74 38,84 32,42" fill="url(#gemGradA)" opacity="0.85" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
+          <circle cx="60" cy="54" r="3.5" fill="#ffffff" filter="drop-shadow(0 0 6px #6ee7b7)" />
+        </svg>
+      </div>
+
+      <!-- Glowing Arc Gauge & Large Score Readout (Modeled directly after Opal Screen 4) -->
+      <div class="relative w-64 sm:w-72 h-32 flex flex-col items-center justify-end -mt-4">
+        <svg class="w-full h-full" viewBox="0 0 200 110">
+          <defs>
+            <linearGradient id="opalArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#06b6d4" />
+              <stop offset="50%" stop-color="#10b981" />
+              <stop offset="100%" stop-color="#34d399" />
+            </linearGradient>
+            <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- Base Track Arc -->
+          <path d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="7" stroke-linecap="round" />
+          <!-- Neon Glowing Value Arc -->
+          <path id="opalGaugePath" d="M 25 100 A 75 75 0 0 1 175 100" fill="none" stroke="url(#opalArcGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="235.6" stroke-dashoffset="40" filter="url(#arcGlow)" />
+        </svg>
+        
+        <div class="absolute inset-0 flex flex-col items-center justify-center pt-8">
+          <span class="text-[10px] uppercase font-mono font-bold tracking-widest text-slate-400">Score</span>
+          <div class="flex items-center gap-1.5">
+            <span id="aggPct" class="text-4xl sm:text-5xl font-extrabold font-display tracking-tight text-white">--%</span>
+            <span class="text-emerald-400 text-xl font-bold">▲</span>
           </div>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400/80 -mt-0.5">Opal Defense Grid</span>
+        </div>
+      </div>
 
-          <!-- Attendance What-If Simulator Drawer -->
-          <div id="simulatorDrawer" class="hidden mb-4 p-4 rounded-xl bg-[#0e1322] border border-indigo-500/30 text-xs space-y-3">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px] font-mono">
-                <i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-400"></i> Attendance Margin Simulator
-              </span>
-              <button onclick="resetSimulator()" class="text-[10px] text-slate-400 hover:text-white underline">Reset</button>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="text-slate-400 block mb-1 text-[11px]">Simulate Attended Lectures (+P):</label>
-                <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-indigo-500" />
-              </div>
-              <div>
-                <label class="text-slate-400 block mb-1 text-[11px]">Simulate Missed Lectures (+A):</label>
-                <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono outline-none focus:border-rose-500" />
-              </div>
-            </div>
-            <div id="simResultBox" class="p-2.5 rounded-lg bg-slate-900 border border-white/[0.06] flex justify-between items-center">
-              <span class="text-slate-300 font-medium">Projected Equilibrium:</span>
-              <span id="simResultPct" class="font-mono font-bold text-sm text-indigo-400">--%</span>
-            </div>
+      <!-- Connecting Lines (Screen 4 Style) -->
+      <div class="flex flex-col items-center mt-3 w-full">
+        <svg class="w-56 h-4 text-white/15" viewBox="0 0 160 16" fill="none">
+          <path d="M 80 0 L 80 8 M 80 8 L 25 15 M 80 8 L 80 15 M 80 8 L 135 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        
+        <!-- The 3 Connected Capsule Pills -->
+        <div class="flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap mt-1">
+          <button onclick="toggleSimulator()" class="opal-capsule group" title="Theory Attendance Percentage">
+            <span class="text-slate-400 group-hover:text-emerald-400">🌙</span>
+            <span id="theoryPct" class="font-mono font-bold text-white text-xs">--%</span>
+            <span class="text-[10px] text-slate-400 font-mono">Theory</span>
+          </button>
+          
+          <button onclick="toggleSimulator()" class="opal-capsule group" title="Lab Attendance Percentage">
+            <span class="text-slate-400 group-hover:text-cyan-400">⏳</span>
+            <span id="labPct" class="font-mono font-bold text-white text-xs">--%</span>
+            <span class="text-[10px] text-slate-400 font-mono">Lab</span>
+          </button>
+          
+          <button onclick="toggleSimulator()" class="opal-capsule group" title="Attendance Margin / Safe Bunk">
+            <span class="text-emerald-400">🛡️</span>
+            <span id="aggMargin" class="font-mono font-bold text-emerald-400 text-xs">Margin: --</span>
+            <span class="text-[10px] text-slate-400 font-mono">Rest</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons (Screen 3 Style) -->
+      <div class="flex items-center justify-center gap-3 mt-5 flex-wrap">
+        <button onclick="toggleSimulator()" class="btn-opal-primary px-5 py-2 text-xs">
+          <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+          <span>What-If Simulator</span>
+        </button>
+        <button onclick="triggerReactorOvercharge()" class="btn-opal-secondary px-4 py-2 text-xs">
+          <i data-lucide="zap" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Stark Overcharge</span>
+        </button>
+      </div>
+
+      <!-- Hidden Telemetry Details for script hooks -->
+      <div class="hidden">
+        <span id="bunkCalculatorBadge">Calculating...</span>
+        <span id="theoryMargin">Margin: --</span>
+        <span id="labMargin">Margin: --</span>
+        <span id="reactorPowerPct">98.4%</span>
+        <span id="jarvisStatusHeadline">ARC REACTOR: ONLINE</span>
+        <span id="jarvisStatusDetail">J.A.R.V.I.S. active</span>
+      </div>
+
+      <!-- What-If Attendance Margin Simulator Drawer (Interactive Popup) -->
+      <div id="simulatorDrawer" class="hidden w-full max-w-lg mt-6 p-4 rounded-2xl bg-[#0b1220] border border-emerald-500/30 text-xs space-y-3 text-left">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5 text-[11px] font-mono">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-400"></i> Attendance Margin Simulator
+          </span>
+          <button onclick="resetSimulator()" class="text-[10px] text-slate-400 hover:text-white underline">Reset</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-slate-400 block mb-1 text-[11px]">Simulate Attended Lectures (+P):</label>
+            <input type="number" id="simAddPresent" min="0" value="0" oninput="runSimulation()" class="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3 py-1.5 text-white font-mono outline-none focus:border-emerald-500" />
           </div>
-
-          <!-- 3 Metric Gauges (Theory, Lab, Aggregate) -->
-          <div class="grid grid-cols-3 gap-3 mb-4">
-            <div class="glass-subcard p-3 text-center">
-              <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block">Theory</span>
-              <div id="theoryPct" class="text-2xl font-extrabold font-mono text-slate-100 mt-1">--%</div>
-              <div id="theoryMargin" class="text-[10px] font-mono text-slate-500 mt-1">Margin: --</div>
-            </div>
-
-            <div class="glass-subcard p-3 text-center">
-              <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400 block">Lab</span>
-              <div id="labPct" class="text-2xl font-extrabold font-mono text-slate-100 mt-1">--%</div>
-              <div id="labMargin" class="text-[10px] font-mono text-slate-500 mt-1">Margin: --</div>
-            </div>
-
-            <div class="glass-subcard p-3 text-center border-indigo-500/25 bg-indigo-950/20">
-              <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-indigo-300 block">Aggregate</span>
-              <div id="aggPct" class="text-2xl font-extrabold font-mono text-indigo-300 mt-1">--%</div>
-              <div id="aggMargin" class="text-[10px] font-mono text-indigo-400 mt-1 font-semibold">Margin: --</div>
-            </div>
-          </div>
-
-          <!-- Holographic Stark Arc Reactor Mark-85 HUD -->
-          <div class="relative bg-gradient-to-r from-cyan-950/30 via-slate-900/80 to-slate-900/50 border border-cyan-500/25 rounded-xl p-3.5 mb-4 flex items-center justify-between gap-4 cursor-pointer group hover:border-cyan-400/40" onclick="triggerReactorOvercharge()" title="Click for Stark Overcharge Telemetry">
-            <div class="flex items-center gap-3.5">
-              
-              <!-- Multi-ring Precision Hologram SVG -->
-              <div class="relative w-14 h-14 flex items-center justify-center flex-shrink-0">
-                <svg class="w-14 h-14 absolute arc-spin-slow text-cyan-400/60" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8 4 8" fill="transparent"></circle>
-                </svg>
-                <svg class="w-10 h-10 absolute arc-spin-rev text-sky-300/80" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2.5" stroke-dasharray="14 10" fill="transparent"></circle>
-                  <polygon points="50,16 79,33 79,67 50,84 21,67 21,33" stroke="currentColor" stroke-width="1.5" fill="transparent" class="text-cyan-400/35"></polygon>
-                </svg>
-                <div class="w-5 h-5 rounded-full bg-cyan-400 shadow-[0_0_15px_#22d3ee] flex items-center justify-center">
-                  <div class="w-2 h-2 rounded-full bg-white animate-ping"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-mono font-bold tracking-widest text-cyan-400 flex items-center gap-1 uppercase">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Stark Defense Protocol
-                  </span>
-                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">MARK-85</span>
-                </div>
-                <h4 id="jarvisStatusHeadline" class="text-xs font-bold text-slate-100 mt-0.5 tracking-wide font-display">ARC REACTOR: ONLINE</h4>
-                <p id="jarvisStatusDetail" class="text-[11px] text-slate-400 font-mono mt-0.5 leading-tight">
-                  J.A.R.V.I.S.: Shields operating. Initializing telemetry scan...
-                </p>
-              </div>
-            </div>
-
-            <div class="hidden sm:flex flex-col items-end flex-shrink-0 text-right">
-              <span class="text-[9px] uppercase tracking-wider text-slate-500 font-semibold font-mono">Core Power</span>
-              <span id="reactorPowerPct" class="text-sm font-mono font-bold text-cyan-300">98.4%</span>
-            </div>
+          <div>
+            <label class="text-slate-400 block mb-1 text-[11px]">Simulate Missed Lectures (+A):</label>
+            <input type="number" id="simAddAbsent" min="0" value="0" oninput="runSimulation()" class="w-full bg-[#070b14] border border-slate-700 rounded-xl px-3 py-1.5 text-white font-mono outline-none focus:border-rose-500" />
           </div>
         </div>
+        <div id="simResultBox" class="p-3 rounded-xl bg-[#070b14] border border-white/[0.08] flex justify-between items-center">
+          <span class="text-slate-300 font-medium">Projected Equilibrium:</span>
+          <span id="simResultPct" class="font-mono font-bold text-sm text-emerald-400">--%</span>
+        </div>
+      </div>
 
-        <!-- Class-by-Class Attendance Timeline -->
+    </div>
+
+    <!-- ROW 1: TODAY'S SCHEDULE & NEXT MILESTONES (OPAL SLIDER CARDS) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch" id="attendanceSection">
+
+      <!-- Today's Lecture Stream & Timeline (7 cols) -->
+      <div class="lg:col-span-7 opal-card p-5 md:p-6 flex flex-col justify-between">
         <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider font-mono">Class Log Timeline</h3>
-            <span class="text-[10px] text-slate-500 font-mono">Real-Time Sync</span>
+          <!-- Header Bar -->
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400">🌙</span>
+              <div>
+                <h3 class="text-sm font-bold text-white font-display">Schedule & Lecture Telemetry</h3>
+                <p class="text-[11px] text-slate-400">Live timetable stream from connected Google Sheets</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">Live Stream</span>
           </div>
-          <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs min-h-[44px] items-center">
-            <span class="text-slate-500 text-xs">Connect Attendance CSV in settings to stream lecture status</span>
+
+          <!-- Class-by-Class Attendance Timeline -->
+          <div class="mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider font-mono">Lecture Log Stream</span>
+              <span class="text-[10px] text-slate-500 font-mono">Real-Time Sync</span>
+            </div>
+            <div id="attendanceLog" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs min-h-[44px] items-center">
+              <span class="text-slate-500 text-xs">Connect Attendance CSV in settings to stream lecture status</span>
+            </div>
+          </div>
+
+          <!-- Opal Metric Sliders Breakdown (Screen 4 Style) -->
+          <div class="space-y-2.5 pt-2 border-t border-white/[0.06]">
+            <!-- Safe Margin Row -->
+            <div class="opal-subcard p-3 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-slate-200 block">Safe Bunk Margin</span>
+                <span class="text-[10px] text-slate-400">Buffer above 75% regulatory requirement</span>
+              </div>
+              <span id="marginSliderPill" class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full">Great</span>
+            </div>
+
+            <!-- Subject Equilibrium Row -->
+            <div class="opal-subcard p-3 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-slate-200 block">Lab Compliance Standard</span>
+                <span class="text-[10px] text-slate-400">Practical & workshop requirements</span>
+              </div>
+              <span class="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-3 py-1 rounded-full">Optimal</span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Smart Milestones Card (5 cols) -->
-      <div class="lg:col-span-5 glass-card p-5 md:p-6 flex flex-col justify-between">
+      <div class="lg:col-span-5 opal-card p-5 md:p-6 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-              <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                <i data-lucide="calendar" class="w-4 h-4"></i>
-              </div>
-              <h2 class="text-sm font-bold text-white tracking-tight font-display">Next Milestones</h2>
+              <span class="text-slate-400">📅</span>
+              <h3 class="text-sm font-bold text-white font-display">Academic Milestones</h3>
             </div>
-            <span class="text-[10px] text-indigo-400/90 font-mono font-semibold bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Auto-Tracking</span>
+            <span class="text-[10px] text-emerald-400 font-mono font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Auto-Tracking</span>
           </div>
 
           <!-- Countdown Tiles -->
           <div class="space-y-2.5 mb-4">
             <!-- Next Exam Tile -->
-            <div id="nextExamCard" class="glass-subcard p-3 flex items-center justify-between border-rose-500/25 bg-rose-950/15">
-              <div class="flex items-center gap-3">
-                <div class="p-1.5 rounded-lg bg-rose-500/15 text-rose-400 border border-rose-500/25 flex-shrink-0">
-                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                </div>
+            <div id="nextExamCard" class="opal-subcard p-3 flex items-center justify-between border-rose-500/20 bg-rose-950/10">
+              <div class="flex items-center gap-2.5">
+                <span class="text-rose-400 text-sm">🎯</span>
                 <div>
                   <div class="text-[10px] uppercase font-bold text-rose-400 font-mono">Next Exam / Test</div>
                   <div id="nextExamName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextExamCountdown" class="text-xs font-mono font-bold text-rose-300 bg-rose-950/80 px-2.5 py-1 rounded-lg border border-rose-800/80">--</div>
+              <div id="nextExamCountdown" class="text-xs font-mono font-bold text-rose-300 bg-rose-950/80 px-2.5 py-1 rounded-full border border-rose-800/80">--</div>
             </div>
 
             <!-- Next Holiday Tile -->
-            <div id="nextHolidayCard" class="glass-subcard p-3 flex items-center justify-between border-emerald-500/25 bg-emerald-950/15">
-              <div class="flex items-center gap-3">
-                <div class="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex-shrink-0">
-                  <i data-lucide="sun" class="w-4 h-4"></i>
-                </div>
+            <div id="nextHolidayCard" class="opal-subcard p-3 flex items-center justify-between border-emerald-500/20 bg-emerald-950/10">
+              <div class="flex items-center gap-2.5">
+                <span class="text-emerald-400 text-sm">🌴</span>
                 <div>
                   <div class="text-[10px] uppercase font-bold text-emerald-400 font-mono">Next Holiday</div>
                   <div id="nextHolidayName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextHolidayCountdown" class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-800/80">--</div>
+              <div id="nextHolidayCountdown" class="text-xs font-mono font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-800/80">--</div>
             </div>
 
             <!-- Next Event Tile -->
-            <div id="nextEventCard" class="glass-subcard p-3 flex items-center justify-between border-indigo-500/25 bg-indigo-950/15">
-              <div class="flex items-center gap-3">
-                <div class="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/25 flex-shrink-0">
-                  <i data-lucide="clock" class="w-4 h-4"></i>
-                </div>
+            <div id="nextEventCard" class="opal-subcard p-3 flex items-center justify-between border-cyan-500/20 bg-cyan-950/10">
+              <div class="flex items-center gap-2.5">
+                <span class="text-cyan-400 text-sm">⏰</span>
                 <div>
-                  <div class="text-[10px] uppercase font-bold text-indigo-400 font-mono">Next Event / Deadline</div>
+                  <div class="text-[10px] uppercase font-bold text-cyan-400 font-mono">Next Event / Deadline</div>
                   <div id="nextEventName" class="text-xs font-semibold text-slate-200 mt-0.5">Finding...</div>
                 </div>
               </div>
-              <div id="nextEventCountdown" class="text-xs font-mono font-bold text-indigo-300 bg-indigo-950/80 px-2.5 py-1 rounded-lg border border-indigo-800/80">--</div>
+              <div id="nextEventCountdown" class="text-xs font-mono font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-800/80">--</div>
             </div>
           </div>
 
-          <!-- Calendar List Feed -->
-          <h3 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">Academic Schedule</h3>
-          <div id="calendarList" class="space-y-2 max-h-[155px] overflow-y-auto pr-1 custom-scrollbar text-xs">
+          <!-- Academic Schedule List -->
+          <h4 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2 font-mono">Upcoming Calendar</h4>
+          <div id="calendarList" class="space-y-2 max-h-[145px] overflow-y-auto pr-1 custom-scrollbar text-xs">
             <span class="text-slate-500">Connect Calendar CSV in settings to populate events</span>
           </div>
         </div>
@@ -450,72 +596,69 @@
 
     </div>
 
-    <!-- Row 2: Practice Topics & Question Bank -->
-    <div class="glass-card p-5 md:p-6">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+    <!-- ROW 2: COURSEWORK ASSIGNMENTS -->
+    <div class="opal-card p-5 md:p-6 space-y-4" id="assignmentsSection">
+      <div class="flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-2">
-          <div class="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-            <i data-lucide="code-2" class="w-4 h-4"></i>
-          </div>
+          <span class="text-emerald-400 text-base">📝</span>
           <div>
-            <h2 class="text-sm font-bold text-white tracking-tight font-display">Practice Topics & Question Bank</h2>
-            <p class="text-xs text-slate-400">Live problem progress from connected Google Sheets</p>
+            <h3 class="text-sm font-bold text-white tracking-tight font-display">Assignments & Lab Submissions</h3>
+            <p class="text-xs text-slate-400">Deadlines with countdown status and submission trackers</p>
           </div>
         </div>
-        <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-mono font-medium flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live Dropdown Sync
-        </span>
+
+        <div class="flex items-center gap-1.5 bg-[#090e1c] border border-white/[0.08] p-1 rounded-full text-xs font-semibold">
+          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-medium">All</button>
+          <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-3 py-1 rounded-full text-slate-400 hover:text-white">Pending (<span id="filterPendingBadge">0</span>)</button>
+          <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-3 py-1 rounded-full text-slate-400 hover:text-white">Submitted</button>
+        </div>
       </div>
 
-      <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
-        <span class="text-slate-500 col-span-full py-6 text-center">Connect Questions CSV in settings to load practice topics</span>
+      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+        <span class="text-slate-500 col-span-full py-6 text-center">Connect Assignments CSV to view submissions</span>
       </div>
     </div>
 
-    <!-- Row 3: STARK DOUBT VAULT -->
-    <div class="glass-card p-5 md:p-6 space-y-4">
+    <!-- ROW 3: DOUBT VAULT & MULTI-FORMAT ARCHIVE -->
+    <div class="opal-card p-5 md:p-6 space-y-4" id="doubtsSection">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-2">
-          <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <i data-lucide="help-circle" class="w-4 h-4"></i>
-          </div>
+          <span class="text-amber-400 text-base">💡</span>
           <div>
-            <h2 class="text-sm font-bold text-white tracking-tight font-display">Stark Doubt Vault & Multi-Format Archive</h2>
-            <p class="text-xs text-slate-400">Paste/upload screenshots of questions, consult J.A.R.V.I.S., and store multi-format solutions</p>
+            <h3 class="text-sm font-bold text-white tracking-tight font-display">Doubt Vault & Multi-Format Archive</h3>
+            <p class="text-xs text-slate-400">Paste/upload screenshots (<kbd class="kbd-chip">Cmd+V</kbd>), consult J.A.R.V.I.S., and store multi-format solutions</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5 bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-colors">All (<span id="doubtTotalBadge">0</span>)</button>
-          <button onclick="setDoubtFilter('pending')" id="doubtFilterPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors">Pending (<span id="doubtPendingBadge">0</span>)</button>
-          <button onclick="setDoubtFilter('resolved')" id="doubtFilterResolved" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors">Resolved</button>
+        <div class="flex items-center gap-1.5 bg-[#090e1c] border border-white/[0.08] p-1 rounded-full text-xs font-semibold">
+          <button onclick="setDoubtFilter('all')" id="doubtFilterAll" class="px-3 py-1 rounded-full bg-emerald-600 text-white transition-colors">All (<span id="doubtTotalBadge">0</span>)</button>
+          <button onclick="setDoubtFilter('pending')" id="doubtFilterPending" class="px-3 py-1 rounded-full text-slate-400 hover:text-white transition-colors">Pending (<span id="doubtPendingBadge">0</span>)</button>
+          <button onclick="setDoubtFilter('resolved')" id="doubtFilterResolved" class="px-3 py-1 rounded-full text-slate-400 hover:text-white transition-colors">Resolved</button>
         </div>
       </div>
 
       <!-- Creation Form -->
-      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2.5 text-xs bg-[#0a0e18] p-3.5 rounded-xl border border-white/[0.07]">
-        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
-        <button type="submit" class="md:col-span-3 btn-primary-grad px-4 py-2 text-white text-xs">
+      <form onsubmit="handleCreateDoubt(event)" class="grid grid-cols-1 md:grid-cols-12 gap-2.5 text-xs bg-[#090f1e] p-4 rounded-2xl border border-white/[0.07]">
+        <input type="text" id="doubtTopicInput" placeholder="Topic (e.g. Loops, Arrays, OOP...)" required class="md:col-span-3 bg-[#060a14] border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+        <input type="text" id="doubtTitleInput" placeholder="Question Title (e.g. Q19: Pattern Matrix Logic)" required class="md:col-span-6 bg-[#060a14] border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+        <button type="submit" class="md:col-span-3 btn-opal-primary px-4 py-2 text-white text-xs">
           <i data-lucide="plus" class="w-3.5 h-3.5"></i>
           Log New Doubt
         </button>
 
-        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono text-[11px]"></textarea>
+        <textarea id="doubtNotesInput" rows="2" placeholder="Optional notes or text context..." class="md:col-span-12 bg-[#060a14] border border-slate-700/80 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-mono text-[11px]"></textarea>
 
         <!-- Screenshot Dropzone -->
-        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border border-dashed border-slate-700 hover:border-amber-500/60 bg-slate-950/40 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none">
+        <div id="doubtPasteZone" tabindex="0" class="md:col-span-12 border border-dashed border-slate-700 hover:border-emerald-500/60 bg-[#060a14]/60 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 cursor-pointer outline-none">
           <div class="flex items-center gap-2.5">
-            <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <i data-lucide="image" class="w-4 h-4"></i>
-            </div>
+            <span class="text-emerald-400 text-base">📷</span>
             <div>
               <span class="text-xs font-semibold text-slate-200 block">Attach Question Screenshot</span>
               <span class="text-[10px] text-slate-400">Click & press <kbd class="kbd-chip">Cmd+V</kbd> to paste screenshot directly, or browse:</span>
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <label class="btn-action px-3 py-1.5 text-xs text-slate-300">
+            <label class="btn-opal-secondary px-3 py-1.5 text-xs text-slate-300">
               <i data-lucide="upload" class="w-3 h-3"></i> Upload Image
               <input type="file" id="doubtImageInput" accept="image/*" onchange="handleDoubtImageUpload(event)" class="hidden" />
             </label>
@@ -531,38 +674,59 @@
       <div id="doubtsLedgerContainer" class="space-y-2.5 min-h-[100px] max-h-[460px] overflow-y-auto pr-1 custom-scrollbar text-xs"></div>
     </div>
 
-    <!-- Row 4: Coursework Assignments -->
-    <div class="glass-card p-5 md:p-6 space-y-4">
-      <div class="flex flex-wrap justify-between items-center gap-3">
+    <!-- ROW 4: PRACTICE TOPICS & QUESTION BANK -->
+    <div class="opal-card p-5 md:p-6" id="topicsSection">
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
         <div class="flex items-center gap-2">
-          <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            <i data-lucide="file-check-2" class="w-4 h-4"></i>
-          </div>
+          <span class="text-cyan-400 text-base">📚</span>
           <div>
-            <h2 class="text-sm font-bold text-white tracking-tight font-display">Assignments & Lab Submissions</h2>
-            <p class="text-xs text-slate-400">Coursework deadlines with urgency warnings and submission links</p>
+            <h3 class="text-sm font-bold text-white tracking-tight font-display">Practice Topics & Question Bank</h3>
+            <p class="text-xs text-slate-400">Live problem progress from connected Google Sheets</p>
           </div>
         </div>
-
-        <div class="flex items-center gap-1.5 bg-[#101625] border border-white/[0.08] p-1 rounded-xl text-xs font-semibold">
-          <button onclick="setAssignmentFilter('all')" id="btnAssignAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium">All</button>
-          <button onclick="setAssignmentFilter('pending')" id="btnAssignPending" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Pending (<span id="filterPendingBadge">0</span>)</button>
-          <button onclick="setAssignmentFilter('submitted')" id="btnAssignSubmitted" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Submitted</button>
-        </div>
+        <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full font-mono font-medium flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live Dropdown Sync
+        </span>
       </div>
 
-      <div id="assignmentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
-        <span class="text-slate-500 col-span-full py-6 text-center">Connect Assignments CSV to view submissions</span>
+      <div id="topicsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
+        <span class="text-slate-500 col-span-full py-6 text-center">Connect Questions CSV in settings to load practice topics</span>
       </div>
     </div>
 
   </main>
 
+  <!-- =========================================================================
+       SIGNATURE OPAL FLOATING DOCK NAVIGATION (SCREENS 3 & 4 STYLE)
+       ========================================================================= -->
+  <nav class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 bg-[#070b16]/90 backdrop-blur-xl border border-white/10 rounded-full px-3 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.85)] flex items-center gap-1 sm:gap-2">
+    <a href="#heroSection" class="dock-item active">
+      <span class="text-sm">⭕</span>
+      <span class="dock-label">Home</span>
+    </a>
+    <a href="#attendanceSection" class="dock-item">
+      <span class="text-sm">🛡️</span>
+      <span class="dock-label">Defense</span>
+    </a>
+    <a href="#assignmentsSection" class="dock-item">
+      <span class="text-sm">📝</span>
+      <span class="dock-label">Work</span>
+    </a>
+    <a href="#doubtsSection" class="dock-item">
+      <span class="text-sm">💡</span>
+      <span class="dock-label">Doubts</span>
+    </a>
+    <a href="productivity.html" class="dock-item text-amber-400 hover:text-amber-300">
+      <span class="text-sm">🔥</span>
+      <span class="dock-label">Focus</span>
+    </a>
+  </nav>
+
   <!-- QUICK COMMAND PALETTE MODAL (CMD+K) -->
   <div id="cmdPaletteModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-start justify-center pt-24 p-4" onclick="closeCommandPalette()">
-    <div class="bg-[#0b0f19] border border-white/[0.14] rounded-xl max-w-xl w-full shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
-      <div class="p-3 border-b border-white/[0.08] flex items-center gap-2.5">
-        <i data-lucide="search" class="w-4 h-4 text-indigo-400"></i>
+    <div class="bg-[#080d1a] border border-white/[0.14] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+      <div class="p-3.5 border-b border-white/[0.08] flex items-center gap-2.5">
+        <i data-lucide="search" class="w-4 h-4 text-emerald-400"></i>
         <input type="text" id="cmdPaletteInput" oninput="filterPaletteActions()" placeholder="Search action, jump to simulator, export prompt..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none" />
         <span class="kbd-chip">ESC</span>
       </div>
@@ -572,11 +736,11 @@
 
   <!-- MULTI-FORMAT RESOLUTION MODAL -->
   <div id="resolveModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b0f19] border border-white/[0.12] rounded-xl max-w-xl w-full p-5 shadow-2xl space-y-4">
+    <div class="bg-[#080d1a] border border-white/[0.12] rounded-2xl max-w-xl w-full p-5 shadow-2xl space-y-4">
       <div class="flex justify-between items-start">
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase font-mono">Doubt Resolution</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase font-mono">Doubt Resolution</span>
             <span class="text-xs text-slate-400 font-semibold" id="resolveModalTopic">Topic</span>
           </div>
           <h3 class="text-base font-bold text-white mt-1" id="resolveModalTitle">Question Title</h3>
@@ -589,26 +753,26 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-300 font-medium mb-1">1. Written Explanation / Code Notes:</label>
-          <textarea id="resolveTextNotes" rows="3" placeholder="Explain the key logic or paste the working Java snippet..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono text-[11px] outline-none focus:border-indigo-500"></textarea>
+          <textarea id="resolveTextNotes" rows="3" placeholder="Explain the key logic or paste the working Java snippet..." class="w-full bg-[#050811] border border-slate-700 rounded-xl p-2.5 text-white font-mono text-[11px] outline-none focus:border-emerald-500"></textarea>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+          <div class="p-3 bg-[#050811] border border-slate-800 rounded-xl space-y-2">
             <span class="text-[11px] font-bold text-slate-300 block flex items-center gap-1.5">
-              <i data-lucide="camera" class="w-3.5 h-3.5 text-indigo-400"></i> Solution Photo / Notes Image
+              <i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-400"></i> Solution Photo / Notes Image
             </span>
-            <label class="w-full btn-action px-3 py-2 text-xs text-slate-300">
+            <label class="w-full btn-opal-secondary px-3 py-2 text-xs text-slate-300">
               <i data-lucide="upload" class="w-3.5 h-3.5"></i> Select Solution Image
               <input type="file" id="resolveImageFile" accept="image/*" onchange="handleResolveImageUpload(event)" class="hidden" />
             </label>
             <div id="resolveImgPreview" class="hidden text-[10px] text-emerald-400 font-mono truncate">Photo Attached ✅</div>
           </div>
 
-          <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
+          <div class="p-3 bg-[#050811] border border-slate-800 rounded-xl space-y-2">
             <span class="text-[11px] font-bold text-slate-300 block flex items-center gap-1.5">
               <i data-lucide="file-text" class="w-3.5 h-3.5 text-cyan-400"></i> Solution PDF Document
             </span>
-            <label class="w-full btn-action px-3 py-2 text-xs text-slate-300">
+            <label class="w-full btn-opal-secondary px-3 py-2 text-xs text-slate-300">
               <i data-lucide="upload" class="w-3.5 h-3.5"></i> Select PDF File
               <input type="file" id="resolvePdfFile" accept="application/pdf" onchange="handleResolvePdfUpload(event)" class="hidden" />
             </label>
@@ -620,37 +784,37 @@
       <div class="flex justify-between items-center pt-2 border-t border-white/[0.06]">
         <span class="text-[11px] text-emerald-400 font-semibold font-mono">+50 XP upon resolution</span>
         <div class="flex gap-2">
-          <button onclick="closeResolveModal()" class="btn-action px-3 py-1.5 text-xs">Cancel</button>
-          <button onclick="submitDoubtResolution()" class="btn-primary-grad px-4 py-1.5 text-xs font-bold">Mark Cleared</button>
+          <button onclick="closeResolveModal()" class="btn-opal-secondary px-3 py-1.5 text-xs">Cancel</button>
+          <button onclick="submitDoubtResolution()" class="btn-opal-primary px-4 py-1.5 text-xs font-bold">Mark Cleared</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- LIGHTBOX IMAGE MODAL -->
-  <div id="imageLightboxModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="closeImageLightbox()">
-    <div class="max-w-4xl max-h-[90vh] overflow-hidden rounded-xl border border-white/[0.12] relative" onclick="event.stopPropagation()">
-      <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-xl" />
+  <div id="imageLightboxModal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="closeImageLightbox()">
+    <div class="max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl border border-white/[0.12] relative" onclick="event.stopPropagation()">
+      <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-2xl" />
       <button onclick="closeImageLightbox()" class="absolute top-3 right-3 bg-slate-900/90 text-white p-2 rounded-full border border-white/20 hover:bg-slate-800"><i data-lucide="x" class="w-4 h-4"></i></button>
     </div>
   </div>
 
   <!-- Settings Modal -->
   <div id="settingsModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0b0f19] border border-white/[0.12] rounded-xl max-w-lg w-full p-5 shadow-2xl space-y-4">
+    <div class="bg-[#080d1a] border border-white/[0.12] rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4">
       <div class="flex justify-between items-center">
-        <h3 class="text-base font-semibold text-white">Dashboard Settings & Backup</h3>
+        <h3 class="text-base font-semibold text-white font-display">Cockpit Settings & Backup</h3>
         <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
 
-      <div class="p-3 bg-slate-900 border border-white/[0.06] rounded-xl space-y-2">
-        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block font-mono">Cross-Device Data Backup</span>
+      <div class="p-3.5 bg-[#050811] border border-white/[0.06] rounded-xl space-y-2">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block font-mono">Cross-Device Data Backup</span>
         <p class="text-[11px] text-slate-400">Export or restore your focus history, doubts, tasks, and XP to sync between devices.</p>
         <div class="flex gap-2 pt-1">
-          <button onclick="exportAllDataBackup()" class="flex-1 btn-action px-3 py-1.5 text-xs text-indigo-300">
+          <button onclick="exportAllDataBackup()" class="flex-1 btn-opal-secondary px-3 py-1.5 text-xs text-emerald-300">
             <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Backup (JSON)
           </button>
-          <label class="flex-1 btn-action px-3 py-1.5 text-xs text-slate-300 cursor-pointer">
+          <label class="flex-1 btn-opal-secondary px-3 py-1.5 text-xs text-slate-300 cursor-pointer">
             <i data-lucide="upload" class="w-3.5 h-3.5"></i> Restore File
             <input type="file" id="importBackupInput" accept=".json" onchange="importAllDataBackup(event)" class="hidden" />
           </label>
@@ -660,31 +824,82 @@
       <div class="space-y-3 text-xs">
         <div>
           <label class="block text-slate-300 font-medium mb-1">Attendance CSV Link</label>
-          <input id="inputAttendance" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAttendance" class="w-full bg-[#050811] border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Calendar CSV Link</label>
-          <input id="inputCalendar" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputCalendar" class="w-full bg-[#050811] border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Assignments CSV Link</label>
-          <input id="inputAssignments" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputAssignments" class="w-full bg-[#050811] border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
         <div>
           <label class="block text-slate-300 font-medium mb-1">Questions CSV Link</label>
-          <input id="inputQuestions" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-indigo-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
+          <input id="inputQuestions" class="w-full bg-[#050811] border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]" placeholder="https://docs.google.com/...output=csv" />
         </div>
       </div>
 
       <div class="flex justify-end gap-2 pt-2">
-        <button onclick="saveSettings()" class="btn-primary-grad px-5 py-2 text-xs font-semibold">Save & Sync</button>
+        <button onclick="saveSettings()" class="btn-opal-primary px-5 py-2 text-xs font-semibold">Save & Sync</button>
       </div>
     </div>
   </div>
 
+  <!-- =========================================================================
+       JAVASCRIPT ARCHITECTURE & FUNCTION ENGINE (100% PRESERVED & ELEVATED)
+       ========================================================================= -->
   <script>
-    // Initial static icons render
     lucide.createIcons();
+
+    /* =========================================================================
+       DYNAMIC OPAL GAUGE ARC UPDATE
+       ========================================================================= */
+    function updateOpalGauge(pct) {
+      const path = document.getElementById('opalGaugePath');
+      if (path) {
+        const totalLength = 235.6; // pi * 75
+        const validPct = isNaN(pct) ? 0 : Math.max(0, Math.min(100, pct));
+        const offset = totalLength - (totalLength * (validPct / 100));
+        path.style.strokeDashoffset = offset;
+      }
+    }
+
+    /* =========================================================================
+       DATE SWITCHER & CLOCK
+       ========================================================================= */
+    let currentDateOffset = 0;
+    function shiftDate(delta) {
+      currentDateOffset += delta;
+      updateTacticalDate();
+    }
+
+    function updateTacticalDate() {
+      const d = new Date();
+      d.setDate(d.getDate() + currentDateOffset);
+      const dateEl = document.getElementById('tacticalDateDisplay');
+      if (dateEl) {
+        if (currentDateOffset === 0) {
+          dateEl.innerText = "Today, " + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        } else if (currentDateOffset === 1) {
+          dateEl.innerText = "Tomorrow, " + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        } else if (currentDateOffset === -1) {
+          dateEl.innerText = "Yesterday, " + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        } else {
+          dateEl.innerText = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+      }
+    }
+
+    function updateTacticalClock() {
+      const now = new Date();
+      const clockEl = document.getElementById('tacticalClock');
+      if (clockEl) {
+        clockEl.innerText = now.toLocaleTimeString('en-US', { hour12: false });
+      }
+    }
+    setInterval(updateTacticalClock, 1000);
+    updateTacticalDate();
 
     /* =========================================================================
        NON-BLOCKING J.A.R.V.I.S. SPEECH SYNTHESIS ENGINE
@@ -696,13 +911,13 @@
       const icon = document.getElementById('jarvisVoiceIcon');
       const label = document.getElementById('jarvisVoiceLabel');
       if (jarvisMuted) {
-        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800';
+        btn.className = 'opal-capsule px-2.5 py-1.5 text-xs text-slate-400 border-slate-700 bg-slate-800';
         icon.setAttribute('data-lucide', 'volume-x');
-        label.innerText = 'J.A.R.V.I.S. Muted';
+        if (label) label.innerText = 'J.A.R.V.I.S. Muted';
       } else {
-        btn.className = 'btn-action px-2.5 py-1.5 text-xs text-cyan-300 border-cyan-500/30 bg-cyan-950/20';
+        btn.className = 'opal-capsule px-2.5 py-1.5 text-xs text-emerald-300 border-emerald-500/30 bg-emerald-950/20';
         icon.setAttribute('data-lucide', 'volume-2');
-        label.innerText = 'J.A.R.V.I.S. Online';
+        if (label) label.innerText = 'J.A.R.V.I.S. Online';
       }
       lucide.createIcons({ root: btn });
     }
@@ -742,30 +957,25 @@
       }, 10);
     }
 
-    // Arc Reactor Interactive Overcharge
+    // Interactive Overcharge
     function triggerReactorOvercharge() {
       const core = document.getElementById('reactorPowerPct');
-      core.innerText = "100.0% MAX";
-      core.className = "text-sm font-mono font-bold text-emerald-400";
-      speakJarvis("Arc reactor energized to maximum efficiency, sir.");
+      if (core) {
+        core.innerText = "100.0% MAX";
+        core.className = "text-sm font-mono font-bold text-emerald-400";
+      }
+      speakJarvis("Opal Defense Grid energized to maximum equilibrium, sir.");
       setTimeout(() => {
-        core.innerText = "98.4%";
-        core.className = "text-sm font-mono font-bold text-cyan-300";
+        if (core) {
+          core.innerText = "98.4%";
+          core.className = "text-sm font-mono font-bold text-cyan-300";
+        }
       }, 3500);
     }
 
     /* =========================================================================
-       LIVE CLOCK & COMMAND PALETTE (CMD+K)
+       COMMAND PALETTE (CMD+K)
        ========================================================================= */
-    function updateTacticalClock() {
-      const now = new Date();
-      const clockEl = document.getElementById('tacticalClock');
-      if (clockEl) {
-        clockEl.innerText = now.toLocaleTimeString('en-US', { hour12: false });
-      }
-    }
-    setInterval(updateTacticalClock, 1000);
-
     const PALETTE_ACTIONS = [
       { name: "Go to Productivity & Focus Cockpit", shortcut: "2", icon: "flame", action: () => window.location.href = "productivity.html" },
       { name: "Toggle What-If Attendance Simulator", shortcut: "S", icon: "sliders", action: () => toggleSimulator() },
@@ -802,14 +1012,14 @@
 
       matched.forEach(a => {
         const item = document.createElement('div');
-        item.className = "flex items-center justify-between p-2 rounded-lg hover:bg-slate-800 cursor-pointer text-slate-200 transition-colors group";
+        item.className = "flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-800/80 cursor-pointer text-slate-200 transition-colors group";
         item.onclick = () => {
           closeCommandPalette();
           a.action();
         };
         item.innerHTML = `
           <div class="flex items-center gap-2.5">
-            <div class="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:text-indigo-300">
+            <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 group-hover:text-emerald-300">
               <i data-lucide="${a.icon}" class="w-4 h-4"></i>
             </div>
             <span class="font-medium text-xs">${a.name}</span>
@@ -821,7 +1031,7 @@
       lucide.createIcons({ root: container });
     }
 
-    // Global Keybinds (Instant)
+    // Global Keybinds
     document.addEventListener('keydown', (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -874,7 +1084,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `academic-cockpit-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `opal-cockpit-backup-${new Date().toISOString().split('T')[0]}.json`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -1073,9 +1283,9 @@
       ['all', 'pending', 'resolved'].forEach(f => {
         const btn = document.getElementById(`doubtFilter${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition-colors';
+          btn.className = 'px-3 py-1 rounded-full bg-emerald-600 text-white transition-colors';
         } else {
-          btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition-colors';
+          btn.className = 'px-3 py-1 rounded-full text-slate-400 hover:text-white transition-colors';
         }
       });
       renderDoubtsLedger();
@@ -1225,14 +1435,14 @@ TASK:
       document.getElementById('doubtPendingBadge').innerText = doubts.filter(d => !d.isResolved).length;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-xl">No doubts in this view. Perimeter clear!</div>`;
+        container.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-2xl">No doubts in this view. Perimeter clear!</div>`;
         return;
       }
 
       filtered.forEach(d => {
         const card = document.createElement('div');
-        card.className = `p-3.5 rounded-xl border transition-colors ${
-          d.isResolved ? 'bg-[#0b0f19] border-white/[0.06]' : 'bg-[#0f1424] border-amber-500/35'
+        card.className = `p-3.5 rounded-2xl border transition-colors ${
+          d.isResolved ? 'bg-[#080d19] border-white/[0.06]' : 'bg-[#0a1122] border-emerald-500/35'
         }`;
 
         let questionImgHtml = '';
@@ -1240,7 +1450,7 @@ TASK:
           questionImgHtml = `
             <div class="mt-2.5 flex items-center gap-2">
               <span class="text-[10px] text-slate-400 font-mono">Question Screenshot:</span>
-              <img src="${d.questionImage}" onclick="openImageLightbox('${d.questionImage}')" title="Click to view full screenshot" class="h-12 w-auto rounded border border-slate-700 hover:border-amber-400 cursor-pointer object-cover" />
+              <img src="${d.questionImage}" onclick="openImageLightbox('${d.questionImage}')" title="Click to view full screenshot" class="h-12 w-auto rounded-lg border border-slate-700 hover:border-emerald-400 cursor-pointer object-cover" />
             </div>
           `;
         }
@@ -1254,7 +1464,7 @@ TASK:
           const solPdfName = (typeof s === 'object' && s.pdfName) ? s.pdfName : 'Solution_Document.pdf';
 
           solutionBlockHtml = `
-            <div class="mt-3 p-3 rounded-lg bg-emerald-950/25 border border-emerald-500/25 text-[11px] space-y-2">
+            <div class="mt-3 p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/25 text-[11px] space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-[9px] uppercase font-bold text-emerald-400 font-mono flex items-center gap-1">
                   <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Verified Solution:
@@ -1262,17 +1472,17 @@ TASK:
                 <button onclick="openResolveModal(${d.id})" class="text-[10px] text-emerald-300 hover:underline">Edit Answer ✏️</button>
               </div>
 
-              ${solNotes ? `<p class="text-slate-200 font-mono whitespace-pre-wrap bg-black/40 p-2 rounded border border-white/[0.04]">${solNotes}</p>` : ''}
+              ${solNotes ? `<p class="text-slate-200 font-mono whitespace-pre-wrap bg-black/40 p-2 rounded-lg border border-white/[0.04]">${solNotes}</p>` : ''}
 
               <div class="flex flex-wrap gap-2 pt-1">
                 ${solImg ? `
-                  <button onclick="openImageLightbox('${solImg}')" class="btn-action px-2 py-1 text-emerald-300 border-emerald-500/30">
+                  <button onclick="openImageLightbox('${solImg}')" class="btn-opal-secondary px-2.5 py-1 text-emerald-300 border-emerald-500/30">
                     <i data-lucide="image" class="w-3 h-3"></i> View Photo
                   </button>
                 ` : ''}
 
                 ${solPdf ? `
-                  <a href="${solPdf}" download="${solPdfName}" class="btn-action px-2 py-1 text-cyan-300 border-cyan-500/30">
+                  <a href="${solPdf}" download="${solPdfName}" class="btn-opal-secondary px-2.5 py-1 text-cyan-300 border-cyan-500/30">
                     <i data-lucide="file-text" class="w-3 h-3"></i> Download PDF
                   </a>
                 ` : ''}
@@ -1285,23 +1495,23 @@ TASK:
           <div class="flex flex-wrap justify-between items-start gap-2 mb-1.5">
             <div>
               <div class="flex items-center gap-2">
-                <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">${d.topic}</span>
+                <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">${d.topic}</span>
                 <span class="text-[10px] text-slate-500 font-mono">&bull; ${d.date}</span>
               </div>
               <h4 class="font-bold text-slate-200 text-xs mt-1">${d.title}</h4>
             </div>
 
             <div class="flex items-center gap-1.5">
-              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="btn-action px-2 py-1 text-cyan-300 border-cyan-500/30">
+              <button onclick="consultJarvisOnDoubt(${d.id})" title="Analyze with J.A.R.V.I.S. AI Copilot" class="btn-opal-secondary px-2 py-1 text-cyan-300 border-cyan-500/30">
                 <i data-lucide="sparkles" class="w-3 h-3 text-cyan-400"></i> Copilot
               </button>
               
               ${d.isResolved ? `
-                <button onclick="unresolveDoubt(${d.id})" class="btn-action px-2 py-1 text-emerald-400 border-emerald-500/30">
+                <button onclick="unresolveDoubt(${d.id})" class="btn-opal-secondary px-2 py-1 text-emerald-400 border-emerald-500/30">
                   <i data-lucide="check-check" class="w-3 h-3"></i> Cleared (+50 XP)
                 </button>
               ` : `
-                <button onclick="openResolveModal(${d.id})" class="btn-action px-2 py-1 text-amber-300 border-amber-500/30">
+                <button onclick="openResolveModal(${d.id})" class="btn-opal-secondary px-2 py-1 text-amber-300 border-amber-500/30">
                   <i data-lucide="plus" class="w-3 h-3"></i> Add Solution
                 </button>
               `}
@@ -1312,7 +1522,7 @@ TASK:
             </div>
           </div>
 
-          ${d.notes ? `<p class="text-[11px] text-slate-300 font-mono bg-black/40 p-2 rounded border border-white/[0.04] mt-1.5 whitespace-pre-wrap">${d.notes}</p>` : ''}
+          ${d.notes ? `<p class="text-[11px] text-slate-300 font-mono bg-black/40 p-2 rounded-lg border border-white/[0.04] mt-1.5 whitespace-pre-wrap">${d.notes}</p>` : ''}
           ${questionImgHtml}
           ${solutionBlockHtml}
         `;
@@ -1333,9 +1543,9 @@ TASK:
       ['all', 'pending', 'submitted'].forEach(f => {
         const btn = document.getElementById(`btnAssign${f.charAt(0).toUpperCase() + f.slice(1)}`);
         if (f === filter) {
-          btn.className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium';
+          btn.className = 'px-3 py-1 rounded-full bg-emerald-600 text-white font-medium';
         } else {
-          btn.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white';
+          btn.className = 'px-3 py-1 rounded-full text-slate-400 hover:text-white';
         }
       });
       renderAssignmentsList();
@@ -1352,44 +1562,58 @@ TASK:
         filtered = cachedAssignments.filter(a => a.isCompleted);
       }
 
+      const pendingCount = cachedAssignments.filter(a => !a.isCompleted).length;
+      document.getElementById('filterPendingBadge').innerText = pendingCount;
+
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-full p-6 text-center text-slate-500 text-xs border border-dashed border-white/[0.08] rounded-xl">No assignments matching this filter.</div>`;
+        container.innerHTML = `<span class="text-slate-500 col-span-full py-6 text-center text-xs">No assignments found for this filter.</span>`;
         return;
       }
 
-      filtered.forEach(a => {
-        const daysLeft = getDaysRemaining(a.dueDate);
-        const isUrgent = !a.isCompleted && daysLeft <= 3;
+      filtered.forEach((a, idx) => {
+        const days = getDaysRemaining(a.deadline);
+        const isUrgent = days >= 0 && days <= 2 && !a.isCompleted;
 
         const card = document.createElement('div');
-        card.className = `glass-subcard p-3.5 flex flex-col justify-between ${
-          isUrgent ? 'border-rose-500/70 bg-rose-950/20 urgent-assignment' : ''
+        card.className = `p-3.5 rounded-2xl border transition-all ${
+          a.isCompleted 
+            ? 'bg-[#080d19] border-white/[0.06] opacity-75' 
+            : isUrgent 
+              ? 'bg-[#0e1222] border-rose-500/40 shadow-[0_0_15px_rgba(244,63,94,0.15)]' 
+              : 'bg-[#0a1020] border-white/[0.08]'
         }`;
 
-        let urgencyTag = '';
-        if (!a.isCompleted) {
-          if (daysLeft < 0) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">Overdue</span>`;
-          else if (daysLeft <= 1) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">Due soon!</span>`;
-          else if (daysLeft <= 3) urgencyTag = `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500/40">In ${daysLeft} days</span>`;
-        }
-
         card.innerHTML = `
-          <div>
-            <div class="flex justify-between items-start mb-2 gap-2">
-              <div>
-                <h4 class="font-semibold text-slate-200 text-xs">${a.title}</h4>
-                <div class="flex items-center gap-1.5 mt-1">
-                  <span class="text-[10px] text-slate-400">Due: <b class="font-mono text-slate-300">${a.dueDate}</b></span>
-                  ${urgencyTag}
-                </div>
-              </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-lg ${a.isCompleted ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 font-medium'} whitespace-nowrap font-mono">${a.status}</span>
+          <div class="flex justify-between items-start gap-2 mb-2">
+            <div>
+              <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">${a.subject}</span>
+              <h4 class="font-bold text-slate-100 text-xs mt-1.5 ${a.isCompleted ? 'line-through text-slate-400' : ''}">${a.title}</h4>
             </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${
+              a.isCompleted 
+                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
+                : isUrgent 
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse' 
+                  : 'bg-slate-800 text-slate-300 border border-slate-700'
+            }">
+              ${a.isCompleted ? 'Submitted' : formatDaysBadge(days)}
+            </span>
           </div>
-          
-          <div class="flex justify-between items-center pt-2.5 border-t border-white/[0.06] text-[11px] mt-2">
-            <span class="text-slate-400">Grade: <span class="font-mono font-semibold text-slate-200">${a.score}</span></span>
-            ${a.portalUrl ? `<a href="${a.portalUrl}" target="_blank" class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1 text-[10px]">Submit ↗</a>` : `<span class="text-slate-600 text-[10px]">No Link</span>`}
+
+          <p class="text-[11px] text-slate-400 mb-3">${a.description || 'No detailed instructions provided.'}</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-white/[0.05] text-[11px]">
+            <span class="text-slate-500 font-mono text-[10px]">Due: ${a.deadline || 'TBA'}</span>
+            <div class="flex items-center gap-1.5">
+              ${a.submissionLink ? `
+                <a href="${a.submissionLink}" target="_blank" class="btn-opal-secondary px-2 py-1 text-[10px] text-cyan-300">
+                  <i data-lucide="external-link" class="w-3 h-3"></i> Portal
+                </a>
+              ` : ''}
+              <button onclick="toggleAssignmentSubmission(${idx})" class="btn-opal-secondary px-2.5 py-1 text-[10px] ${a.isCompleted ? 'text-amber-300' : 'text-emerald-400 font-semibold'}">
+                ${a.isCompleted ? 'Mark Pending' : '✓ Submit'}
+              </button>
+            </div>
           </div>
         `;
         container.appendChild(card);
@@ -1397,362 +1621,326 @@ TASK:
       lucide.createIcons({ root: container });
     }
 
-    function loadAllData() {
-      const buster = '&_t=' + new Date().getTime();
-
-      let attUrl = localStorage.getItem('ATTENDANCE_CSV');
-      let calUrl = localStorage.getItem('CALENDAR_CSV');
-      let qUrl = localStorage.getItem('QUESTIONS_CSV');
-      let assignUrl = localStorage.getItem('ASSIGNMENTS_CSV');
-
-      if (attUrl) {
-        Papa.parse(attUrl + (attUrl.includes('?') ? buster : '?' + buster), {
-          download: true,
-          complete: function(results) {
-            if (results.data && results.data.length >= 2) {
-              const headers = results.data[0];
-              const myRow = results.data[1];
-              
-              const theoryStr = myRow[2] || '--%';
-              const labStr = myRow[3] || '--%';
-              const aggStr = myRow[4] || '0%';
-
-              document.getElementById('theoryPct').innerText = theoryStr;
-              document.getElementById('labPct').innerText = labStr;
-              document.getElementById('aggPct').innerText = aggStr;
-
-              let totalClasses = 0;
-              let attendedClasses = 0;
-              const log = document.getElementById('attendanceLog');
-              log.innerHTML = '';
-
-              for (let i = 5; i < headers.length; i++) {
-                if (!headers[i]) continue;
-                const status = (myRow[i] || '').trim().toUpperCase();
-                if (status === 'P' || status === 'A') {
-                  totalClasses++;
-                  if (status === 'P') attendedClasses++;
-                }
-
-                const isP = status === 'P';
-                const el = document.createElement('div');
-                el.className = `flex flex-col items-center px-2 py-1 rounded-lg border ${isP ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-rose-950/40 border-rose-800 text-rose-300'} flex-shrink-0 font-mono`;
-                el.innerHTML = `<span class="text-[10px] text-slate-400 truncate max-w-[70px]">${headers[i]}</span><span class="font-bold">${status || '-'}</span>`;
-                log.appendChild(el);
-              }
-
-              baseAttended = attendedClasses;
-              baseTotal = totalClasses;
-
-              const aggVal = parseFloat(aggStr.replace('%', '')) || 0;
-              const badge = document.getElementById('bufferBadge');
-              const bunkBadge = document.getElementById('bunkCalculatorBadge');
-
-              const aggMarginInfo = calculateMargin(attendedClasses, totalClasses);
-              document.getElementById('aggMargin').innerText = aggMarginInfo.text;
-
-              const headline = document.getElementById('jarvisStatusHeadline');
-              const detail = document.getElementById('jarvisStatusDetail');
-
-              if (aggVal >= 75) {
-                badge.innerText = 'Safe: Above 75%';
-                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium font-mono';
-                bunkBadge.innerText = aggMarginInfo.count > 0 ? `🛡️ ${aggMarginInfo.count} Bunkable` : '⚠ Zero buffer';
-                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold font-mono';
-                document.title = `(${aggStr}) Cockpit | Vikas N`;
-
-                headline.innerText = 'J.A.R.V.I.S.: DEFENSE SHIELDS OPTIMAL';
-                headline.className = 'text-xs font-bold text-emerald-300 mt-0.5 tracking-wide font-display';
-                detail.innerText = `All academic protocols nominal at ${aggStr}. Arc reactor buffer: ${aggMarginInfo.text}.`;
-              } else {
-                badge.innerText = 'Warning: Below 75%';
-                badge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-medium font-mono';
-                bunkBadge.innerText = `🚨 Need +${aggMarginInfo.count} classes`;
-                bunkBadge.className = 'text-xs px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold font-mono';
-                document.title = `⚠ (${aggStr}) Below 75% | Cockpit`;
-
-                headline.innerText = `J.A.R.V.I.S.: DEFICIT DETECTED (${aggStr})`;
-                headline.className = 'text-xs font-bold text-rose-300 mt-0.5 tracking-wide font-display';
-                detail.innerText = `Warning sir: Shields depleted below 75%. You must attend the next ${aggMarginInfo.count} classes to restore equilibrium.`;
-                
-                if (!sessionStorage.getItem('JARVIS_ATTENDANCE_WARNED')) {
-                  sessionStorage.setItem('JARVIS_ATTENDANCE_WARNED', 'true');
-                  speakJarvis(`Tactical alert, sir. Aggregate attendance is currently ${aggStr}. You must attend the next ${aggMarginInfo.count} lectures to restore safe shields.`);
-                }
-              }
-
-              const theoryVal = parseFloat(theoryStr.replace('%', ''));
-              if (!isNaN(theoryVal)) {
-                document.getElementById('theoryMargin').innerText = theoryVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
-                document.getElementById('theoryMargin').className = theoryVal >= 75 ? 'text-[10px] text-emerald-400 mt-1 font-mono' : 'text-[10px] text-rose-400 mt-1 font-semibold font-mono';
-              }
-              const labVal = parseFloat(labStr.replace('%', ''));
-              if (!isNaN(labVal)) {
-                document.getElementById('labMargin').innerText = labVal >= 75 ? 'Safe: ≥75%' : 'Deficit: <75%';
-                document.getElementById('labMargin').className = labVal >= 75 ? 'text-[10px] text-emerald-400 mt-1 font-mono' : 'text-[10px] text-rose-400 mt-1 font-semibold font-mono';
-              }
-
-              cachedAttendance = {
-                theory: theoryStr,
-                lab: labStr,
-                aggregate: aggStr,
-                status: aggVal >= 75 ? 'Safe' : 'Warning/Deficit',
-                marginDetail: aggMarginInfo.text
-              };
-            }
-          }
-        });
-      }
-
-      if (calUrl) {
-        Papa.parse(calUrl + (calUrl.includes('?') ? buster : '?' + buster), {
-          download: true,
-          complete: function(results) {
-            const list = document.getElementById('calendarList');
-            list.innerHTML = '';
-            const rows = results.data.slice(1);
-
-            let nextExam = null;
-            let nextHoliday = null;
-            let nextEvent = null;
-
-            const parsedRows = rows
-              .filter(r => r[0] && r[1])
-              .map(r => ({
-                name: r[0].trim(),
-                dateStr: r[1].trim(),
-                type: (r[2] || 'Event').trim(),
-                days: getDaysRemaining(r[1].trim())
-              }))
-              .sort((a, b) => a.days - b.days);
-
-            parsedRows.forEach(item => {
-              if (item.days >= 0) {
-                const lowerType = item.type.toLowerCase();
-                const lowerName = item.name.toLowerCase();
-
-                if (!nextExam && (lowerType.includes('exam') || lowerName.includes('internal assessment') || lowerName.includes('ia-') || lowerName.includes('see'))) {
-                  nextExam = item;
-                }
-                if (!nextHoliday && (lowerType.includes('holiday') || lowerName.includes('jayanthi') || lowerName.includes('pooja') || lowerName.includes('deepavali') || lowerName.includes('chaturthi'))) {
-                  nextHoliday = item;
-                }
-                if (!nextEvent && (lowerType.includes('academic') || lowerType.includes('deadline') || lowerName.includes('meeting') || lowerName.includes('freezing'))) {
-                  nextEvent = item;
-                }
-              }
-
-              const el = document.createElement('div');
-              el.className = 'glass-subcard p-2 flex justify-between items-center';
-              const badgeClass = item.days >= 0 ? 'text-indigo-300 font-mono' : 'text-slate-500 font-mono';
-              el.innerHTML = `
-                <div>
-                  <div class="font-medium text-slate-200 text-xs">${item.name}</div>
-                  <div class="text-[10px] text-slate-400">${item.dateStr} &bull; <span class="${badgeClass}">${formatDaysBadge(item.days)}</span></div>
-                </div>
-                <span class="text-[10px] px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 font-mono">${item.type}</span>
-              `;
-              list.appendChild(el);
-            });
-
-            if (nextExam) {
-              document.getElementById('nextExamName').innerText = `${nextExam.name} (${nextExam.dateStr})`;
-              document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
-              cachedMilestones.exam = `${nextExam.name} on ${nextExam.dateStr} (${formatDaysBadge(nextExam.days)})`;
-            } else {
-              document.getElementById('nextExamName').innerText = 'None scheduled';
-              document.getElementById('nextExamCountdown').innerText = '--';
-            }
-
-            if (nextHoliday) {
-              document.getElementById('nextHolidayName').innerText = `${nextHoliday.name} (${nextHoliday.dateStr})`;
-              document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
-              cachedMilestones.holiday = `${nextHoliday.name} (${formatDaysBadge(nextHoliday.days)})`;
-            }
-
-            if (nextEvent) {
-              document.getElementById('nextEventName').innerText = `${nextEvent.name} (${nextEvent.dateStr})`;
-              document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
-            }
-            lucide.createIcons({ root: list });
-          }
-        });
-      }
-
-      if (qUrl) {
-        Papa.parse(qUrl + (qUrl.includes('?') ? buster : '?' + buster), {
-          download: true,
-          complete: function(results) {
-            const container = document.getElementById('topicsContainer');
-            container.innerHTML = '';
-            const rows = results.data.slice(1);
-            cachedTopics = [];
-
-            rows.forEach((r) => {
-              if (!r[0]) return;
-              const topicName = r[0];
-              const sheetUrl = r[1] || '#';
-              const totalQ = parseInt(r[2] || '0') || 0;
-              const completedQ = parseInt(r[3] || '0') || 0;
-              const doubtQ = parseInt(r[4] || '0') || 0;
-              const notAttemptedQ = Math.max(0, totalQ - completedQ - doubtQ);
-
-              const pct = totalQ > 0 ? Math.min(100, Math.round((completedQ / totalQ) * 100)) : 0;
-
-              cachedTopics.push({
-                name: topicName,
-                total: totalQ,
-                done: completedQ,
-                doubt: doubtQ,
-                pending: notAttemptedQ,
-                percentage: pct
-              });
-
-              const card = document.createElement('div');
-              card.className = 'glass-subcard p-3.5 flex flex-col justify-between';
-              card.innerHTML = `
-                <div>
-                  <div class="flex justify-between items-start mb-2">
-                    <span class="font-semibold text-slate-200 capitalize truncate pr-1 text-xs">${topicName}</span>
-                    <a href="${sheetUrl}" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium whitespace-nowrap">Open ↗</a>
-                  </div>
-
-                  <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-3">
-                    <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-1.5 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
-                  </div>
-
-                  <div class="grid grid-cols-3 gap-1 text-center text-[10px]">
-                    <div class="bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 p-1 rounded-md">
-                      <div class="font-bold text-xs font-mono">${completedQ}</div>
-                      <div class="text-[9px] text-slate-400">Done</div>
-                    </div>
-                    <div class="bg-amber-950/40 border border-amber-800/60 text-amber-300 p-1 rounded-md">
-                      <div class="font-bold text-xs font-mono">${doubtQ}</div>
-                      <div class="text-[9px] text-slate-400">Doubts</div>
-                    </div>
-                    <div class="bg-slate-800/60 border border-slate-700/60 text-slate-300 p-1 rounded-md">
-                      <div class="font-bold text-xs font-mono">${notAttemptedQ}</div>
-                      <div class="text-[9px] text-slate-400">Pending</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mt-3 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-slate-400">Total: <b class="font-mono text-slate-300">${totalQ}</b></span>
-                  <span class="font-semibold font-mono ${pct === 100 ? 'text-emerald-400' : 'text-indigo-400'}">${pct}% Completed</span>
-                </div>
-              `;
-              container.appendChild(card);
-            });
-            lucide.createIcons({ root: container });
-          }
-        });
-      }
-
-      if (assignUrl) {
-        Papa.parse(assignUrl + (assignUrl.includes('?') ? buster : '?' + buster), {
-          download: true,
-          complete: function(results) {
-            const rows = results.data.slice(1);
-            cachedAssignments = [];
-            let pendingCount = 0;
-
-            rows.forEach((r) => {
-              if (!r[0]) return;
-              const title = r[0];
-              const dueDate = r[1] || 'TBD';
-              const status = (r[2] || 'Pending').trim();
-              const score = r[3] || '-';
-              const portalUrl = r[4] || '';
-
-              const isCompleted = status.toLowerCase() === 'submitted' || status.toLowerCase() === 'completed';
-              if (!isCompleted) pendingCount++;
-
-              cachedAssignments.push({
-                title,
-                dueDate,
-                status,
-                score,
-                portalUrl,
-                isCompleted
-              });
-            });
-
-            document.getElementById('filterPendingBadge').innerText = pendingCount;
-            renderAssignmentsList();
-          }
-        });
-      }
-    }
-
-    function exportAIPrompt() {
-      const agg = cachedAttendance.aggregate || document.getElementById('aggPct').innerText;
-      const theory = cachedAttendance.theory || document.getElementById('theoryPct').innerText;
-      const lab = cachedAttendance.lab || document.getElementById('labPct').innerText;
-      const margin = cachedAttendance.marginDetail || 'Monitoring 75% threshold';
-      const exam = cachedMilestones.exam || 'Internal Assessment 1';
-      
-      let topicSummary = '';
-      if (cachedTopics.length > 0) {
-        topicSummary = cachedTopics.map(t => `  - ${t.name}: ${t.done}/${t.total} solved (${t.percentage}%), ${t.doubt} doubts, ${t.pending} pending`).join('\n');
-      } else {
-        topicSummary = '  - DSA practice in progress';
-      }
-
-      const pendingAssign = cachedAssignments.filter(a => !a.isCompleted);
-      let assignSummary = pendingAssign.length > 0 
-        ? pendingAssign.map(a => `  - ${a.title} (Due: ${a.dueDate})`).join('\n')
-        : '  - No urgent submissions pending';
-
-      const prompt = `I am Vikas N, a 1st-year B.Tech AIML engineering student (USN: 2392608146, Section B).
-
-Here is my real-time academic cockpit status:
-1. ATTENDANCE STATUS:
-   - Aggregate: ${agg}
-   - Theory: ${theory} | Lab: ${lab}
-   - Safe-Bunk / Recovery Margin: ${margin}
-
-2. UPCOMING MILESTONES:
-   - Target Exam: ${exam}
-
-3. DSA PRACTICE GAPS:
-${topicSummary}
-
-4. PENDING ASSIGNMENTS:
-${assignSummary}
-
-TASK:
-Acting as an expert academic and software engineering mentor, generate an optimized 7-day study & problem-solving roadmap that:
-1. Allocates specific daily focus blocks to clear my open DSA doubts first.
-2. Balances upcoming coursework deadlines without falling behind in theory classes.
-3. Provides 3 high-yield conceptual tips for my pending topics.`;
-
-      navigator.clipboard.writeText(prompt);
-      speakJarvis("Strategic roadmap prompt copied to clipboard, sir.");
-      alert('📋 Rich Context AI Study Prompt copied to clipboard!\nPaste it directly into Gemini or ChatGPT for your tailored study plan.');
-    }
-
-    window.onload = () => {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      }
-      updateJarvisVoiceUI();
-      syncNavXP();
-      initInputs();
-      renderDoubtsLedger();
-      loadAllData();
-      updateTacticalClock();
-      if (!localStorage.getItem('ATTENDANCE_CSV')) {
-        toggleSettingsModal();
-      } else {
-        if (!sessionStorage.getItem('JARVIS_GREETED')) {
-          sessionStorage.setItem('JARVIS_GREETED', 'true');
-          setTimeout(() => {
-            speakJarvis("Systems synchronized, sir. Academic defenses standing by.");
-          }, 1000);
+    function toggleAssignmentSubmission(index) {
+      if (cachedAssignments[index]) {
+        cachedAssignments[index].isCompleted = !cachedAssignments[index].isCompleted;
+        renderAssignmentsList();
+        if (cachedAssignments[index].isCompleted) {
+          const currentXp = parseInt(localStorage.getItem('ACADEMIC_DASH_PLAYER_XP') || '150');
+          localStorage.setItem('ACADEMIC_DASH_PLAYER_XP', currentXp + 40);
+          syncNavXP();
+          speakJarvis("Assignment submission verified, sir. Academic defense elevated.");
         }
       }
-    };
+    }
+
+    /* =========================================================================
+       DATA STREAMING: PAPAPARSE CSV FETCHER
+       ========================================================================= */
+    function loadAllData() {
+      const attUrl = localStorage.getItem('ATTENDANCE_CSV');
+      const calUrl = localStorage.getItem('CALENDAR_CSV');
+      const assUrl = localStorage.getItem('ASSIGNMENTS_CSV');
+      const queUrl = localStorage.getItem('QUESTIONS_CSV');
+
+      if (attUrl) loadAttendance(attUrl);
+      if (calUrl) loadCalendar(calUrl);
+      if (assUrl) loadAssignments(assUrl);
+      if (queUrl) loadQuestions(queUrl);
+    }
+
+    function loadAttendance(url) {
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          processAttendance(results.data);
+        },
+        error: function() {
+          document.getElementById('attendanceLog').innerHTML = '<span class="text-rose-400 text-xs">Failed to load attendance CSV</span>';
+        }
+      });
+    }
+
+    function processAttendance(rows) {
+      let theoryAttended = 0, theoryTotal = 0;
+      let labAttended = 0, labTotal = 0;
+      let totalAttended = 0, totalClasses = 0;
+
+      const logContainer = document.getElementById('attendanceLog');
+      logContainer.innerHTML = '';
+
+      rows.forEach(r => {
+        const type = (r['Type'] || r['type'] || 'Theory').toLowerCase();
+        const status = (r['Status'] || r['status'] || '').toLowerCase();
+        const subject = r['Subject'] || r['subject'] || 'Subject';
+        const date = r['Date'] || r['date'] || '';
+
+        const isPresent = status === 'present' || status === 'p' || status === '1';
+        const isAbsent = status === 'absent' || status === 'a' || status === '0';
+
+        if (isPresent || isAbsent) {
+          totalClasses++;
+          if (isPresent) totalAttended++;
+
+          if (type.includes('lab') || type.includes('practical')) {
+            labTotal++;
+            if (isPresent) labAttended++;
+          } else {
+            theoryTotal++;
+            if (isPresent) theoryAttended++;
+          }
+
+          const chip = document.createElement('div');
+          chip.className = `flex-shrink-0 px-2.5 py-1 rounded-full text-[10px] font-mono font-medium flex items-center gap-1.5 border ${
+            isPresent 
+              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' 
+              : 'bg-rose-500/10 text-rose-400 border-rose-500/25'
+          }`;
+          chip.innerHTML = `
+            <span class="w-1.5 h-1.5 rounded-full ${isPresent ? 'bg-emerald-400' : 'bg-rose-400'}"></span>
+            <span>${subject}</span>
+            <span class="text-slate-500">${date ? `(${date.slice(0,5)})` : ''}</span>
+          `;
+          logContainer.appendChild(chip);
+        }
+      });
+
+      baseAttended = totalAttended;
+      baseTotal = totalClasses;
+
+      const aggPct = totalClasses ? ((totalAttended / totalClasses) * 100).toFixed(1) : 0;
+      const thPct = theoryTotal ? ((theoryAttended / theoryTotal) * 100).toFixed(1) : 0;
+      const lbPct = labTotal ? ((labAttended / labTotal) * 100).toFixed(1) : 0;
+
+      document.getElementById('aggPct').innerText = `${aggPct}%`;
+      document.getElementById('theoryPct').innerText = `${thPct}%`;
+      document.getElementById('labPct').innerText = `${lbPct}%`;
+
+      // Update the smooth SVG Opal Arc Gauge
+      updateOpalGauge(parseFloat(aggPct));
+
+      const margin = calculateMargin(totalAttended, totalClasses);
+      const marginSliderPill = document.getElementById('marginSliderPill');
+      if (marginSliderPill) {
+        marginSliderPill.innerText = margin.type === 'safe' ? `+${margin.count} Safe` : `Attend ${margin.count}`;
+        marginSliderPill.className = margin.type === 'safe' 
+          ? 'text-xs font-mono font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full'
+          : 'text-xs font-mono font-bold text-rose-300 bg-rose-950/60 border border-rose-500/30 px-3 py-1 rounded-full';
+      }
+
+      const bunkBadge = document.getElementById('bunkCalculatorBadge');
+      if (bunkBadge) {
+        bunkBadge.innerText = margin.text;
+        bunkBadge.className = margin.type === 'safe' 
+          ? 'text-xs px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-mono font-medium'
+          : 'text-xs px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 font-mono font-medium';
+      }
+
+      const bufferBadge = document.getElementById('bufferBadge');
+      if (bufferBadge) {
+        if (aggPct >= 75) {
+          bufferBadge.innerText = `Safe: ${(aggPct - 75).toFixed(1)}% Buffer`;
+          bufferBadge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        } else {
+          bufferBadge.innerText = `Alert: ${(75 - aggPct).toFixed(1)}% Deficit`;
+          bufferBadge.className = "text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30";
+        }
+      }
+
+      const aggMarginEl = document.getElementById('aggMargin');
+      if (aggMarginEl) {
+        aggMarginEl.innerText = margin.type === 'safe' ? `+${margin.count} Safe` : `-${margin.count} Needed`;
+      }
+
+      cachedAttendance = {
+        aggPct,
+        theoryPct: thPct,
+        labPct: lbPct,
+        attended: totalAttended,
+        total: totalClasses,
+        margin
+      };
+    }
+
+    function loadCalendar(url) {
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          processCalendar(results.data);
+        }
+      });
+    }
+
+    function processCalendar(rows) {
+      const listEl = document.getElementById('calendarList');
+      listEl.innerHTML = '';
+
+      let nextExam = null;
+      let nextHoliday = null;
+      let nextEvent = null;
+
+      rows.forEach(r => {
+        const title = r['Event'] || r['Title'] || r['event'] || r['name'] || 'Event';
+        const type = (r['Type'] || r['type'] || 'Event').toLowerCase();
+        const date = r['Date'] || r['date'] || '';
+        const days = getDaysRemaining(date);
+
+        if (days >= 0) {
+          if (type.includes('exam') || type.includes('test') || type.includes('cia') || type.includes('quiz')) {
+            if (!nextExam || days < nextExam.days) nextExam = { title, date, days };
+          } else if (type.includes('holiday') || type.includes('vacation')) {
+            if (!nextHoliday || days < nextHoliday.days) nextHoliday = { title, date, days };
+          } else {
+            if (!nextEvent || days < nextEvent.days) nextEvent = { title, date, days };
+          }
+        }
+
+        const item = document.createElement('div');
+        item.className = "opal-subcard p-2.5 flex items-center justify-between text-xs";
+        item.innerHTML = `
+          <div>
+            <span class="font-medium text-slate-200 block">${title}</span>
+            <span class="text-[10px] text-slate-400 font-mono">${date}</span>
+          </div>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full ${
+            days >= 0 && days <= 3 
+              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' 
+              : 'bg-slate-800 text-slate-400 border border-slate-700'
+          }">
+            ${formatDaysBadge(days)}
+          </span>
+        `;
+        listEl.appendChild(item);
+      });
+
+      if (nextExam) {
+        document.getElementById('nextExamName').innerText = nextExam.title;
+        document.getElementById('nextExamCountdown').innerText = formatDaysBadge(nextExam.days);
+      }
+      if (nextHoliday) {
+        document.getElementById('nextHolidayName').innerText = nextHoliday.title;
+        document.getElementById('nextHolidayCountdown').innerText = formatDaysBadge(nextHoliday.days);
+      }
+      if (nextEvent) {
+        document.getElementById('nextEventName').innerText = nextEvent.title;
+        document.getElementById('nextEventCountdown').innerText = formatDaysBadge(nextEvent.days);
+      }
+
+      cachedMilestones = { nextExam, nextHoliday, nextEvent };
+    }
+
+    function loadAssignments(url) {
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          cachedAssignments = results.data.map(r => ({
+            title: r['Title'] || r['title'] || r['Assignment'] || 'Assignment',
+            subject: r['Subject'] || r['subject'] || 'Core',
+            deadline: r['Deadline'] || r['Due Date'] || r['date'] || '',
+            description: r['Description'] || r['description'] || '',
+            submissionLink: r['Link'] || r['Submission Link'] || '',
+            isCompleted: false
+          }));
+          renderAssignmentsList();
+        }
+      });
+    }
+
+    function loadQuestions(url) {
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          processQuestions(results.data);
+        }
+      });
+    }
+
+    function processQuestions(rows) {
+      const topicMap = {};
+      rows.forEach(r => {
+        const topic = r['Topic'] || r['topic'] || 'General Practice';
+        const qTitle = r['Question'] || r['question'] || r['Title'] || 'Problem';
+        const difficulty = r['Difficulty'] || r['difficulty'] || 'Medium';
+
+        if (!topicMap[topic]) topicMap[topic] = [];
+        topicMap[topic].push({ title: qTitle, difficulty });
+      });
+
+      cachedTopics = topicMap;
+      const container = document.getElementById('topicsContainer');
+      container.innerHTML = '';
+
+      Object.keys(topicMap).forEach(topic => {
+        const count = topicMap[topic].length;
+        const card = document.createElement('div');
+        card.className = "opal-subcard p-3.5 space-y-2 hover:border-emerald-500/30 transition-all";
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-100 text-xs">${topic}</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${count} Problems</span>
+          </div>
+          <div class="space-y-1 pt-1 max-h-36 overflow-y-auto custom-scrollbar">
+            ${topicMap[topic].slice(0, 4).map(q => `
+              <div class="text-[11px] text-slate-300 flex items-center justify-between py-0.5 hover:text-emerald-300">
+                <span class="truncate pr-1">• ${q.title}</span>
+                <span class="text-[9px] font-mono text-slate-500 flex-shrink-0">${q.difficulty}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* =========================================================================
+       AI MENTOR EXPORT PROMPT
+       ========================================================================= */
+    function exportAIPrompt() {
+      const totalDoubts = doubts.length;
+      const pendingDoubts = doubts.filter(d => !d.isResolved).length;
+
+      let prompt = `I am Vikas N, a 1st-year B.Tech AIML student (USN: 2392608146) at CMR University.
+Here is my current live academic cockpit status:
+
+[ATTENDANCE & DEFENSE]
+- Aggregate Attendance: ${cachedAttendance.aggPct || '--'}%
+- Theory: ${cachedAttendance.theoryPct || '--'}%
+- Lab: ${cachedAttendance.labPct || '--'}%
+- Safe Bunk Buffer: ${cachedAttendance.margin ? cachedAttendance.margin.text : 'Pending data'}
+
+[MILESTONES]
+- Next Exam: ${cachedMilestones.nextExam ? `${cachedMilestones.nextExam.title} (in ${cachedMilestones.nextExam.days} days)` : 'None pending'}
+- Next Holiday: ${cachedMilestones.nextHoliday ? `${cachedMilestones.nextHoliday.title} (in ${cachedMilestones.nextHoliday.days} days)` : 'None pending'}
+
+[ACTIVE COURSEWORK & DOUBTS]
+- Unresolved Doubts in Vault: ${pendingDoubts} out of ${totalDoubts} total doubts.
+
+TASK:
+Based on my schedule and current attendance buffer, provide a prioritized study strategy for this week to maintain my 75% attendance equilibrium and master pending DSA/AIML topics.`;
+
+      navigator.clipboard.writeText(prompt);
+      speakJarvis("Comprehensive academic prompt synthesized and copied to clipboard, sir.");
+      alert('📋 Master AI Mentor Prompt copied to clipboard!\nPaste it into Gemini or Claude to generate an actionable study plan.');
+    }
+
+    // Initialize all subsystems on DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initInputs();
+      syncNavXP();
+      updateJarvisVoiceUI();
+      renderDoubtsLedger();
+      loadAllData();
+      updateOpalGauge(85); // Initial pleasant arc state until CSV syncs
+    });
   </script>
+
 </body>
 </html>
